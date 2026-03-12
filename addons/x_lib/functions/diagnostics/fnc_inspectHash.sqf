@@ -23,43 +23,36 @@ Author:
 ARJay
 ---------------------------------------------------------------------------- */
 
-private ["_target","_text","_level","_inspectRecurse"];
+private _target = _this;
 
-_target = _this;
+private _level = 0;
 
-_level = 0;
-
-_text = " ------------------ Inspecting Hash -------------------- ";
+private _text = " ------------------ Inspecting Hash -------------------- ";
 [_text] call ALIVE_fnc_dump;
 
-_inspectRecurse = {
-    private ["_target","_level","_key","_value","_indent"];
-
-    _target = _this select 0;
-    _level = _this select 1;
-    _level = _level + 1;
+private _inspectRecurse = {
+    private _target = _this select 0;
+    private _level = (_this select 1) + 1;
+    private _index = 0;
 
     {
-        _key = _x;
-        _value = [_target,_key] call ALIVE_fnc_hashGet;
+        private _key = _x;
+        private _value = _y;
 
-        if([_value] call ALIVE_fnc_isHash) then {
-            _indent = " ";
-            for "_i" from 0 to _level-1 do {
-                _indent = format["%1%2",_indent,_indent];
-            };
+        private _indent = " ";
+        for "_i" from 0 to _level-1 do {
+            _indent = format["%1%2",_indent,_indent];
+        };
+
+        if ([_value] call ALIVE_fnc_isHash) then {
             ["%1 k: %2",_indent,_key] call ALIVE_fnc_dump;
             [_value,_level] call _inspectRecurse;
         } else {
-            _indent = " ";
-            for "_i" from 0 to _level-1 do {
-                _indent = format["%1%2",_indent,_indent];
-            };
-            ["%1 k [%4]: %2 v: %3",_indent,_key,_value,_forEachIndex] call ALIVE_fnc_dump;
+            ["%1 k [%4]: %2 v: %3",_indent,_key,_value,_index] call ALIVE_fnc_dump;
         };
-    } forEach (_target select 1);
 
-    _level = _level - 1;
+        _index = _index + 1;
+    } forEach _target;
 };
 
 [_target,_level] call _inspectRecurse;

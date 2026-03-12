@@ -55,13 +55,13 @@ if (_spawnSources isEqualTo []) then {
         private _profile = [MOD(profileHandler),"getProfile", _profileID] call ALiVE_fnc_profileHandler;
 
         if (!isnil "_profile") then {
-            private _leader = _profile select 2 select 10;
+            private _leader = _profile get "leader";
 
             //["TRACE | Despawn %1 - Despawn Queue %2",_profileID,_profilesToDespawnQueue] call ALiVE_fnc_Dump;
 
             // if unit is in the air, prevent despawn
             if ((getpos _leader) select 2 < 3) then {
-                if ((_profile select 2 select 5) == "entity") then {
+                if ((_profile get "type") == "entity") then {
                     [_profile,"despawn"] call ALiVE_fnc_profileEntity;
                 } else {
                     private _vehicleAssignments = [_profile,"vehicleAssignments"] call ALiVE_fnc_HashGet;
@@ -124,8 +124,8 @@ if (_spawnSources isEqualTo []) then {
 
         // don't spawn or despawn player profiles
         if (!([_x,"isPlayer", false] call ALiVE_fnc_hashGet)) then {
-            if (!(_x select 2 select 1)) then {  // if profile active
-                if ((_x select 2 select 2) distance _center <= _radius) then {  // if profile within spawn distance radius
+            if (!(_x get "active")) then {  // if profile active
+                if ((_x get "position") distance _center <= _radius) then {  // if profile within spawn distance radius
                   private _isShip = false;
                 	private _isWater = false;
                 	private _position = [_x, "position"] call ALiVE_fnc_hashGet;
@@ -153,15 +153,15 @@ if (_spawnSources isEqualTo []) then {
                 		// ["Profile Spawner - Profile in Water & Not a Ship : Don't Spawn!. _type: %4, _isWater: %5, _faction %1, _profileID: %2, _objectType: %3", _faction, _profileID, _objectType, _type, _isWater] call ALiVE_fnc_dump;   
                 	};
 
-                  _profilesToSpawnQueue pushbackunique (_x select 2 select 4);
+                  _profilesToSpawnQueue pushbackunique (_x get "profileID");
   
                 };
                 
             } else {
                 // if leader is null
                 // find new leader
-                if (isnull (_x select 2 select 10) && {(_x select 2 select 5) == "entity"}) then {
-                    private _leader = leader (_x select 2 select 13); // group
+                if (isnull (_x get "leader") && {(_x get "type") == "entity"}) then {
+                    private _leader = leader (_x get "group"); // group
 
                     if (!isnull _leader) then {
                         [_x,"leader", _leader] call ALiVE_fnc_hashSet;
@@ -169,7 +169,7 @@ if (_spawnSources isEqualTo []) then {
                 };
 
                 // mark profile as safe from despawn
-                _profilesInSpawnRange pushbackunique (_x select 2 select 4);
+                _profilesInSpawnRange pushbackunique (_x get "profileID");
             };
         };
     } foreach _profilesInDeactivationRange;
@@ -208,12 +208,12 @@ if (!(_profilesToSpawnQueue isEqualTo []) && {time - _lastProfileSpawnedTime > A
     private _profileID = _profilesToSpawnQueue deleteat 0;
     private _profile = [MOD(profileHandler),"getProfile", _profileID] call ALiVE_fnc_profileHandler;
 
-    if (!isnil "_profile" && {!(_profile select 2 select 1)} && {!([_profile,"locked", false] call ALiVE_fnc_HashGet)}) then {
+    if (!isnil "_profile" && {!(_profile get "active")} && {!([_profile,"locked", false] call ALiVE_fnc_HashGet)}) then {
 		private _activeLimiter = [MOD(profileSystem),"activeLimiter"] call ALiVE_fnc_profileSystem;
         private _activeEntityCount = count ([MOD(profileHandler),"getActiveEntities"] call ALiVE_fnc_profileHandler);
 
         if (_activeEntityCount < _activeLimiter) then {
-            if ((_profile select 2 select 5) == "entity") then {
+            if ((_profile get "type") == "entity") then {
                 [_profile,"spawn"] spawn ALiVE_fnc_profileEntity;
             } else {
                 private _vehicleAssignments = [_profile,"vehicleAssignments"] call ALiVE_fnc_HashGet;
@@ -228,14 +228,14 @@ if (!(_profilesToSpawnQueue isEqualTo []) && {time - _lastProfileSpawnedTime > A
             // we've breached the active limiter
             // unregister profile if entity and inactive
 
-            if (!(_profile select 2 select 1) && {(_profile select 2 select 5) == "entity"}) then {
+            if (!(_profile get "active") && {(_profile get "type") == "entity"}) then {
                 {
                     private _vehicleProfile = [MOD(profileHandler),"getProfile", _x] call ALiVE_fnc_profileHandler;
 
                     if (!isnil "_vehicleProfile") then {
                         [MOD(profileHandler),"unregisterProfile", _vehicleProfile] call ALiVE_fnc_profileHandler;
                     };
-                } foreach (_profile select 2 select 8); // "vehiclesInCommandOf"
+                } foreach (_profile get "entitiesInCommandOf"); // "vehiclesInCommandOf"
 
                 [MOD(profileHandler),"unregisterProfile", _profile] call ALiVE_fnc_profileHandler;
             };

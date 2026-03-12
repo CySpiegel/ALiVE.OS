@@ -35,7 +35,7 @@ ARJay
     _taskFaction = _args select 4;
     _taskProfile = _args select 5;
 
-    _taskProfileID = _taskProfile select 2 select 4;
+    _taskProfileID = _taskProfile get "profileID";
 
     _insertionTypes = ["Car","Helicopter"];
 
@@ -110,9 +110,9 @@ ARJay
             _vehicleClass = (selectRandom _carClasses);
             _profiles = [_vehicleClass,_taskSide,_taskFaction,"CAPTAIN",_insertionPosition,random(360),false,_taskFaction,true,true] call ALIVE_fnc_createProfilesCrewedVehicle;
             _crewProfile = _profiles select 0;
-            _crewProfileID = _crewProfile select 2 select 4;
+            _crewProfileID = _crewProfile get "profileID";
             _vehicleProfile = _profiles select 1;
-            _vehicleProfileID = _vehicleProfile select 2 select 4;
+            _vehicleProfileID = _vehicleProfile get "profileID";
 
             _taskPosition = [_taskPosition] call ALIVE_fnc_getClosestRoad;
 
@@ -123,9 +123,9 @@ ARJay
             _vehicleClass = (selectRandom _heliClasses);
             _profiles = [_vehicleClass,_taskSide,_taskFaction,"CAPTAIN",_insertionPosition,random(360),false,_taskFaction,true,true] call ALIVE_fnc_createProfilesCrewedVehicle;
             _crewProfile = _profiles select 0;
-            _crewProfileID = _crewProfile select 2 select 4;
+            _crewProfileID = _crewProfile get "profileID";
             _vehicleProfile = _profiles select 1;
-            _vehicleProfileID = _vehicleProfile select 2 select 4;
+            _vehicleProfileID = _vehicleProfile get "profileID";
 
             _profileWaypoint = [_taskPosition, 100, "MOVE", "LIMITED", 100, [], "LINE"] call ALIVE_fnc_createProfileWaypoint;
             [_crewProfile, "addWaypoint", _profileWaypoint] call ALIVE_fnc_profileEntity;
@@ -165,12 +165,12 @@ ARJay
 
             _loaded = false;
 
-            _active = _taskProfile select 2 select 1;
+            _active = _taskProfile get "active";
             _countUnloaded = 0;
 
             if(_active) then {
 
-                _group = _taskProfile select 2 select 13;
+                _group = _taskProfile get "group";
                 _units = units _group;
 
                 _loaded = [_units] call ALIVE_fnc_taskHaveUnitsLoadedInVehicle;

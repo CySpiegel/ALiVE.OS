@@ -36,7 +36,7 @@ scopeName "MAIN";
 _profiles = [_profile] call ALIVE_fnc_vehicleAssignmentsGetLinkedProfiles;
 
 {
-    _position = getposATL (_x select 2 select 10);
+    _position = getposATL (_x get "leader");
     if(([_position, _spawnDistance] call ALiVE_fnc_anyPlayersInRange > 0) || ([_position, _spawnDistance] call ALiVE_fnc_anyAutonomousInRange > 0)) then {
         _result = _result + 1;
         breakTo "MAIN";

@@ -55,11 +55,11 @@ if (_profileVehicle isEqualType objNull) then {
 if (isnil "_profileVehicle" || { !(_profileVehicle isEqualType []) }) exitwith {};
 if (isnil "_profileEntity" || { !(_profileEntity isEqualType []) }) exitwith {};
 
-private _entityID = _profileEntity select 2 select 4; //[_profileEntity, "profileID"] call ALIVE_fnc_hashGet;
+private _entityID = _profileEntity get "profileID"; //[_profileEntity, "profileID"] call ALIVE_fnc_hashGet;
 private _unitIndexes = [_profileEntity, "unitIndexes"] call ALIVE_fnc_profileEntity;
 private _currentEntityAssignments = [_profileEntity, "vehicleAssignments"] call ALIVE_fnc_hashGet;
 private _currentVehicleAssignments = [_profileVehicle, "vehicleAssignments"] call ALIVE_fnc_hashGet;
-private _vehicleID = _profileVehicle select 2 select 4; //[_profileVehicle, "profileID"] call ALIVE_fnc_hashGet;
+private _vehicleID = _profileVehicle get "profileID"; //[_profileVehicle, "profileID"] call ALIVE_fnc_hashGet;
 
 // get indexes of units that are already assigned to vehicles
 private _usedIndexes = _currentEntityAssignments call ALIVE_fnc_profileVehicleAssignmentGetUsedIndexes;

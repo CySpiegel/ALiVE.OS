@@ -468,7 +468,7 @@ switch(_operation) do {
                         private _profileID = _x;
                         private _profile = [ALIVE_profileHandler, "getProfile", _profileID] call ALIVE_fnc_profileHandler;
                         if !(isnil "_profile") then {
-                            _position = _profile select 2 select 2;
+                            _position = _profile get "position";
 
                             if!(surfaceIsWater _position) then {
                                 private _marker = [_profile, "createDebugMarkers", [_alpha]] call ALIVE_fnc_profileEntity;
@@ -1194,7 +1194,7 @@ switch(_operation) do {
                     {
                         _sector = _x;
                         _centerPosition = [_sector, "center"] call ALIVE_fnc_sector;
-                        _sectorData = _sector select 2 select 0;
+                        _sectorData = _sector get "debug";
                         if("active" in keys _sectorData) then {
                             _active = [_sectorData, "active"] call ALIVE_fnc_hashGet;
 
@@ -1213,7 +1213,7 @@ switch(_operation) do {
                                 {
                                     _profile = _x;
                                     if !(isnil "_profile") then {
-                                        _position = _profile select 2 select 2;
+                                        _position = _profile get "position";
 
                                         if!(surfaceIsWater _position) then {
                                             _marker = [_profile, "createDebugMarkers", [1]] call ALIVE_fnc_profileEntity;

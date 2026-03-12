@@ -828,7 +828,7 @@ switch(_operation) do {
                                         _profile = [ALIVE_profileHandler, "getProfile", _x] call ALIVE_fnc_profileHandler;
 
                                         if!(isNil "_profile") then {
-                                            _position = _profile select 2 select 2;
+                                            _position = _profile get "position";
                                             _positions pushBack _position;
                                         };
 
@@ -1006,7 +1006,7 @@ switch(_operation) do {
                                     {
                                         _profile = [ALIVE_profileHandler, "getProfile", _x] call ALIVE_fnc_profileHandler;
                                         if!(isNil "_profile") then {
-                                            _active = _profile select 2 select 1;
+                                            _active = _profile get "active";
                                             if(_active) then {
                                                 _anyActive = true;
                                             };
@@ -1018,7 +1018,7 @@ switch(_operation) do {
                                     {
                                         _profile = [ALIVE_profileHandler, "getProfile", _x] call ALIVE_fnc_profileHandler;
                                         if!(isNil "_profile") then {
-                                            _active = _profile select 2 select 1;
+                                            _active = _profile get "active";
                                             if(_active) then {
                                                 _anyActive = true;
                                             };
@@ -1030,7 +1030,7 @@ switch(_operation) do {
                                     {
                                         _profile = [ALIVE_profileHandler, "getProfile", _x select 0] call ALIVE_fnc_profileHandler;
                                         if!(isNil "_profile") then {
-                                            _active = _profile select 2 select 1;
+                                            _active = _profile get "active";
                                             if(_active) then {
                                                 _anyActive = true;
                                             };
@@ -1043,7 +1043,7 @@ switch(_operation) do {
                                         {
                                             _profile = [ALIVE_profileHandler, "getProfile", _x] call ALIVE_fnc_profileHandler;
                                             if!(isNil "_profile") then {
-                                                _active = _profile select 2 select 1;
+                                                _active = _profile get "active";
                                                 if(_active) then {
                                                     _anyActive = true;
                                                 };
@@ -1057,7 +1057,7 @@ switch(_operation) do {
                                         {
                                             _profile = [ALIVE_profileHandler, "getProfile", _x] call ALIVE_fnc_profileHandler;
                                             if!(isNil "_profile") then {
-                                                _active = _profile select 2 select 1;
+                                                _active = _profile get "active";
                                                 if(_active) then {
                                                     _anyActive = true;
                                                 };
@@ -1071,7 +1071,7 @@ switch(_operation) do {
                                         {
                                             _profile = [ALIVE_profileHandler, "getProfile", _x] call ALIVE_fnc_profileHandler;
                                             if!(isNil "_profile") then {
-                                                _active = _profile select 2 select 1;
+                                                _active = _profile get "active";
                                                 if(_active) then {
                                                     _anyActive = true;
                                                 };
@@ -1085,7 +1085,7 @@ switch(_operation) do {
                                         {
                                             _profile = [ALIVE_profileHandler, "getProfile", _x] call ALIVE_fnc_profileHandler;
                                             if!(isNil "_profile") then {
-                                                _active = _profile select 2 select 1;
+                                                _active = _profile get "active";
                                                 if(_active) then {
                                                     _anyActive = true;
                                                 };
@@ -1099,7 +1099,7 @@ switch(_operation) do {
                                         {
                                             _profile = [ALIVE_profileHandler, "getProfile", _x] call ALIVE_fnc_profileHandler;
                                             if!(isNil "_profile") then {
-                                                _active = _profile select 2 select 1;
+                                                _active = _profile get "active";
                                                 if(_active) then {
                                                     _anyActive = true;
                                                 };
@@ -1120,7 +1120,7 @@ switch(_operation) do {
                                         // delete all profiles
 
                                         {
-                                            _profileType = _x select 2 select 5;
+                                            _profileType = _x get "type";
                                             if(_profileType == 'entity') then {
                                                 [_x, "destroy"] call ALIVE_fnc_profileEntity;
                                             }else{
@@ -1625,7 +1625,7 @@ switch(_operation) do {
                         if(count _objectives > 0) then {
 
                             // sort objectives by distance to module
-                            _sortedObjectives = [_objectives,[],{(position _logic) distance (_x select 2 select 1)},"DESCEND"] call ALiVE_fnc_SortBy;
+                            _sortedObjectives = [_objectives,[],{(position _logic) distance (_x get "active")},"DESCEND"] call ALiVE_fnc_SortBy;
 
                             // get the highest priority objective
                             _primaryReinforcementObjective = _sortedObjectives select ((count _sortedObjectives)-1);
@@ -2130,7 +2130,7 @@ switch(_operation) do {
 
                                 _profileIDs = [];
                                 {
-                                    _profileID = _x select 2 select 4;
+                                    _profileID = _x get "profileID";
                                     _profileIDs pushback _profileID;
                                 } forEach _profiles;
 
@@ -2183,7 +2183,7 @@ switch(_operation) do {
 
                                             // _slingloadProfile call ALIVE_fnc_inspectHash;
 
-                                            _payloadWeight = [(_slingLoadProfile select 2 select 11)] call ALIVE_fnc_getObjectWeight;
+                                            _payloadWeight = [(_slingLoadProfile get "vehicleClass")] call ALIVE_fnc_getObjectWeight;
 
                                             // Select helicopter that can slingload the vehicle
                                             _vehicleClass = "";
@@ -2237,19 +2237,19 @@ switch(_operation) do {
                                             _profiles = [_vehicleClass,_side,_eventFaction,"CAPTAIN",_position,random(360),false,_eventFaction,true,true,[], [[_x], []]] call ALIVE_fnc_createProfilesCrewedVehicle;
 
                                             // Set slingload state on profile
-                                            [_slingloadProfile,"slung",[[_profiles select 1 select 2 select 4]]] call ALIVE_fnc_profileVehicle;
+                                            [_slingloadProfile,"slung",[[(_profiles select 1) get "profileID"]]] call ALIVE_fnc_profileVehicle;
 
                                             if(_debug) then {
                                                 ["ML - Slingloading: %1", _vehicleClass] call ALiVE_fnc_dump;
                                                 _slingloadProfile call ALIVE_fnc_inspectHash;
                                             };
 
-                                            _transportProfiles pushback (_profiles select 0 select 2 select 4);
-                                            _transportVehicleProfiles pushback (_profiles select 1 select 2 select 4);
+                                            _transportProfiles pushback ((_profiles select 0) get "profileID");
+                                            _transportVehicleProfiles pushback ((_profiles select 1) get "profileID");
 
                                             _profileIDs = [];
                                             {
-                                                _profileID = _x select 2 select 4;
+                                                _profileID = _x get "profileID";
                                                 _profileIDs pushback _profileID;
                                             } forEach _profiles;
 
@@ -2312,7 +2312,7 @@ switch(_operation) do {
 
                                 _profileIDs = [];
                                 {
-                                    _profileID = _x select 2 select 4;
+                                    _profileID = _x get "profileID";
                                     _profileIDs pushback _profileID;
                                 } forEach _profiles;
 
@@ -2356,8 +2356,8 @@ switch(_operation) do {
 
                                         _profiles = [_vehicleClass,_side,_eventFaction,"CAPTAIN",_position,random(360),false,_eventFaction,true,true] call ALIVE_fnc_createProfilesCrewedVehicle;
 
-                                        _transportProfiles pushback (_profiles select 0 select 2 select 4);
-                                        _transportVehicleProfiles pushback (_profiles select 1 select 2 select 4);
+                                        _transportProfiles pushback ((_profiles select 0) get "profileID");
+                                        _transportVehicleProfiles pushback ((_profiles select 1) get "profileID");
 
                                         if(count _infantryProfiles >= _i) then {
                                             if(count (_infantryProfiles select _i) > 0) then {
@@ -2413,8 +2413,8 @@ switch(_operation) do {
 
                                         _profiles = [_vehicleClass,_side,_eventFaction,"CAPTAIN",_position,random(360),false,_eventFaction,false,true] call ALIVE_fnc_createProfilesCrewedVehicle;
 
-                                        _transportProfiles pushback (_profiles select 0 select 2 select 4);
-                                        _transportVehicleProfiles pushback (_profiles select 1 select 2 select 4);
+                                        _transportProfiles pushback ((_profiles select 0) get "profileID");
+                                        _transportVehicleProfiles pushback ((_profiles select 1) get "profileID");
 
                                     };
 
@@ -2459,7 +2459,7 @@ switch(_operation) do {
 
                                 _profileIDs = [];
                                 {
-                                    _profileID = _x select 2 select 4;
+                                    _profileID = _x get "profileID";
                                     _profileIDs pushback _profileID;
                                 } forEach _profiles;
 
@@ -2509,7 +2509,7 @@ switch(_operation) do {
 
                                 _profileIDs = [];
                                 {
-                                    _profileID = _x select 2 select 4;
+                                    _profileID = _x get "profileID";
                                     _profileIDs pushback _profileID;
                                 } forEach _profiles;
 
@@ -2547,7 +2547,7 @@ switch(_operation) do {
 
                                     _profileIDs = [];
                                     {
-                                        _profileID = _x select 2 select 4;
+                                        _profileID = _x get "profileID";
                                         _profileIDs pushback _profileID;
                                     } forEach _profiles;
 
@@ -2591,7 +2591,7 @@ switch(_operation) do {
 
                                     _profileIDs = [];
                                     {
-                                        _profileID = _x select 2 select 4;
+                                        _profileID = _x get "profileID";
                                         _profileIDs pushback _profileID;
                                     } forEach _profiles;
 
@@ -2973,7 +2973,7 @@ switch(_operation) do {
                     {
                         private _transportProfile = [ALIVE_profileHandler,"getProfile", _x] call ALiVE_fnc_profileHandler;
                         if!(isNil "_transportProfile") then {
-                            private _transportProfilePos = _transportProfile select 2 select 2;
+                            private _transportProfilePos = _transportProfile get "position";
 
                             private _leaveDir = [(_transportProfilePos getDir _reinforcementPosition) - 180] call ALiVE_fnc_modDegrees;
                             private _turnDirOffset = if (random 1 > 0.5) then { 50 } else { -50 };
@@ -3099,14 +3099,14 @@ switch(_operation) do {
                     {
                         _infantryProfile = [ALIVE_profileHandler, "getProfile", _x select 0] call ALIVE_fnc_profileHandler;
                         if!(isNil "_infantryProfile") then {
-                            _active = _infantryProfile select 2 select 1;
+                            _active = _infantryProfile get "active";
 
                             // only need to worry about this is there are
                             // players nearby
 
                             if(_active) then {
 
-                                _units = _infantryProfile select 2 select 21;
+                                _units = _infantryProfile get "units";
 
                                 // catagorise units into loaded and not
                                 // loaded arrays
@@ -3565,11 +3565,11 @@ switch(_operation) do {
                     private _infantryProfile = [ALIVE_profileHandler, "getProfile", _x select 0] call ALIVE_fnc_profileHandler;
 
                     if !(isNil "_infantryProfile") then {
-                        private _active = _infantryProfile select 2 select 1;
+                        private _active = _infantryProfile get "active";
 
                         // only need to worry about this if there are players nearby
                         if (_active) then {
-                            private _units = _infantryProfile select 2 select 21;
+                            private _units = _infantryProfile get "units";
 
                             {
                                 if (alive _x && vehicle _x != _x) then {
@@ -3676,13 +3676,13 @@ switch(_operation) do {
                     {
                         _transportProfile = [ALIVE_profileHandler, "getProfile", _x] call ALIVE_fnc_profileHandler;
                         if !(isNil "_transportProfile") then {
-                            _active = _transportProfile select 2 select 1;
+                            _active = _transportProfile get "active";
 
                             if (_active) then {
                                 _anyActive = _anyActive + 1;
                             } else {
                                 // if not active dispose of transport profiles
-                                _inCommand = _transportProfile select 2 select 8;
+                                _inCommand = _transportProfile get "entitiesInCommandOf";
 
                                 if (count _inCommand > 0) then {
                                     _commandProfileID = _inCommand select 0;
@@ -3805,8 +3805,8 @@ switch(_operation) do {
                     {
                         _transportProfile = [ALIVE_profileHandler, "getProfile", _x] call ALIVE_fnc_profileHandler;
                         if !(isNil "_transportProfile") then {
-                            _active = _transportProfile select 2 select 1;
-                            _vehicle = _transportProfile select 2 select 10;
+                            _active = _transportProfile get "active";
+                            _vehicle = _transportProfile get "vehicle";
 
                             if (_eventState == "heliTransportReturnWait") then {
                                 if ([position _vehicle, 1000] call ALiVE_fnc_anyPlayersInRange == 0 || _waitIterations > _waitTotalIterations) then {
@@ -3822,7 +3822,7 @@ switch(_operation) do {
                                 _anyActive = _anyActive + 1;
                             } else {
                                 // if not active dispose of transport profiles
-                                _inCommand = _transportProfile select 2 select 8;
+                                _inCommand = _transportProfile get "entitiesInCommandOf";
 
                                 if (count _inCommand > 0) then {
                                     _commandProfileID = _inCommand select 0;
@@ -4047,7 +4047,7 @@ switch(_operation) do {
 
                                 _profileIDs = [];
                                 {
-                                    _profileID = _x select 2 select 4;
+                                    _profileID = _x get "profileID";
                                     _profileIDs pushback _profileID;
                                 } forEach _profiles;
 
@@ -4108,7 +4108,7 @@ switch(_operation) do {
 
                                     // _slingloadProfile call ALIVE_fnc_inspectHash;
 
-                                    _payloadWeight = [(_slingLoadProfile select 2 select 11)] call ALIVE_fnc_getObjectWeight;
+                                    _payloadWeight = [(_slingLoadProfile get "vehicleClass")] call ALIVE_fnc_getObjectWeight;
 
                                     // Select helicopter that can slingload the vehicle
                                     _vehicleClass = "";
@@ -4136,14 +4136,14 @@ switch(_operation) do {
                                     _profiles = [_vehicleClass,_side,_eventFaction,"CAPTAIN",_position,random(360),false,_eventFaction,true,true,[], [[_x select 0], []]] call ALIVE_fnc_createProfilesCrewedVehicle;
 
                                     // Set slingloaded profile
-                                    [_slingloadProfile,"slung",[[_profiles select 1 select 2 select 4]]] call ALIVE_fnc_profileVehicle;
+                                    [_slingloadProfile,"slung",[[(_profiles select 1) get "profileID"]]] call ALIVE_fnc_profileVehicle;
 
-                                    _transportProfiles pushback (_profiles select 0 select 2 select 4);
-                                    _transportVehicleProfiles pushback (_profiles select 1 select 2 select 4);
+                                    _transportProfiles pushback ((_profiles select 0) get "profileID");
+                                    _transportVehicleProfiles pushback ((_profiles select 1) get "profileID");
 
                                     _profileIDs = [];
                                     {
-                                        _profileID = _x select 2 select 4;
+                                        _profileID = _x get "profileID";
                                         _profileIDs pushback _profileID;
                                     } forEach _profiles;
 
@@ -4193,7 +4193,7 @@ switch(_operation) do {
                             } forEach _staticIndividuals;
 
                             _profile = [_unitClasses,_side,_eventFaction,_position,0,_side,true] call ALIVE_fnc_createProfileEntity;
-                            _profileID = _profile select 2 select 4;
+                            _profileID = _profile get "profileID";
                             _staticIndividualProfiles pushback [_profileID];
                             _infantryProfiles pushback [_profileID];
 
@@ -4228,7 +4228,7 @@ switch(_operation) do {
                             } forEach _joinIndividuals;
 
                             _profile = [_unitClasses,_side,_eventFaction,_position,0,_side,true] call ALIVE_fnc_createProfileEntity;
-                            _profileID = _profile select 2 select 4;
+                            _profileID = _profile get "profileID";
                             _joinIndividualProfiles pushback [_profileID];
                             _infantryProfiles pushback [_profileID];
 
@@ -4262,7 +4262,7 @@ switch(_operation) do {
                             } forEach _reinforceIndividuals;
 
                             _profile = [_unitClasses,_side,_eventFaction,_position,0,_side,true] call ALIVE_fnc_createProfileEntity;
-                            _profileID = _profile select 2 select 4;
+                            _profileID = _profile get "profileID";
                             _reinforceIndividualProfiles pushback [_profileID];
                             _infantryProfiles pushback [_profileID];
 
@@ -4379,8 +4379,8 @@ switch(_operation) do {
                                     private _containsVehicles = 0;
 
                                     {
-                                        private _profileID = _x select 2 select 4;
-                                        private _inCargo = _x select 2 select 9;
+                                        private _profileID = _x get "profileID";
+                                        private _inCargo = _x get "vehiclesInCargoOf";
 
                                         //Count vehicles in group
                                         if ([_profileID,"vehicle"] call CBA_fnc_find != -1) then {
@@ -4471,8 +4471,8 @@ switch(_operation) do {
 
                                         _profiles = [_vehicleClass,_side,_eventFaction,"CAPTAIN",_position,random(360),false,_eventFaction,false,true] call ALIVE_fnc_createProfilesCrewedVehicle;
 
-                                        _transportProfiles pushback (_profiles select 0 select 2 select 4);
-                                        _transportVehicleProfiles pushback (_profiles select 1 select 2 select 4);
+                                        _transportProfiles pushback ((_profiles select 0) get "profileID");
+                                        _transportVehicleProfiles pushback ((_profiles select 1) get "profileID");
 
                                     }
 
@@ -4532,8 +4532,8 @@ switch(_operation) do {
                                         // Create profiles
                                         _profiles = [_vehicleClass,_side,_eventFaction,"CAPTAIN",_position,random(360),false,_eventFaction,true,true] call ALIVE_fnc_createProfilesCrewedVehicle;
 
-                                        _transportProfiles pushback (_profiles select 0 select 2 select 4);
-                                        _transportVehicleProfiles pushback (_profiles select 1 select 2 select 4);
+                                        _transportProfiles pushback ((_profiles select 0) get "profileID");
+                                        _transportVehicleProfiles pushback ((_profiles select 1) get "profileID");
 
                                         _infantryProfileID = _infantryProfiles select _i select 0;
                                         if!(isNil "_infantryProfileID") then {
@@ -4601,7 +4601,7 @@ switch(_operation) do {
 
                                             // _slingloadProfile call ALIVE_fnc_inspectHash;
 
-                                            _payloadWeight = [(_slingLoadProfile select 2 select 11)] call ALIVE_fnc_getObjectWeight;
+                                            _payloadWeight = [(_slingLoadProfile get "vehicleClass")] call ALIVE_fnc_getObjectWeight;
 
                                             // Select helicopter that can slingload the vehicle
                                             _vehicleClass = "";
@@ -4626,16 +4626,16 @@ switch(_operation) do {
                                             // Create slingloading heli (slingloading another profile!)
                                             _profiles = [_vehicleClass,_side,_eventFaction,"CAPTAIN",_position,random(360),false,_eventFaction,true,true,[], [[_x], []]] call ALIVE_fnc_createProfilesCrewedVehicle;
 
-                                            ["HELI PROFILE FOR SLINGLOADING: %1",_profiles select 1 select 2 select 4] call ALiVE_fnc_dump;
+                                            ["HELI PROFILE FOR SLINGLOADING: %1",(_profiles select 1) get "profileID"] call ALiVE_fnc_dump;
                                             // Set slingloaded profile
-                                            [_slingloadProfile,"slung",[[_profiles select 1 select 2 select 4]]] call ALIVE_fnc_profileVehicle;
+                                            [_slingloadProfile,"slung",[[(_profiles select 1) get "profileID"]]] call ALIVE_fnc_profileVehicle;
 
-                                            _transportProfiles pushback (_profiles select 0 select 2 select 4);
-                                            _transportVehicleProfiles pushback (_profiles select 1 select 2 select 4);
+                                            _transportProfiles pushback ((_profiles select 0) get "profileID");
+                                            _transportVehicleProfiles pushback ((_profiles select 1) get "profileID");
 
                                             _profileIDs = [];
                                             {
-                                                _profileID = _x select 2 select 4;
+                                                _profileID = _x get "profileID";
                                                 _profileIDs pushback _profileID;
                                             } forEach _profiles;
 
@@ -4712,12 +4712,12 @@ switch(_operation) do {
 
                                     _profiles = [_vehicleClass,_side,_eventFaction,"CAPTAIN",_position,random(360),false,_eventFaction,false,true,_payload] call ALIVE_fnc_createProfilesCrewedVehicle;
 
-                                    _transportProfiles pushback (_profiles select 0 select 2 select 4);
-                                    _transportVehicleProfiles pushback (_profiles select 1 select 2 select 4);
+                                    _transportProfiles pushback ((_profiles select 0) get "profileID");
+                                    _transportVehicleProfiles pushback ((_profiles select 1) get "profileID");
 
                                     _profileIDs = [];
                                     {
-                                        _profileID = _x select 2 select 4;
+                                        _profileID = _x get "profileID";
                                         _profileIDs pushback _profileID;
                                     } forEach _profiles;
 
@@ -4839,12 +4839,12 @@ switch(_operation) do {
                                         };
                                     };
 
-                                    _transportProfiles pushback (_profiles select 0 select 2 select 4);
-                                    _transportVehicleProfiles pushback (_profiles select 1 select 2 select 4);
+                                    _transportProfiles pushback ((_profiles select 0) get "profileID");
+                                    _transportVehicleProfiles pushback ((_profiles select 1) get "profileID");
 
                                     _profileIDs = [];
                                     {
-                                        _profileID = _x select 2 select 4;
+                                        _profileID = _x get "profileID";
                                         _profileIDs pushback _profileID;
                                     } forEach _profiles;
 
@@ -5160,8 +5160,8 @@ switch(_operation) do {
 
         _debug = [_logic, "debug"] call MAINCLASS;
 
-        _active = _entityProfile select 2 select 1;
-        _profileID = _entityProfile select 2 select 4;
+        _active = _entityProfile get "active";
+        _profileID = _entityProfile get "profileID";
 
         _waypointCompleted = false;
 
@@ -5169,7 +5169,7 @@ switch(_operation) do {
             private ["_group","_leader","_currentPosition","_currentWaypoint","_waypoints","_waypointCount",
             "_destination","_completionRadius","_distance"];
 
-            _group = _entityProfile select 2 select 13;
+            _group = _entityProfile get "group";
 
             if !(!isnil "_group" && {typeName _group == "GROUP"}) exitwith {_waypointCompleted = true};
 
@@ -5221,11 +5221,11 @@ switch(_operation) do {
 
         private _entityProfile = _args;
 
-        private _active = _entityProfile select 2 select 1;
+        private _active = _entityProfile get "active";
 
         if(_active) then {
 
-            private _group = _entityProfile select 2 select 13;
+            private _group = _entityProfile get "group";
 
             _group setBehaviour "CARELESS";
             _group allowFleeing 0;
@@ -5253,9 +5253,9 @@ switch(_operation) do {
         _event = _args select 0;
         _entityProfile = _args select 1;
 
-        _active = _entityProfile select 2 select 1;
-        _profileID = _entityProfile select 2 select 4;
-        _vehiclesInCommandOf = _entityProfile select 2 select 8;
+        _active = _entityProfile get "active";
+        _profileID = _entityProfile get "profileID";
+        _vehiclesInCommandOf = _entityProfile get "vehiclesInCommandOf";
 
         if(count _vehiclesInCommandOf == 0) exitWith { _result = false; };
 
@@ -5307,7 +5307,7 @@ switch(_operation) do {
 
                     private ["_group","_position","_heliPad","_inCargo","_cargoProfileID","_cargoProfile"];
 
-                    _inCargo = _vehicleProfile select 2 select 9;
+                    _inCargo = _vehicleProfile get "entitiesInCargoOf";
 
                     if(count _inCargo > 0) then {
                         {
@@ -5325,14 +5325,14 @@ switch(_operation) do {
 
                     private ["_inCargo","_cargoProfileID","_cargoProfile","_position"];
 
-                    _inCargo = _vehicleProfile select 2 select 9;
+                    _inCargo = _vehicleProfile get "entitiesInCargoOf";
 
                     if(count _inCargo > 0) then {
                         {
                             _cargoProfileID = _x;
                             _cargoProfile = [ALIVE_profileHandler, "getProfile", _cargoProfileID] call ALIVE_fnc_profileHandler;
 
-                            _position = _vehicleProfile select 2 select 2;
+                            _position = _vehicleProfile get "position";
                             _position set [2,0];
 
                             if!(isNil "_cargoProfile") then {
@@ -5354,7 +5354,7 @@ switch(_operation) do {
 
                     [_entityProfile,_vehicleProfile] call ALIVE_fnc_removeProfileVehicleAssignment;
 
-                    _position = _vehicleProfile select 2 select 2;
+                    _position = _vehicleProfile get "position";
                     _position set [2,0];
                     [_vehicleProfile,"position",_position] call ALIVE_fnc_profileVehicle;
                     [_vehicleProfile,"hasSimulated",false] call ALIVE_fnc_profileVehicle;
@@ -5401,9 +5401,9 @@ switch(_operation) do {
         _event = _args select 0;
         _entityProfile = _args select 1;
 
-        _active = _entityProfile select 2 select 1;
-        _profileID = _entityProfile select 2 select 4;
-        _vehiclesInCommandOf = _entityProfile select 2 select 8;
+        _active = _entityProfile get "active";
+        _profileID = _entityProfile get "profileID";
+        _vehiclesInCommandOf = _entityProfile get "vehiclesInCommandOf";
 
         if(count _vehiclesInCommandOf == 0) exitWith { _result = false; };
 
@@ -5470,7 +5470,7 @@ switch(_operation) do {
 
                     private ["_group","_position","_heliPad","_inCargo","_cargoProfileID","_cargoProfile"];
 
-                    _group = _entityProfile select 2 select 13;
+                    _group = _entityProfile get "group";
                     _group setBehaviour "CARELESS";
 
                     private _blacklistPositions = [];
@@ -5495,7 +5495,7 @@ switch(_operation) do {
                     _eventAssets pushback _heliPad;
                     [_event, "eventAssets",_eventAssets] call ALIVE_fnc_hashSet;
 
-                    _inCargo = _vehicleProfile select 2 select 9;
+                    _inCargo = _vehicleProfile get "entitiesInCargoOf";
 
                     if(count _inCargo > 0) then {
                         {
@@ -5509,12 +5509,12 @@ switch(_operation) do {
                         } forEach _inCargo;
                     };
 
-                    private _vehiclesInCommandOf = _entityProfile select 2 select 8;
+                    private _vehiclesInCommandOf = _entityProfile get "vehiclesInCommandOf";
                     {
                         private _vehicleProfile = [ALIVE_profileHandler,"getProfile", _x] call ALiVE_fnc_profileHandler;
-                        private _isActive = _vehicleProfile select 2 select 1;
+                        private _isActive = _vehicleProfile get "active";
                         if (_isActive) then {
-                            private _vehicleObject = _vehicleProfile select 2 select 10;
+                            private _vehicleObject = _vehicleProfile get "vehicle";
                             if (_vehicleObject iskindof "Helicopter") then {
                                 private _landPos = getpos _helipad;
 
@@ -5528,7 +5528,7 @@ switch(_operation) do {
 
                     private ["_position","_inCargo","_cargoProfileID","_cargoProfile"];
 
-                    _inCargo = _vehicleProfile select 2 select 9;
+                    _inCargo = _vehicleProfile get "entitiesInCargoOf";
                     _position = _eventPosition getPos [random(DESTINATION_VARIANCE), random(360)];
 
                     if(count _inCargo > 0) then {
@@ -5553,7 +5553,7 @@ switch(_operation) do {
 
                     private ["_group","_position","_heliPad"];
 
-                    _group = _entityProfile select 2 select 13;
+                    _group = _entityProfile get "group";
                     _group setBehaviour "CARELESS";
 
                     _position = _eventPosition getPos [random(DESTINATION_VARIANCE), random(360)];
@@ -5575,7 +5575,7 @@ switch(_operation) do {
 
                     [_entityProfile,_vehicleProfile] call ALIVE_fnc_removeProfileVehicleAssignment;
 
-                    _position = _vehicleProfile select 2 select 2;
+                    _position = _vehicleProfile get "position";
                     _position set [2,0];
                     [_vehicleProfile,"position",_position] call ALIVE_fnc_profileVehicle;
                     [_vehicleProfile,"hasSimulated",false] call ALIVE_fnc_profileVehicle;
@@ -5608,8 +5608,8 @@ switch(_operation) do {
 
                     private ["_vehicle","_group","_position","_heliPad"];
 
-                    _vehicle = _vehicleProfile select 2 select 10;
-                    _group = _entityProfile select 2 select 13;
+                    _vehicle = _vehicleProfile get "vehicle";
+                    _group = _entityProfile get "group";
                     _group setBehaviour "CARELESS";
 
                     // _position = _eventPosition getPos [random(DESTINATION_VARIANCE), random(360)];
@@ -5701,7 +5701,7 @@ switch(_operation) do {
 
                     private ["_position"];
 
-                    _position = _vehicleProfile select 2 select 2;
+                    _position = _vehicleProfile get "position";
                     _position set [2,0];
                     [_vehicleProfile,"position",_position] call ALIVE_fnc_profileVehicle;
                     [_vehicleProfile,"hasSimulated",false] call ALIVE_fnc_profileVehicle;
@@ -5903,14 +5903,14 @@ switch(_operation) do {
                         _profile = [ALIVE_profileHandler, "getProfile", _x] call ALIVE_fnc_profileHandler;
                         if!(isNil "_profile") then {
 
-                            _active = _profile select 2 select 1;
-                            _type = _profile select 2 select 5;
+                            _active = _profile get "active";
+                            _type = _profile get "type";
 
                             if(_type == "entity") then {
 
                                 if(_active) then {
 
-                                    _units = _profile select 2 select 21;
+                                    _units = _profile get "units";
 
                                     _units joinSilent (group _player);
 
@@ -5941,14 +5941,14 @@ switch(_operation) do {
                         _profile = [ALIVE_profileHandler, "getProfile", _x] call ALIVE_fnc_profileHandler;
                         if!(isNil "_profile") then {
 
-                            _active = _profile select 2 select 1;
-                            _type = _profile select 2 select 5;
+                            _active = _profile get "active";
+                            _type = _profile get "type";
 
                             if(_type == "entity") then {
 
                                 if(_active) then {
 
-                                    _units = _profile select 2 select 21;
+                                    _units = _profile get "units";
 
                                     _units joinSilent (group _player);
 
@@ -5983,8 +5983,8 @@ switch(_operation) do {
                         _profile = [ALIVE_profileHandler, "getProfile", _x] call ALIVE_fnc_profileHandler;
                         if!(isNil "_profile") then {
 
-                            _active = _profile select 2 select 1;
-                            _type = _profile select 2 select 5;
+                            _active = _profile get "active";
+                            _type = _profile get "type";
 
                             if(_type == "entity") then {
 
@@ -6019,8 +6019,8 @@ switch(_operation) do {
                         _profile = [ALIVE_profileHandler, "getProfile", (_x select 0)] call ALIVE_fnc_profileHandler;
                         if!(isNil "_profile") then {
 
-                            _active = _profile select 2 select 1;
-                            _type = _profile select 2 select 5;
+                            _active = _profile get "active";
+                            _type = _profile get "type";
 
                             if(_type == "entity") then {
 
@@ -6068,7 +6068,7 @@ switch(_operation) do {
                         if(!(isNil "_payloadProfile") && !(isNil "_payloadVehicle")) then {
                             _payloadProfiles pushback _payloadProfileID;
 
-                            _vehicle = _payloadVehicle select 2 select 10;
+                            _vehicle = _payloadVehicle get "vehicle";
 
                             [_event, "finalDestination", position _vehicle] call ALIVE_fnc_hashSet;
                         };
@@ -6106,11 +6106,11 @@ switch(_operation) do {
 
                                 private ["_active","_slingLoading","_slingload","_noCargo","_vehicle"];
 
-                                _active = _vehicleProfile select 2 select 1;
+                                _active = _vehicleProfile get "active";
 
                                 _slingLoading = [_vehicleProfile,"slingloading",false] call ALiVE_fnc_hashGet;
 
-                                _vehicle = _vehicleProfile select 2 select 10;
+                                _vehicle = _vehicleProfile get "vehicle";
                                 _noCargo = count (_vehicle getvariable ["ALiVE_SYS_LOGISTICS_CARGO",[]]) == 0;
 
                                 // If payload vehicle is not slingloading and its cargo is empty - its done.
@@ -6206,7 +6206,7 @@ switch(_operation) do {
 
                                         if(!(isNil "_profile") && !(isNil "_pVehicle")) then {
 
-                                            _vehicle = _pVehicle select 2 select 10;
+                                            _vehicle = _pVehicle get "vehicle";
 
                                             if([position _vehicle, 1500] call ALiVE_fnc_anyPlayersInRange == 0) then {
 

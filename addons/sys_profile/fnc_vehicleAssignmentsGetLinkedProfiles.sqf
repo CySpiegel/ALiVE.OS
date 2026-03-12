@@ -31,9 +31,9 @@ private ["_profile","_profileType","_profileID","_profileActive","_linkedProfile
 _profile = _this select 0;
 _linkedProfiles = if(count _this > 1) then {_this select 1} else {[] call ALIVE_fnc_hashCreate};
 
-_profileType = _profile select 2 select 5; //[_profile,"type"] call ALIVE_fnc_hashGet;
-_profileID = _profile select 2 select 4; //[_profile,"profileID"] call ALIVE_fnc_hashGet;
-_profileActive = _profile select 2 select 1; //[_profile,"active"] call ALIVE_fnc_hashGet;
+_profileType = _profile get "type"; //[_profile,"type"] call ALIVE_fnc_hashGet;
+_profileID = _profile get "profileID"; //[_profile,"profileID"] call ALIVE_fnc_hashGet;
+_profileActive = _profile get "active"; //[_profile,"active"] call ALIVE_fnc_hashGet;
 
 if!(_profileID in keys _linkedProfiles) then {
 
@@ -41,7 +41,7 @@ if!(_profileID in keys _linkedProfiles) then {
 
     if(_profileType == "vehicle") then {
 
-        _vehicle = _profile select 2 select 10; //[_profile,"vehicle"] call ALIVE_fnc_hashGet;
+        _vehicle = _profile get "vehicle"; //[_profile,"vehicle"] call ALIVE_fnc_hashGet;
         _groupsInVehicle = _vehicle call ALIVE_fnc_vehicleGetGroupsWithin;
 
         /*
@@ -61,7 +61,7 @@ if!(_profileID in keys _linkedProfiles) then {
                 _entityProfile = [ALIVE_profileHandler, "getProfile", _entityID] call ALIVE_fnc_profileHandler;
 
                 if !(isnil "_entityProfile") then {
-                    _entityProfileActive = _entityProfile select 2 select 1; //[_entityProfile,"active"] call ALIVE_fnc_hashGet;
+                    _entityProfileActive = _entityProfile get "active"; //[_entityProfile,"active"] call ALIVE_fnc_hashGet;
 
                     if(_entityProfileActive) then {
                         _linkedProfiles = [_entityProfile, _linkedProfiles] call ALIVE_fnc_vehicleAssignmentsGetLinkedProfiles;
@@ -72,7 +72,7 @@ if!(_profileID in keys _linkedProfiles) then {
 
     } else {
 
-        _units = _profile select 2 select 21; //[_profile,"units"] call ALIVE_fnc_hashGet;
+        _units = _profile get "units"; //[_profile,"units"] call ALIVE_fnc_hashGet;
         _group = group (_units select 0);
         _vehiclesUnitsIn = _units call ALIVE_fnc_unitArrayGetVehiclesWithin;
 
@@ -94,7 +94,7 @@ if!(_profileID in keys _linkedProfiles) then {
                 _vehicleProfile = [ALIVE_profileHandler, "getProfile", _vehicleID] call ALIVE_fnc_profileHandler;
 
                 if !(isnil "_vehicleProfile") then {
-                    _vehicleProfileActive = _vehicleProfile select 2 select 1; //[_vehicleProfile,"active"] call ALIVE_fnc_hashGet;
+                    _vehicleProfileActive = _vehicleProfile get "active"; //[_vehicleProfile,"active"] call ALIVE_fnc_hashGet;
 
                     if(_vehicleProfileActive) then {
                         _linkedProfiles = [_vehicleProfile, _linkedProfiles] call ALIVE_fnc_vehicleAssignmentsGetLinkedProfiles;

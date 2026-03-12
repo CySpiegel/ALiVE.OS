@@ -203,7 +203,7 @@ switch(_operation) do {
             [_logic,"agentClass",_args] call ALIVE_fnc_hashSet;
         };
 
-        _result = _logic select 2 select 6; //[_logic,"agentClass"] call ALIVE_fnc_hashGet;
+        _result = _logic get "agentClass"; //[_logic,"agentClass"] call ALIVE_fnc_hashGet;
 
     };
 
@@ -304,16 +304,16 @@ switch(_operation) do {
 
     case "spawn": {
 
-        private _debug = _logic select 2 select 0;  //[_logic,"debug"] call ALIVE_fnc_hashGet;
-        private _active = _logic select 2 select 1;         //[_logic,"active"] call ALIVE_fnc_hashGet;
-        private _position = _logic select 2 select 2;       //[_logic,"position"] call ALIVE_fnc_hashGet;
-        private _agentID = _logic select 2 select 3;        //[_logic,"agentID"] call ALIVE_fnc_hashGet;
-        private _agentClass = _logic select 2 select 6;     //[_logic,"agentClass"] call ALIVE_fnc_hashGet;
-        private _side = _logic select 2 select 8;           //[_logic,"side"] call ALIVE_fnc_hashGet;
-        private _direction = _logic select 2 select 11;     //[_logic,"direction"] call ALIVE_fnc_hashGet;
-        private _fuel = _logic select 2 select 12;          //[_logic,"fuel"] call ALIVE_fnc_hashGet;
-        private _damage = _logic select 2 select 13;        //[_logic,"damage"] call ALIVE_fnc_hashGet;
-        private _initialdamage = _logic select 2 select 14;        //[_logic,"initialdamage"] call ALIVE_fnc_hashGet;
+        private _debug = _logic get "debug";  //[_logic,"debug"] call ALIVE_fnc_hashGet;
+        private _active = _logic get "active";         //[_logic,"active"] call ALIVE_fnc_hashGet;
+        private _position = _logic get "position";       //[_logic,"position"] call ALIVE_fnc_hashGet;
+        private _agentID = _logic get "agentID";        //[_logic,"agentID"] call ALIVE_fnc_hashGet;
+        private _agentClass = _logic get "agentClass";     //[_logic,"agentClass"] call ALIVE_fnc_hashGet;
+        private _side = _logic get "side";           //[_logic,"side"] call ALIVE_fnc_hashGet;
+        private _direction = _logic get "direction";     //[_logic,"direction"] call ALIVE_fnc_hashGet;
+        private _fuel = _logic get "fuel";          //[_logic,"fuel"] call ALIVE_fnc_hashGet;
+        private _damage = _logic get "damage";        //[_logic,"damage"] call ALIVE_fnc_hashGet;
+        private _initialdamage = _logic get "initialdamage";        //[_logic,"initialdamage"] call ALIVE_fnc_hashGet;
 
 
         private _sideObject = [_side] call ALIVE_fnc_sideTextToObject;
@@ -387,11 +387,11 @@ switch(_operation) do {
 
     case "despawn": {
 
-        private _debug = _logic select 2 select 0;      //[_logic,"debug"] call ALIVE_fnc_hashGet;
-        private _active = _logic select 2 select 1;     //[_logic,"active"] call ALIVE_fnc_hashGet;
-        private _side = _logic select 2 select 8;       //[_logic,"side"] call ALIVE_fnc_hashGet;
-        private _unit = _logic select 2 select 5;       //[_logic,"unit"] call ALIVE_fnc_hashGet;
-        private _agentID = _logic select 2 select 3;    //[_logic,"agentID"] call ALIVE_fnc_hashGet;
+        private _debug = _logic get "debug";      //[_logic,"debug"] call ALIVE_fnc_hashGet;
+        private _active = _logic get "active";     //[_logic,"active"] call ALIVE_fnc_hashGet;
+        private _side = _logic get "side";       //[_logic,"side"] call ALIVE_fnc_hashGet;
+        private _unit = _logic get "unit";       //[_logic,"unit"] call ALIVE_fnc_hashGet;
+        private _agentID = _logic get "agentID";    //[_logic,"agentID"] call ALIVE_fnc_hashGet;
 
         // not already inactive
         if(_active) then {

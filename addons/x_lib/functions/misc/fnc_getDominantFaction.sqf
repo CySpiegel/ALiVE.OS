@@ -37,8 +37,8 @@ if !(isnil "ALIVE_profileHandler") then {
 
 _facs = [];
 {
-    if (((_x select 2 select 5) == "entity") && {!(_x select 2 select 1)} && {!(_x select 2 select 30)} && {(_x select 2 select 2) distance _pos < _radius}) then {
-        _facs pushback (_x select 2 select 29);
+    if (((_x get "type") == "entity") && {!(_x get "active")} && {!(_x get "isPlayer")} && {(_x get "position") distance _pos < _radius}) then {
+        _facs pushback (_x get "faction");
     };
 } foreach (_profiles select 2);
 

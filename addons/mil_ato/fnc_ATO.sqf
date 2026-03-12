@@ -2567,7 +2567,7 @@ switch(_operation) do {
                                         _profile = [ALIVE_profileHandler, "getProfile", _x] call ALIVE_fnc_profileHandler;
 
                                         if!(isNil "_profile") then {
-                                            _position = _profile select 2 select 2;
+                                            _position = _profile get "position";
                                             _positions pushBack _position;
                                         };
 
@@ -2745,7 +2745,7 @@ switch(_operation) do {
                                     {
                                         _profile = [ALIVE_profileHandler, "getProfile", _x] call ALIVE_fnc_profileHandler;
                                         if!(isNil "_profile") then {
-                                            _active = _profile select 2 select 1;
+                                            _active = _profile get "active";
                                             if(_active) then {
                                                 _anyActive = true;
                                             };
@@ -2757,7 +2757,7 @@ switch(_operation) do {
                                     {
                                         _profile = [ALIVE_profileHandler, "getProfile", _x] call ALIVE_fnc_profileHandler;
                                         if!(isNil "_profile") then {
-                                            _active = _profile select 2 select 1;
+                                            _active = _profile get "active";
                                             if(_active) then {
                                                 _anyActive = true;
                                             };
@@ -2769,7 +2769,7 @@ switch(_operation) do {
                                     {
                                         _profile = [ALIVE_profileHandler, "getProfile", _x select 0] call ALIVE_fnc_profileHandler;
                                         if!(isNil "_profile") then {
-                                            _active = _profile select 2 select 1;
+                                            _active = _profile get "active";
                                             if(_active) then {
                                                 _anyActive = true;
                                             };
@@ -2782,7 +2782,7 @@ switch(_operation) do {
                                         {
                                             _profile = [ALIVE_profileHandler, "getProfile", _x] call ALIVE_fnc_profileHandler;
                                             if!(isNil "_profile") then {
-                                                _active = _profile select 2 select 1;
+                                                _active = _profile get "active";
                                                 if(_active) then {
                                                     _anyActive = true;
                                                 };
@@ -2796,7 +2796,7 @@ switch(_operation) do {
                                         {
                                             _profile = [ALIVE_profileHandler, "getProfile", _x] call ALIVE_fnc_profileHandler;
                                             if!(isNil "_profile") then {
-                                                _active = _profile select 2 select 1;
+                                                _active = _profile get "active";
                                                 if(_active) then {
                                                     _anyActive = true;
                                                 };
@@ -2810,7 +2810,7 @@ switch(_operation) do {
                                         {
                                             _profile = [ALIVE_profileHandler, "getProfile", _x] call ALIVE_fnc_profileHandler;
                                             if!(isNil "_profile") then {
-                                                _active = _profile select 2 select 1;
+                                                _active = _profile get "active";
                                                 if(_active) then {
                                                     _anyActive = true;
                                                 };
@@ -2824,7 +2824,7 @@ switch(_operation) do {
                                         {
                                             _profile = [ALIVE_profileHandler, "getProfile", _x] call ALIVE_fnc_profileHandler;
                                             if!(isNil "_profile") then {
-                                                _active = _profile select 2 select 1;
+                                                _active = _profile get "active";
                                                 if(_active) then {
                                                     _anyActive = true;
                                                 };
@@ -2838,7 +2838,7 @@ switch(_operation) do {
                                         {
                                             _profile = [ALIVE_profileHandler, "getProfile", _x] call ALIVE_fnc_profileHandler;
                                             if!(isNil "_profile") then {
-                                                _active = _profile select 2 select 1;
+                                                _active = _profile get "active";
                                                 if(_active) then {
                                                     _anyActive = true;
                                                 };
@@ -2859,7 +2859,7 @@ switch(_operation) do {
                                         // delete all profiles
 
                                         {
-                                            _profileType = _x select 2 select 5;
+                                            _profileType = _x get "type";
                                             if(_profileType == 'entity') then {
                                                 [_x, "destroy"] call ALIVE_fnc_profileEntity;
                                             }else{

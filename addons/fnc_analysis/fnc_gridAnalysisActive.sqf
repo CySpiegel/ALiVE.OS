@@ -43,7 +43,7 @@ _updatedSectors = [];
 {
     _sector = _x;
 
-    _sectorData = _sector select 2 select 0; //[_sector, "data"] call ALIVE_fnc_sector;
+    _sectorData = _sector get "debug"; //[_sector, "data"] call ALIVE_fnc_sector;
 
     if("ARRAY" == typeName _sectorData && {"active" in keys _sectorData}) then {
         [_sector, "data", ["active",[]]] call ALIVE_fnc_sector;

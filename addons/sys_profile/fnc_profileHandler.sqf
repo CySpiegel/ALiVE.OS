@@ -775,8 +775,8 @@ switch(_operation) do {
             private _profile = [ALIVE_profileHandler,"getProfile", _x] call ALIVE_fnc_profileHandler;
 
             if !(isNil "_profile") then {
-                private _position = _profile select 2 select 2;
-                private _side = _profile select 2 select 3;
+                private _position = _profile get "position";
+                private _side = _profile get "side";
 
                 _result pushback [_position,_side];
             };
@@ -955,7 +955,7 @@ switch(_operation) do {
         private _unitCount = 0;
 
         {
-            if((_x select 2 select 5) == "entity") then {
+            if((_x get "type") == "entity") then {
                 _unitCount = _unitCount + ([_x,"unitCount"] call ALIVE_fnc_profileEntity);
             }
         } forEach (([_logic,"profiles"] call ALIVE_fnc_hashGet) select 2);
@@ -976,12 +976,12 @@ switch(_operation) do {
 
             //_profile call ALIVE_fnc_inspectHash;
 
-            _profileID = _profile select 2 select 4;
-            _profileType = _profile select 2 select 5;
+            _profileID = _profile get "profileID";
+            _profileType = _profile get "type";
             _isPlayer = false;
 
             if (_profileType == "entity") then {
-                _isPlayer = _profile select 2 select 30;
+                _isPlayer = _profile get "isPlayer";
             };
 
             if!(_isPlayer) then {
@@ -1092,17 +1092,17 @@ switch(_operation) do {
 
         {
             _profile = _x;
-            _profileID = _profile select 2 select 4;
-            _profileType = _profile select 2 select 5;
+            _profileID = _profile get "profileID";
+            _profileType = _profile get "type";
             _isPlayer = false;
 
             if(_profileType == "entity") then {
-                _isPlayer = _profile select 2 select 30;
+                _isPlayer = _profile get "isPlayer";
             };
 
             if!(_isPlayer) then {
 
-                _vehicleAssignments = _profile select 2 select 7;
+                _vehicleAssignments = _profile get "vehicleAssignments";
                 _assignmentKeys = _vehicleAssignments select 1;
                 _assignmentValues = _vehicleAssignments select 2;
 
@@ -1142,7 +1142,7 @@ switch(_operation) do {
 
                     [_exportProfile, "type", 1] call ALIVE_fnc_hashSet;
 
-                    _ranks = _profile select 2 select 20;
+                    _ranks = _profile get "ranks";
                     _exportRanks = [];
 
                     {
@@ -1165,7 +1165,7 @@ switch(_operation) do {
 
                     [_exportProfile, "ranks", _exportRanks] call ALIVE_fnc_hashSet;
 
-                    _classes = _profile select 2 select 11;
+                    _classes = _profile get "unitClasses";
                     _exportClasses = [];
 
                     {
@@ -1178,7 +1178,7 @@ switch(_operation) do {
 
                     [_exportProfile, "unitClasses", _exportClasses] call ALIVE_fnc_hashSet;
 
-                    _side = _profile select 2 select 3;
+                    _side = _profile get "side";
 
                     [_exportProfile, "side", [_side] call ALIVE_fnc_sideTextToNumber] call ALIVE_fnc_hashSet;
 
@@ -1222,7 +1222,7 @@ switch(_operation) do {
 
                     [_exportProfile, "type", 2] call ALIVE_fnc_hashSet;
 
-                    _side = _profile select 2 select 3;
+                    _side = _profile get "side";
                     [_exportProfile, "side", [_side] call ALIVE_fnc_sideTextToNumber] call ALIVE_fnc_hashSet;
 
                     _entitiesInCommandOf = [_exportProfile, "entitiesInCommandOf"] call ALIVE_fnc_hashGet;

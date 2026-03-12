@@ -161,7 +161,7 @@ switch (_taskState) do {
             if !(typeName _group == "BOOL") then {
 
                 _profile = [_group, _pickupPosition, random(360), true, _taskFaction, true] call ALIVE_fnc_createProfilesFromGroupConfig;
-                _profileID = _profile select 0 select 2 select 4;
+                _profileID = (_profile select 0) get "profileID";
 
             } else {
 
@@ -352,7 +352,7 @@ switch (_taskState) do {
                 // the players are at the pickup point
                 if(_destinationReached) then {
 
-                    _infantryGroup = _infantryProfile select 2 select 13;
+                    _infantryGroup = _infantryProfile get "group";
 
                     _nearVehicles = [_taskPosition,_taskPlayers,200] call ALIVE_fnc_taskGetNearPlayerVehicles;
                     _vehicles = [_nearVehicles,_infantryGroup] call ALIVE_fnc_taskDoVehiclesHaveRoomForGroup;
@@ -384,7 +384,7 @@ switch (_taskState) do {
 
                                 [_infantryProfile,"resize",_room] call ALIVE_fnc_profileEntity;
 
-                                _infantryGroup = _infantryProfile select 2 select 13;
+                                _infantryGroup = _infantryProfile get "group";
 
                                 _assignments = [_infantryGroup, _maxRoomVehicle, true] call ALIVE_fnc_vehicleAssignGroup;
 
@@ -445,7 +445,7 @@ switch (_taskState) do {
             _infantryProfile = [ALIVE_profileHandler, "getProfile", _profileID] call ALIVE_fnc_profileHandler;
             if!(isNil "_infantryProfile") then {
 
-                _units = _infantryProfile select 2 select 21;
+                _units = _infantryProfile get "units";
 
                 _loaded = [_units] call ALIVE_fnc_taskHaveUnitsLoadedInVehicle;
 
@@ -541,7 +541,7 @@ switch (_taskState) do {
                     // set the group to dismount the vehicle
                     if!(isNil "_infantryProfile") then {
 
-                        _infantryGroup = _infantryProfile select 2 select 13;
+                        _infantryGroup = _infantryProfile get "group";
 
                         _assignments = [_params,"assignments"] call ALIVE_fnc_hashGet;
                         [_assignments, _vehicle] call ALIVE_fnc_vehicleDismount;
@@ -577,7 +577,7 @@ switch (_taskState) do {
             _infantryProfile = [ALIVE_profileHandler, "getProfile", _profileID] call ALIVE_fnc_profileHandler;
             if!(isNil "_infantryProfile") then {
 
-                _units = _infantryProfile select 2 select 21;
+                _units = _infantryProfile get "units";
 
                 _unloaded = [_units] call ALIVE_fnc_taskHaveUnitsUnloadedFromVehicle;
 

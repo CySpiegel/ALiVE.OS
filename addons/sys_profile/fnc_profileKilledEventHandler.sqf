@@ -30,7 +30,7 @@ private _profile = [ALIVE_profileHandler,"getProfile", _profileID] call ALIVE_fn
 
 if (isnil "_profile") exitwith {};
 
-private _profileType = _profile select 2 select 5; // [_profile, "type"] call ALIVE_fnc_hashGet;
+private _profileType = _profile get "type"; // [_profile, "type"] call ALIVE_fnc_hashGet;
 
 switch(_profileType) do {
     case "entity": {
@@ -41,16 +41,16 @@ switch(_profileType) do {
 
             // log event
 
-            private _position = _profile select 2 select 2;
-            private _faction = _profile select 2 select 29;
-            private _side = _profile select 2 select 3;
+            private _position = _profile get "position";
+            private _faction = _profile get "faction";
+            private _side = _profile get "side";
 
             private _killerSide = str(side group _killer);
             private _killerProfileID = _killer getvariable "profileID";
             private _killerProfile = [ALIVE_profileHandler,"getProfile", _killerProfileID] call ALIVE_fnc_profileHandler;
 
-            private _victimProfileID = _profile select 2 select 4;
-            private _victimObjectType = _profile select 2 select 6;
+            private _victimProfileID = _profile get "profileID";
+            private _victimObjectType = _profile get "objectType";
 
             private _event = ['PROFILE_KILLED', [_position,_faction,_side,_killerSide,_profile,_killerProfile,_victimProfileID,_victimObjectType], "Profile"] call ALIVE_fnc_event;
             private _eventID = [ALIVE_eventLog,"addEvent", _event] call ALIVE_fnc_eventLog;

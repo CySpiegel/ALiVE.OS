@@ -135,7 +135,7 @@ switch(_operation) do {
                 _id = [_sector, "id"] call ALIVE_fnc_sector;
                 _bounds = [_sector, "bounds"] call ALIVE_fnc_sector;
                 _dimensions = [_sector, "dimensions"] call ALIVE_fnc_sector;
-                _sectorData = _sector select 2 select 0; //[_sector, "data"] call ALIVE_fnc_sector;
+                _sectorData = _sector get "debug"; //[_sector, "data"] call ALIVE_fnc_sector;
 
                 switch(_key) do {
                         case "units": {

@@ -27,8 +27,8 @@ ARJay
 
 params ["_agentData","_commandState","_commandName","_args","_state","_debug"];
 
-private _agentID = _agentData select 2 select 3;
-private _agent = _agentData select 2 select 5;
+private _agentID = _agentData get "agentID";
+private _agent = _agentData get "unit";
 
 private _nextState = _state;
 private _nextStateArgs = [];
@@ -57,7 +57,7 @@ switch (_state) do {
 
         if(count _agents > 0) then {
             private _partner = selectRandom _agents;
-            private _partnerAgent = _partner select 2 select 5;
+            private _partnerAgent = _partner get "unit";
 
             if(!(_partnerAgent getVariable ["ALIVE_agentMeetingRequested",false]) && {!(_partnerAgent getVariable ["ALIVE_agentGatheringRequested",false])}) then {
                 _partnerAgent setVariable ["ALIVE_agentMeetingTarget", _agent, false];

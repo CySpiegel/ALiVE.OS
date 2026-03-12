@@ -36,9 +36,9 @@ private _pos2cord = {
     private _argX = _this select 1;
     private _argY = _this select 2;
 
-    private _gridOrigin = _logic select 2 select 0;
-    private _sectorSize = _logic select 2 select 1;
-    private _maxSector = _logic select 2 select 4;
+    private _gridOrigin = _logic get "origin";
+    private _sectorSize = _logic get "sectorSize";
+    private _maxSector = _logic get "maxSector";
 
     private _originX = _gridOrigin select 0;
     private _originY = _gridOrigin select 1;
@@ -101,9 +101,9 @@ switch (_operation) do {
         private _argX = _args select 0;
         private _argY = _args select 1;
 
-        private _gridOrigin = _logic select 2 select 0;
-        private _sectorSize = _logic select 2 select 1;
-        private _maxSector = _logic select 2 select 4;
+        private _gridOrigin = _logic get "origin";
+        private _sectorSize = _logic get "sectorSize";
+        private _maxSector = _logic get "maxSector";
 
         private _originX = _gridOrigin select 0;
         private _originY = _gridOrigin select 1;
@@ -128,9 +128,9 @@ switch (_operation) do {
     case "coordsToSector": {
 
         if !(_args isEqualTo [-1,-1]) then {
-            private _sectorsInColumn = (_logic select 2 select 4) select 0;
+            private _sectorsInColumn = (_logic get "maxSector") select 0;
             private _index = (_args select 0) + ((_args select 1) * _sectorsInColumn);
-            _result = (_logic select 2 select 5) select _index;
+            _result = (_logic get "sectors") select _index;
         };
 
     };
@@ -184,7 +184,7 @@ switch (_operation) do {
 
     case "clear": {
 
-        private _sectors = _logic select 2 select 5;
+        private _sectors = _logic get "sectors";
         {
             _x = [];
         } foreach _sectors;
@@ -201,8 +201,8 @@ switch (_operation) do {
         private _minCoords = [_logic, (_center select 0) - _radius, (_center select 1) - _radius] call _pos2cord;
         private _maxCoords = [_logic, (_center select 0) + _radius, (_center select 1) + _radius] call _pos2cord;
 
-        private _maxSector = _logic select 2 select 4;
-        private _sectors = _logic select 2 select 5;
+        private _maxSector = _logic get "maxSector";
+        private _sectors = _logic get "sectors";
 
         _result = [];
 
@@ -243,9 +243,9 @@ switch (_operation) do {
             // search inwards-out till points are found
             // or grid bounds are all covered
 
-            private _sectorsInColumn = (_logic select 2 select 4) select 0;
-            private _maxSector = _logic select 2 select 4;
-            private _sectors = _logic select 2 select 5;
+            private _sectorsInColumn = (_logic get "maxSector") select 0;
+            private _maxSector = _logic get "maxSector";
+            private _sectors = _logic get "sectors";
 
             private _points = [];
             private _layer = 1;

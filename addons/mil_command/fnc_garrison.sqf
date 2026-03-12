@@ -80,7 +80,7 @@ sleep 0.3;
 
 if (_type == "entity" && {count (_assignments select 1) == 0}) then {
 
-    _group = _profile select 2 select 13;
+    _group = _profile get "group";
 
     if (_profileType == "SPE") then {
     	// DEBUG -------------------------------------------------------------------------------------

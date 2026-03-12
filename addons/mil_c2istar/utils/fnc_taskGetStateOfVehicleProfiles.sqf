@@ -34,13 +34,13 @@ _state = [] call ALIVE_fnc_hashCreate;
 
     if!(isNil "_vehicleProfile") then {
 
-        _active = _vehicleProfile select 2 select 1;
+        _active = _vehicleProfile get "active";
 
         _profiles pushback _vehicleProfile;
 
         if(_active) then {
 
-            _vehicle = _vehicleProfile select 2 select 10;
+            _vehicle = _vehicleProfile get "vehicle";
 
             if(alive _vehicle) then {
 

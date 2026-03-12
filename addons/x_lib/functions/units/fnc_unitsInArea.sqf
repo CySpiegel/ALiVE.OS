@@ -37,7 +37,7 @@ private _found = false;
     _profile = _x;
 
     if !(isnil "_profile") then {
-        private _position = _profile select 2 select 2;
+        private _position = _profile get "position";
 
         if (_position inArea _trigger) then {
 

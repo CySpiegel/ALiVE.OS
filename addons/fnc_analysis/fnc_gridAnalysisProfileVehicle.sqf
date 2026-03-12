@@ -73,18 +73,18 @@ _profiles = [ALIVE_profileHandler, "profiles"] call ALIVE_fnc_hashGet;
 {
     _profile = _x;
 
-    _profileID = _profile select 2 select 4; //[_profile,"profileID"] call ALIVE_fnc_hashGet;
-    _profileType = _profile select 2 select 5; //[_profile,"type"] call ALIVE_fnc_hashGet;
-    _profileActive = _profile select 2 select 1; //[_profile, "active"] call ALIVE_fnc_hashGet;
-    _side = _profile select 2 select 3; //[_profile, "active"] call ALIVE_fnc_hashGet;
+    _profileID = _profile get "profileID"; //[_profile,"profileID"] call ALIVE_fnc_hashGet;
+    _profileType = _profile get "type"; //[_profile,"type"] call ALIVE_fnc_hashGet;
+    _profileActive = _profile get "active"; //[_profile, "active"] call ALIVE_fnc_hashGet;
+    _side = _profile get "side"; //[_profile, "active"] call ALIVE_fnc_hashGet;
 
     if(_profileType == "vehicle") then {
 
         if(_profileActive) then {
-            _vehicle = _profile select 2 select 10; //[_profile,"leader"] call ALIVE_fnc_hashGet;
+            _vehicle = _profile get "vehicle"; //[_profile,"leader"] call ALIVE_fnc_hashGet;
             _position = getPosATL _vehicle;
         } else {
-            _position = _profile select 2 select 2; //[_profile, "position"] call ALIVE_fnc_hashGet;
+            _position = _profile get "position"; //[_profile, "position"] call ALIVE_fnc_hashGet;
         };
 
         _sector = [_grid, "positionToSector", _position] call ALIVE_fnc_sectorGrid;

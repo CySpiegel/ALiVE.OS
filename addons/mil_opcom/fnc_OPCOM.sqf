@@ -580,7 +580,7 @@ switch(_operation) do {
                     private _profile = [ALiVE_ProfileHandler,"getProfile", _x] call ALiVE_fnc_ProfileHandler;
 
                     if !(isnil "_profile") then {
-                        private _profileWaypoints = _profile select 2 select 16;
+                        private _profileWaypoints = _profile get "waypoints";
                         _sectionWaypoints = _sectionWaypoints + (count _profileWaypoints);
                     } else {
                         [_logic,"resetorders", _x] call ALiVE_fnc_OPCOM;
@@ -690,17 +690,17 @@ switch(_operation) do {
             private _nearProfiles = [_pos, 800, [_sides,"entity"]] call ALIVE_fnc_getNearProfiles;
             {
                 if (_requireVisibility) then {
-                    private _profileID = _x select 2 select 4;
-                    private _profilePosition = _x select 2 select 2;
+                    private _profileID = _x get "profileID";
+                    private _profilePosition = _x get "position";
 
                     private _profilePosASL = ATLtoASL [_profilePosition select 0, _profilePosition select 1, 0];
                     _profilePosASL set [2,(_profilePosASL select 2) + 2];
 
                     if (_profilePosition distance _pos < 500 && { !(terrainIntersectASL [_profilePosASL, _pos]) }) then {
-                        _nearEnemies pushbackunique [_x select 2 select 4, _x select 2 select 2]; // [id,pos]
+                        _nearEnemies pushbackunique [_x get "profileID", _x get "position"]; // [id,pos]
                     };
                 } else {
-                    _nearEnemies pushbackunique [_x select 2 select 4, _x select 2 select 2]; // [id,pos]
+                    _nearEnemies pushbackunique [_x get "profileID", _x get "position"]; // [id,pos]
                 };
             } foreach _nearProfiles;
 
@@ -869,7 +869,7 @@ switch(_operation) do {
                                                 _active = [_profile,'active',false] call ALiVE_fnc_HashGet;
 
                                                 if (_active) then {
-                                                    _group = _profile select 2 select 13;
+                                                    _group = _profile get "group";
                                                     _group setSpeedmode 'LIMITED';
                                                     {(vehicle _x) land 'LAND'} foreach (units _group);
                                                 } else {
@@ -1125,7 +1125,7 @@ switch(_operation) do {
                             //by distance
                             case ("distance") : {
                                 _objectives = [_objectives,[_logic],{
-                                    _final = ([_Input0, "position"] call ALIVE_fnc_HashGet) distance (_x select 2 select 1);
+                                    _final = ([_Input0, "position"] call ALIVE_fnc_HashGet) distance (_x get "active");
 
                                     //["OPCOM Priority calculated %1",_final] call ALiVE_fnc_dumpR;
 
@@ -1140,11 +1140,11 @@ switch(_operation) do {
                             //by size and height
                             case ("strategic") : {
                                 _objectives = [_objectives,[_logic],{
-                                    _height = (ATLtoASL [(_x select 2 select 1) select 0,(_x select 2 select 1) select 1,0]) select 2;
-                                    _value1 = (_x select 2 select 2);
-                                    _value2 = (_x select 2 select 4);
+                                    _height = (ATLtoASL [(_x get "active") select 0,(_x get "active") select 1,0]) select 2;
+                                    _value1 = (_x get "position");
+                                    _value2 = (_x get "profileID");
                                     _value3 = (_height/2);
-                                    _value4 = ((([_Input0, "position"] call ALIVE_fnc_HashGet) distance (_x select 2 select 1))/10);
+                                    _value4 = ((([_Input0, "position"] call ALIVE_fnc_HashGet) distance (_x get "active"))/10);
 
                                     _final = (_value1 + _value2 + _value3) - _value4;
 
@@ -1162,8 +1162,8 @@ switch(_operation) do {
                                 _objectivesCiv = +_objectives;
                                 _objectivesMil = +_objectives;
 
-                                _objectivesFilteredCiv = [_objectivesCiv,[_logic],{(([_Input0, "position"] call ALIVE_fnc_HashGet) distance (_x select 2 select 1))*(1-(random 0.20))},"ASCEND",{(_x select 2 select 3) == "CIV"}] call ALiVE_fnc_SortBy;
-                                _objectivesFilteredMil = [_objectivesMil,[_logic],{(([_Input0, "position"] call ALIVE_fnc_HashGet) distance (_x select 2 select 1))*(1-(random 0.20))},"ASCEND",{(_x select 2 select 3) == "MIL"}] call ALiVE_fnc_SortBy;
+                                _objectivesFilteredCiv = [_objectivesCiv,[_logic],{(([_Input0, "position"] call ALIVE_fnc_HashGet) distance (_x get "active"))*(1-(random 0.20))},"ASCEND",{(_x get "side") == "CIV"}] call ALiVE_fnc_SortBy;
+                                _objectivesFilteredMil = [_objectivesMil,[_logic],{(([_Input0, "position"] call ALIVE_fnc_HashGet) distance (_x get "active"))*(1-(random 0.20))},"ASCEND",{(_x get "side") == "MIL"}] call ALiVE_fnc_SortBy;
 
                                 _objectives = _objectivesFilteredCiv + _objectivesFilteredMil;
 
@@ -1426,7 +1426,7 @@ switch(_operation) do {
 	                    // Get civilian factions from Amb Civs
 	                    If (!isnil "ALiVE_Agenthandler") then {
 	                        _AllAgents = [ALiVE_Agenthandler,"agents",["",[],[],nil]] call ALiVE_fnc_HashGet;
-	                        if (count (_AllAgents select 2) > 0) exitwith {_civFactions = _civFactions + [[(_AllAgents select 2 select 0),"faction","CIV_F"] call ALiVE_fnc_HashGet]};
+	                        if (count (_AllAgents select 2) > 0) exitwith {_civFactions = _civFactions + [[(_AllAgents get "debug"),"faction","CIV_F"] call ALiVE_fnc_HashGet]};
 	                    };
 
 	                    [time,_center,_id,_size,selectRandom _factions,[_objective,"suicide",[]] call ALiVE_fnc_HashGet,_sidesEnemy,_agents,_civFactions] spawn ALiVE_fnc_INS_suicide;
@@ -2382,7 +2382,7 @@ switch(_operation) do {
                 private _nearFriendlies = [];
                 private _nearEnemies = [];
                 {
-                    private _side = _x select 2 select 3;
+                    private _side = _x get "side";
                     if (_side in _sidesFriendly) then {
                         _nearFriendlies pushback _x;
                     } else {

@@ -424,7 +424,7 @@ switch(_operation) do {
 
         {
             {
-                _iconState = _x select 2 select 3;
+                _iconState = _x get "side";
                 _iconState set [1,0];
                 _iconState set [2,0];
             } forEach _x;
@@ -1346,7 +1346,7 @@ switch(_operation) do {
                                     _profileID = _x;
                                     _profile = [ALIVE_profileHandler, "getProfile", _profileID] call ALIVE_fnc_profileHandler;
                                     if !(isnil "_profile") then {
-                                        _position = _profile select 2 select 2;
+                                        _position = _profile get "position";
 
                                         if!(surfaceIsWater _position) then {
                                             _m = [_profile, "createMarker", [_alpha]] call ALIVE_fnc_profileEntity;
@@ -1823,7 +1823,7 @@ switch(_operation) do {
 
                             if !(isnil "_profile") then {
 
-                                _position = _profile select 2 select 2;
+                                _position = _profile get "position";
 
                                 if(_opcom_state == "idle") then {
                                     _profiles pushback [_objective,_profileID,15000];
@@ -1889,9 +1889,9 @@ switch(_operation) do {
                 if !(isnil "_profile") then {
 
 
-                    _faction = _profile select 2 select 29;
+                    _faction = _profile get "faction";
 
-                    _position = _profile select 2 select 2;
+                    _position = _profile get "position";
 
                     _position = (_position getPos [50, (random 360)]);
 
@@ -1901,9 +1901,9 @@ switch(_operation) do {
 
                     player setPos _position;
 
-                    waitUntil{_profile select 2 select 1};
+                    waitUntil{_profile get "active"};
 
-                    _group = _profile select 2 select 13;
+                    _group = _profile get "group";
                     _unit = (selectRandom (units _group));
 
                     _duration = 30;
@@ -2287,13 +2287,13 @@ switch(_operation) do {
 
                         _transportProfile = [ALIVE_profileHandler, "getProfile", _transportProfile] call ALIVE_fnc_profileHandler;
                         if!(isNil "_transportProfile") then {
-                            _position = _transportProfile select 2 select 2;
+                            _position = _transportProfile get "position";
 
                             player setPos _position;
 
-                            waitUntil {(_transportProfile select 2 select 1)};
+                            waitUntil {(_transportProfile get "active")};
 
-                            _group = _transportProfile select 2 select 13;
+                            _group = _transportProfile get "fuel";
                             _leader = leader _group;
                             _vehicle = vehicle _leader;
 
@@ -2508,11 +2508,11 @@ switch(_operation) do {
                 {
                     _profile = _x;
 
-                    _type = _profile select 2 select 4;
+                    _type = _profile get "profileID";
 
                     if(_type == "agent") then {
 
-                        _position = _profile select 2 select 2;
+                        _position = _profile get "position";
 
                         if(surfaceIsWater _position) then {
                             _position = [_position] call ALIVE_fnc_getClosestLand;
@@ -2521,11 +2521,11 @@ switch(_operation) do {
                         player setPos _position;
                         hideObjectGlobal player;
 
-                        waitUntil{_profile select 2 select 1};
+                        waitUntil{_profile get "active"};
 
-                        _unit = _profile select 2 select 5;
-                        _faction = _profile select 2 select 7;
-                        _id = _profile select 2 select 3;
+                        _unit = _profile get "type";
+                        _faction = _profile get "vehicleAssignments";
+                        _id = _profile get "side";
 
                         _duration = 20;
 
@@ -2868,9 +2868,9 @@ switch(_operation) do {
 
                             if !(isnil "_profile") then {
 
-                                _faction = _profile select 2 select 29;
-                                _position = _profile select 2 select 2;
-                                _vehiclesInCommandOf = _profile select 2 select 8;
+                                _faction = _profile get "faction";
+                                _position = _profile get "position";
+                                _vehiclesInCommandOf = _profile get "entitiesInCommandOf";
 
                                 _profile call ALIVE_fnc_inspectHash;
 
@@ -2886,11 +2886,11 @@ switch(_operation) do {
 
                                     player setPos _position;
 
-                                    waitUntil{_profile select 2 select 1};
+                                    waitUntil{_profile get "active"};
 
                                     sleep 2;
 
-                                    _group = _profile select 2 select 13;
+                                    _group = _profile get "group";
                                     _unit = (selectRandom (units _group));
 
                                     _duration = 1000;
@@ -4282,11 +4282,11 @@ switch(_operation) do {
         _eventData = _args select 1;
 
         _side = _eventData select 0;
-        _position = _eventData select 1 select 2 select 1;
-        _size = _eventData select 1 select 2 select 2;
-        _type = _eventData select 1 select 2 select 3;
-        _priority = _eventData select 1 select 2 select 4;
-        _clusterID = _eventData select 1 select 2 select 6;
+        _position = (_eventData select 1) get "center";
+        _size = (_eventData select 1) get "size";
+        _type = (_eventData select 1) get "objectiveType";
+        _priority = (_eventData select 1) get "priority";
+        _clusterID = (_eventData select 1) get "clusterID";
 
         _nearestTown = [_position] call ALIVE_fnc_taskGetNearestLocationName;
 
@@ -4325,11 +4325,11 @@ switch(_operation) do {
         _eventData = _args select 1;
 
         _side = _eventData select 0;
-        _position = _eventData select 1 select 2 select 1;
-        _size = _eventData select 1 select 2 select 2;
-        _type = _eventData select 1 select 2 select 3;
-        _priority = _eventData select 1 select 2 select 4;
-        _clusterID = _eventData select 1 select 2 select 6;
+        _position = (_eventData select 1) get "center";
+        _size = (_eventData select 1) get "size";
+        _type = (_eventData select 1) get "objectiveType";
+        _priority = (_eventData select 1) get "priority";
+        _clusterID = (_eventData select 1) get "clusterID";
 
         _nearestTown = [_position] call ALIVE_fnc_taskGetNearestLocationName;
 
@@ -4368,11 +4368,11 @@ switch(_operation) do {
         _eventData = _args select 1;
 
         _side = _eventData select 0;
-        _position = _eventData select 1 select 2 select 1;
-        _size = _eventData select 1 select 2 select 2;
-        _type = _eventData select 1 select 2 select 3;
-        _priority = _eventData select 1 select 2 select 4;
-        _clusterID = _eventData select 1 select 2 select 6;
+        _position = (_eventData select 1) get "center";
+        _size = (_eventData select 1) get "size";
+        _type = (_eventData select 1) get "objectiveType";
+        _priority = (_eventData select 1) get "priority";
+        _clusterID = (_eventData select 1) get "clusterID";
 
         _nearestTown = [_position] call ALIVE_fnc_taskGetNearestLocationName;
 
@@ -4411,11 +4411,11 @@ switch(_operation) do {
         _eventData = _args select 1;
 
         _side = _eventData select 0;
-        _position = _eventData select 1 select 2 select 1;
-        _size = _eventData select 1 select 2 select 2;
-        _type = _eventData select 1 select 2 select 3;
-        _priority = _eventData select 1 select 2 select 4;
-        _clusterID = _eventData select 1 select 2 select 6;
+        _position = (_eventData select 1) get "center";
+        _size = (_eventData select 1) get "size";
+        _type = (_eventData select 1) get "objectiveType";
+        _priority = (_eventData select 1) get "priority";
+        _clusterID = (_eventData select 1) get "clusterID";
 
         _nearestTown = [_position] call ALIVE_fnc_taskGetNearestLocationName;
 
@@ -4454,11 +4454,11 @@ switch(_operation) do {
         _eventData = _args select 1;
 
         _side = _eventData select 0;
-        _position = _eventData select 1 select 2 select 1;
-        _size = _eventData select 1 select 2 select 2;
-        _type = _eventData select 1 select 2 select 3;
-        _priority = _eventData select 1 select 2 select 4;
-        _clusterID = _eventData select 1 select 2 select 6;
+        _position = (_eventData select 1) get "center";
+        _size = (_eventData select 1) get "size";
+        _type = (_eventData select 1) get "objectiveType";
+        _priority = (_eventData select 1) get "priority";
+        _clusterID = (_eventData select 1) get "clusterID";
 
         _nearestTown = [_position] call ALIVE_fnc_taskGetNearestLocationName;
 

@@ -275,7 +275,7 @@ switch(_operation) do {
 							private _profile = [MOD(profileHandler),"getProfile", _x] call ALiVE_fnc_profileHandler;
 
 							if (!isnil "_profile") then {
-								private _position = _profile select 2 select 2;
+								private _position = _profile get "position";
 								_data pushBack [_x,_position];
 							};
 						};
@@ -312,14 +312,14 @@ switch(_operation) do {
 
                 // send the data back to the players SCOM tablet
 
-                private _waypoints = _profile select 2 select 16;               // waypoints
+                private _waypoints = _profile get "waypoints";               // waypoints
                 _waypointPositions = _waypoints apply {(_x select 2) select 0}; // position
 
                 private _profileData = [
-                    _profile select 2 select 1,     // active
-                    _profile select 2 select 3,     // side
-                    _profile select 2 select 2,     // position
-                    _profile select 2 select 13,    // group
+                    _profile get "active",     // active
+                    _profile get "side",     // side
+                    _profile get "position",     // position
+                    _profile get "group",    // group
                     _waypointPositions,
                     [_profile,"busy"] call ALiVE_fnc_hashGet
                 ];
@@ -354,14 +354,14 @@ switch(_operation) do {
 
                 // send the data back to the players SCOM tablet
 
-                private _waypoints = _profile select 2 select 16; // waypoints
+                private _waypoints = _profile get "waypoints"; // waypoints
                 private _waypointsArray = _waypoints apply {_x select 2};
 
                 private _profileData = [
-                    _profile select 2 select 1,     // active
-                    _profile select 2 select 3,     // side
-                    _profile select 2 select 2,     // position
-                    _profile select 2 select 13,    // group
+                    _profile get "active",     // active
+                    _profile get "side",     // side
+                    _profile get "position",     // position
+                    _profile get "group",    // group
                     _waypointsArray
                 ];
 
@@ -399,10 +399,10 @@ switch(_operation) do {
                 // send the data back to the players SCOM tablet
 
                 _profileData = [
-                    _profile select 2 select 1,      // active
-                    _profile select 2 select 3,     // side
-                    _profile select 2 select 2,     // position
-                    _profile select 2 select 13,    // group
+                    _profile get "active",      // active
+                    _profile get "side",     // side
+                    _profile get "position",     // position
+                    _profile get "group",    // group
                     []                              // waypoints
                 ];
 
@@ -467,7 +467,7 @@ switch(_operation) do {
                             };
 
                             if ([_profile,"active"] call ALiVE_fnc_hashGet) then {
-                                private _group = _profile select 2 select 13;
+                                private _group = _profile get "group";
 
                                 waitUntil {
                                     sleep 2;
@@ -501,14 +501,14 @@ switch(_operation) do {
                     };
                 } foreach _updatedWaypoints;
 
-                private _waypoints = _profile select 2 select 16;
+                private _waypoints = _profile get "waypoints";
                 private _waypointsArray = _waypoints apply {_x select 2};
 
                 private _profileData = [
-                    _profile select 2 select 1,     // active
-                    _profile select 2 select 3,     // side
-                    _profile select 2 select 2,     // position
-                    _profile select 2 select 13,    // group
+                    _profile get "active",     // active
+                    _profile get "side",     // side
+                    _profile get "position",     // position
+                    _profile get "group",    // group
                     _waypointsArray                 // waypoints
                 ];
 
@@ -539,9 +539,9 @@ switch(_operation) do {
 
             if (!isnil "_profile") then {
 
-                private _faction = _profile select 2 select 29;                 // faction
-                private _position = _profile select 2 select 2;                 // position
-                private _vehiclesInCommandOf = _profile select 2 select 8;      // vehiclesInCommandOf
+                private _faction = _profile get "faction";                 // faction
+                private _position = _profile get "position";                 // position
+                private _vehiclesInCommandOf = _profile get "entitiesInCommandOf";      // vehiclesInCommandOf
 
                 if (count _vehiclesInCommandOf == 0) then {
 
@@ -557,11 +557,11 @@ switch(_operation) do {
 
                     _player setPos _position;
 
-                    waitUntil {_profile select 2 select 1}; // active
+                    waitUntil {_profile get "active"}; // active
 
                     sleep 2;
 
-                    private _group = _profile select 2 select 13;
+                    private _group = _profile get "group";
                     private _unit = selectRandom (units _group);
 
                     private _player = [_playerID] call ALiVE_fnc_getPlayerByUID;
@@ -598,9 +598,9 @@ switch(_operation) do {
 
             if !(isnil "_profile") then {
 
-                private _faction = _profile select 2 select 29;
-                private _position = _profile select 2 select 2;
-                private _vehiclesInCommandOf = _profile select 2 select 8;
+                private _faction = _profile get "faction";
+                private _position = _profile get "position";
+                private _vehiclesInCommandOf = _profile get "entitiesInCommandOf";
 
                 _position = _position getPos [50, random 360];
 
@@ -616,11 +616,11 @@ switch(_operation) do {
 
                     _player setPos _position;
 
-                    waitUntil {_profile select 2 select 1}; // active
+                    waitUntil {_profile get "active"}; // active
 
                     sleep 2;
 
-                    private _group = _profile select 2 select 13;
+                    private _group = _profile get "group";
                     private _unit = selectRandom (units _group);
 
                     private _player = [_playerID] call ALiVE_fnc_getPlayerByUID;
@@ -758,7 +758,7 @@ switch(_operation) do {
                                     _profile = [MOD(profileHandler), "getProfile", _x] call ALiVE_fnc_profileHandler;
 
                                     if !(isnil "_profile") then {
-                                        _profilePosition = _profile select 2 select 2;
+                                        _profilePosition = _profile get "position";
                                         _attackID = [_profile,"attackID", ""] call ALiVE_fnc_hashGet;
                                         _typeData pushback [_profilePosition,_attackID];
                                     };
@@ -778,7 +778,7 @@ switch(_operation) do {
                                 private _profile = [MOD(profileHandler), "getProfile", _x select 0] call ALiVE_fnc_profileHandler;
 
                                 if !(isnil "_profile") then {
-                                    _side = _profile select 2 select 3;
+                                    _side = _profile get "side";
 
                                     switch (_side) do {
                                         case "EAST": {(_knownEnemiesBySide select 0) pushbackunique (_x select 1)};
@@ -912,7 +912,7 @@ switch(_operation) do {
                                     private _profile = [MOD(profileHandler),"getProfile", _] call ALiVE_fnc_profileHandler;
 
                                     if !(isnil "_profile") then {
-                                        private _position = _profile select 2 select 2;
+                                        private _position = _profile get "position";
                                         private _dir = _position getDir _center;
 
                                         _sections pushBack [_position,_dir];

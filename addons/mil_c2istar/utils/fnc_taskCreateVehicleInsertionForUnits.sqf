@@ -33,7 +33,7 @@ ARJay
     _taskFaction = _args select 3;
     _taskProfile = _args select 4;
 
-    _taskProfileID = _taskProfile select 2 select 4;
+    _taskProfileID = _taskProfile get "profileID";
 
     _insertionTypes = ["Car","Helicopter"];
 
@@ -107,9 +107,9 @@ ARJay
             _vehicleClass = (selectRandom _carClasses);
             _profiles = [_vehicleClass,_taskSide,_taskFaction,"CAPTAIN",_insertionPosition,random(360),false,_taskFaction,true,true] call ALIVE_fnc_createProfilesCrewedVehicle;
             _crewProfile = _profiles select 0;
-            _crewProfileID = _crewProfile select 2 select 4;
+            _crewProfileID = _crewProfile get "profileID";
             _vehicleProfile = _profiles select 1;
-            _vehicleProfileID = _vehicleProfile select 2 select 4;
+            _vehicleProfileID = _vehicleProfile get "profileID";
 
             {
                 private _profile = _x;
@@ -136,9 +136,9 @@ ARJay
             _vehicleClass = (selectRandom _heliClasses);
             _profiles = [_vehicleClass,_taskSide,_taskFaction,"CAPTAIN",_insertionPosition,random(360),false,_taskFaction,true,true] call ALIVE_fnc_createProfilesCrewedVehicle;
             _crewProfile = _profiles select 0;
-            _crewProfileID = _crewProfile select 2 select 4;
+            _crewProfileID = _crewProfile get "profileID";
             _vehicleProfile = _profiles select 1;
-            _vehicleProfileID = _vehicleProfile select 2 select 4;
+            _vehicleProfileID = _vehicleProfile get "profileID";
 
             [_taskProfile,_vehicleProfile] call ALIVE_fnc_createProfileVehicleAssignment;
 
@@ -168,10 +168,10 @@ ARJay
         if!(isNil "_crewProfile") then {
             _waypointComplete = [_crewProfile,"checkWaypointComplete"] call ALIVE_fnc_profileEntity;
 
-            private _active = _crewProfile select 2 select 1;
+            private _active = _crewProfile get "active";
 
             if (_waypointComplete && {_active}) then {
-                private _group = _crewProfile select 2 select 13;
+                private _group = _crewProfile get "group";
                 private _leader = leader _group;
 
                 if ((getposATL _leader) select 2 > 2) then {

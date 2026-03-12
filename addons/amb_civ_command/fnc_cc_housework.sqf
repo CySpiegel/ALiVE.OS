@@ -27,8 +27,8 @@ ARJay
 
 params ["_agentData","_commandState","_commandName","_args","_state","_debug"];
 
-private _agentID = _agentData select 2 select 3;
-private _agent = _agentData select 2 select 5;
+private _agentID = _agentData get "agentID";
+private _agent = _agentData get "unit";
 
 private _nextState = _state;
 private _nextStateArgs = [];
@@ -52,7 +52,7 @@ switch (_state) do {
 
         _agent setVariable ["ALIVE_agentBusy", true, false];
 
-        private _homePosition = _agentData select 2 select 10;
+        private _homePosition = _agentData get "homePosition";
 
         private _positions = [_homePosition,5] call ALIVE_fnc_findIndoorHousePositions;
 
@@ -88,7 +88,7 @@ switch (_state) do {
 
             if(_dayState == "EVENING" || {_dayState == "DAY"}) then {
 
-                private _homePosition = _agentData select 2 select 10;
+                private _homePosition = _agentData get "homePosition";
 
                 if([_homePosition, 80] call ALiVE_fnc_anyPlayersInRange > 0) then {
                     if!(_agent getVariable ["ALIVE_agentHouseMusicOn",false]) then {
@@ -103,7 +103,7 @@ switch (_state) do {
 
             if(_dayState == "EVENING" || {_dayState == "NIGHT"}) then {
 
-                private _homePosition = _agentData select 2 select 10;
+                private _homePosition = _agentData get "homePosition";
 
                 if!(_agent getVariable ["ALIVE_agentHouseLightOn",false]) then {
                     private _building = _homePosition nearestObject "House";

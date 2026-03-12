@@ -27,8 +27,8 @@ ARJay
 
 params ["_agentData","_commandState","_commandName","_args","_state","_debug"];
 
-private _agentID = _agentData select 2 select 3;
-private _agent = _agentData select 2 select 5;
+private _agentID = _agentData get "agentID";
+private _agent = _agentData get "unit";
 
 private _nextState = _state;
 private _nextStateArgs = [];
@@ -54,7 +54,7 @@ switch (_state) do {
         _agent addVest "V_ALiVE_Suicide_Vest";
         _agent addMagazines ["DemoCharge_Remote_Mag", 2];
 
-        private _agentClusterID = _agentData select 2 select 9;
+        private _agentClusterID = _agentData get "homeCluster";
         private _agentCluster = [ALIVE_clusterHandler,"getCluster",_agentClusterID] call ALIVE_fnc_clusterHandler;
 
         private _targetSide = selectRandom (_args select 0);
@@ -66,7 +66,7 @@ switch (_state) do {
 
             _target = _target select 0;
 
-            private _homePosition = _agentData select 2 select 10;
+            private _homePosition = _agentData get "homePosition";
             private _positions = [_homePosition,5] call ALIVE_fnc_findIndoorHousePositions;
 
             if(count _positions > 0) then {

@@ -37,7 +37,7 @@ private _spacialGrid = [ALiVE_profileSystem,"spacialGridProfiles"] call ALiVE_fn
 private _near = ([_spacialGrid,"findInRange", [_position,_radius,_filter2D]] call ALiVE_fnc_spacialGrid) apply {_x select 1};
 
 if (_categorySelector isEqualTo []) then {
-   _near select {(_x select 2 select 5) == "entity"};
+   _near select {(_x get "type") == "entity"};
 } else {
     _categorySelector params [
         ["_categorySide", "all"],
@@ -50,21 +50,21 @@ if (_categorySelector isEqualTo []) then {
 
     if !(_categorySide isEqualTo "all") then {
         if (_categorySide isEqualType []) then {
-            _query = _query + " && ((_x select 2 select 3) in _categorySide)";
+            _query = _query + " && ((_x get "side") in _categorySide)";
         } else {
-            _query = _query + " && ((_x select 2 select 3) == _categorySide)";
+            _query = _query + " && ((_x get "side") == _categorySide)";
         };
     };
 
     if (_categoryType != "all") then {
-        _query = _query + " && {(_x select 2 select 5) == _categoryType}";
+        _query = _query + " && {(_x get "type") == _categoryType}";
     };
 
     if !(_categoryObjectType isEqualTo "none") then {
         if (_categoryObjectType isEqualType "") then {
-            _query = _query + " && {(_x select 2 select 6) == _categoryObjectType}";
+            _query = _query + " && {(_x get "objectType") == _categoryObjectType}";
         } else {
-            _query = _query + " && {(_x select 2 select 6) in _categoryObjectType}";
+            _query = _query + " && {(_x get "objectType") in _categoryObjectType}";
         };
     };
 

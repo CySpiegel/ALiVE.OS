@@ -64,7 +64,7 @@ private _convertAndAddWaypoint = {
 
 private _waypointCount = count _waypoints;
 
-private _isCycling = _profile select 2 select 25;
+private _isCycling = _profile get "isCycling";
 if (_isCycling) then {
     // if the entity has a cycle waypoint need to get all completed waypoints and
     // stick them in the end of the waypoints array

@@ -151,7 +151,7 @@ switch(_operation) do {
                     _profile = _args select 0;
                     _commands = _args select 1;
 
-                    _profileID = _profile select 2 select 4; //[_profile,"profileID"] call ALIVE_fnc_hashGet;
+                    _profileID = _profile get "profileID"; //[_profile,"profileID"] call ALIVE_fnc_hashGet;
 
                     // get the active command vars
                     _activeCommand = _commands select 0;
@@ -159,8 +159,8 @@ switch(_operation) do {
                     _commandType = _activeCommand select 1;
                     _commandArgs = _activeCommand select 2;
 
-                    _debug = _logic select 2 select 0; //[logic,"debug"] call ALIVE_fnc_hashGet;
-                    _commandState = _logic select 2 select 1; //[logic,"commandState"] call ALIVE_fnc_hashGet;
+                    _debug = _logic get "debug"; //[logic,"debug"] call ALIVE_fnc_hashGet;
+                    _commandState = _logic get "active"; //[logic,"commandState"] call ALIVE_fnc_hashGet;
 
                     // DEBUG -------------------------------------------------------------------------------------
                     if(_debug) then {
@@ -186,7 +186,7 @@ switch(_operation) do {
                             [_commandState, _profileID, [_profile, _activeCommand]] call ALIVE_fnc_hashSet;
 
                             // if the managed commands loop is not running start it
-                            _isManaging = _logic select 2 select 2;
+                            _isManaging = _logic get "position";
                             if!(_isManaging) then {
                                 [_logic,"startManagement"] call MAINCLASS;
                             };
@@ -210,10 +210,10 @@ switch(_operation) do {
 
                     _profile = _args;
 
-                    _profileID = _profile select 2 select 4; //[_logic,"profileID"] call ALIVE_fnc_hashGet;
+                    _profileID = _profile get "profileID"; //[_logic,"profileID"] call ALIVE_fnc_hashGet;
 
-                    _debug = _logic select 2 select 0;
-                    _commandState = _logic select 2 select 1;
+                    _debug = _logic get "debug";
+                    _commandState = _logic get "active";
 
                     // does the profile have currently active commands
                     if(_profileID in keys _commandState) then {
@@ -263,7 +263,7 @@ switch(_operation) do {
                         // if there are no active commands shut down the
                         // management loop if it is running
                         if(count (_commandState select 1) == 0) then {
-                            _isManaging = _logic select 2 select 2;
+                            _isManaging = _logic get "position";
                             if(_isManaging) then {
                                 [_logic,"stopManagement"] call MAINCLASS;
                             };
@@ -275,8 +275,8 @@ switch(_operation) do {
 
             private ["_debug","_commandState","_handle"];
 
-            _debug = _logic select 2 select 0;
-            _commandState = _logic select 2 select 1;
+            _debug = _logic get "debug";
+            _commandState = _logic get "active";
 
             // DEBUG -------------------------------------------------------------------------------------
             if(_debug) then {
@@ -307,7 +307,7 @@ switch(_operation) do {
 
                             if(typeName _profile == "ARRAY") then {
 
-                                _profileID = _profile select 2 select 4; //[_logic,"profileID"] call ALIVE_fnc_hashGet;
+                                _profileID = _profile get "profileID"; //[_logic,"profileID"] call ALIVE_fnc_hashGet;
 
                                 _activeCommand = _activeCommand select 1;
                                 _commandType = _activeCommand select 1;

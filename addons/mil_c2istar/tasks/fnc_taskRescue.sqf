@@ -437,17 +437,17 @@ switch (_taskState) do {
                         private["_hostageProfile1","_hostageProfile1ID","_hostageGroup","_hostage","_hostage1Active"];
 
                         _hostageProfile1 = [_unitDetails select 0,_taskSide,_taskFaction, _targetPosition,random(360),_taskFaction,true] call ALIVE_fnc_createProfileEntity;
-                        _hostageProfile1ID = _hostageProfile1 select 2 select 4;
+                        _hostageProfile1ID = _hostageProfile1 get "profileID";
 
                         [_hostageProfile1,"spawnType",["preventDespawn"]] call ALiVE_fnc_profileEntity;
 
                         waitUntil {
                             sleep 1;
-                            _hostage1Active = _hostageProfile1 select 2 select 1;
+                            _hostage1Active = _hostageProfile1 get "active";
                             (_hostage1Active)
                         };
 
-                        _hostageGroup = _hostageProfile1 select 2 select 13;
+                        _hostageGroup = _hostageProfile1 get "group";
                         _hostage = leader _hostageGroup;
                         _hostage setCaptive true;
                         _hostage setName [format["%1 %2",(_unitDetails select 1), (_unitDetails select 2)], (_unitDetails select 1), (_unitDetails select 2)];
@@ -545,12 +545,12 @@ switch (_taskState) do {
                 {
                     _profile = _x;
 
-                    _active = _profile select 2 select 1;
+                    _active = _profile get "active";
 
                     if(_active) then {
                         private "_hostage";
 
-                        _group = _profile select 2 select 13;
+                        _group = _profile get "group";
 
                         _hostage = leader _group;
                         _position = getPos _hostage;
@@ -669,8 +669,8 @@ switch (_taskState) do {
                         private ["_profile","_active","_unit"];
                         _profile = _x;
 
-                        _active = _profile select 2 select 1;
-                        _unit = _profile select 2 select 10;
+                        _active = _profile get "active";
+                        _unit = _profile get "leader";
 
                         if(_active && {vehicle _unit == _unit} && {(getpos _unit) select 2 < 2} && {_unit distance _taskPosition <= 10}) then {
                             

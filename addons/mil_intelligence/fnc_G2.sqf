@@ -274,30 +274,30 @@ switch(_operation) do {
         //Sanitize _profile, it may be dead and unregistered, thus returning null.
         if (isnil "_profile") exitWith {};
 
-        private _profileID = _profile select 2 select 4;
-        private _side = _profile select 2 select 3;
-        private _position = _profile select 2 select 2;
+        private _profileID = _profile get "profileID";
+        private _side = _profile get "side";
+        private _position = _profile get "position";
         private _faction = [_profile,"faction"] call ALiVE_fnc_hashGet;
 
-        private _entityType = _profile select 2 select 5;
+        private _entityType = _profile get "type";
         private ["_speed","_direction","_groupType","_groupSize"];
         if (_entityType == "entity") then {
             // calculate speed and direction
-            private _waypoints = _profile select 2 select 16;
+            private _waypoints = _profile get "waypoints";
             if (_waypoints isnotequalto []) then {
                 private _nextWP = _waypoints select 0;
-                private _nextWPPos = _nextWP select 2 select 0;
+                private _nextWPPos = _nextWP get "debug";
                 _direction = _position getdir _nextWPPos;
-                _speed = (_profile select 2 select 22) select 1;
+                _speed = (_profile get "speedPerSecond") select 1;
             } else {
                 _direction = 0;
                 _speed = 0;
             };
 
             // calculate group size
-            private _vehiclesInCommandOf = _profile select 2 select 8;
+            private _vehiclesInCommandOf = _profile get "entitiesInCommandOf";
             if (_vehiclesInCommandOf isequalto []) then {
-                private _units = _profile select 2 select 21;
+                private _units = _profile get "units";
                 _groupSize = count _units;
                 _groupType = "infantry";
             } else {
@@ -622,7 +622,7 @@ switch(_operation) do {
                 private _objectiveSection = [_objective,"section"] call ALiVE_fnc_hashGet;
 
                 private _assignedProfiles = _objectiveSection apply { [ALiVE_profileHandler,"getProfile", _x] call ALiVE_fnc_profileHandler };
-                private _profilePositions = _assignedProfiles apply { _x select 2 select 2 };
+                private _profilePositions = _assignedProfiles apply { _x get "position" };
                 private _profilePositionsMidpoint = _profilePositions call ALiVE_fnc_findMidpoint;
                 if (_assignedProfiles isequalto []) then {
                     systemchat format ["Assigned Profiles is Empty"];
@@ -678,7 +678,7 @@ switch(_operation) do {
                 private _objectiveSection = [_objective,"section"] call ALiVE_fnc_hashGet;
 
                 private _assignedProfiles = (_objectiveSection apply { [ALiVE_profileHandler,"getProfile", _x] call ALiVE_fnc_profileHandler }) select { !isnil "_x" };
-                private _profilePositions = _assignedProfiles apply { _x select 2 select 2 };
+                private _profilePositions = _assignedProfiles apply { _x get "position" };
                 private _profilePositionsMidpoint = _profilePositions call ALiVE_fnc_findMidpoint;
                 private _dirToAttackers = _objectivePosition getdir _profilePositionsMidpoint;
                 private _dirToObjective = _dirToAttackers - 180;

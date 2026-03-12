@@ -216,7 +216,7 @@ switch (_taskState) do {
             };
 
             _crewProfile1 = [_units, _taskSide, _taskFaction, _targetPosition, random(360), _taskFaction, true] call ALIVE_fnc_createProfileEntity;
-            _crewID = _crewProfile1 select 2 select 4;
+            _crewID = _crewProfile1 get "profileID";
 
             ["C2ISTAR - Task CSAR - Created profile %1 with units %2!",_crewID,_units] call ALiVE_fnc_Dump;
 
@@ -440,11 +440,11 @@ switch (_taskState) do {
 
                         waitUntil {
                             sleep 1;
-                            _crew1Active = _crewProfile1 select 2 select 1;
+                            _crew1Active = _crewProfile1 get "active";
                             (_crew1Active)
                         };
 
-                        _crewGroup = _crewProfile1 select 2 select 13;
+                        _crewGroup = _crewProfile1 get "group";
 
                         ["C2ISTAR - Task CSAR - Spawned CSAR crew %1 at %2!",_crewGroup, getposATL leader _crewGroup] call ALiVE_fnc_Dump;
 
@@ -511,12 +511,12 @@ switch (_taskState) do {
                 {
                     _profile = _x;
 
-                    _active = _profile select 2 select 1;
+                    _active = _profile get "active";
 
                     if(_active) then {
                         private "_crew";
 
-                        _group = _profile select 2 select 13;
+                        _group = _profile get "group";
                         _crew = leader _group;
 
                         _position = getPos _crew;
@@ -660,7 +660,7 @@ switch (_taskState) do {
             {
                 _position = (_remotePosition getPos [(random 200), (random 200)]);
                 _profiles = [_x, _position, random(360), true, _enemyFaction, true] call ALIVE_fnc_createProfilesFromGroupConfig;
-                _profileID = _profiles select 0 select 2 select 4;
+                _profileID = (_profiles select 0) get "profileID";
                 _position = (_taskPosition getPos [(random 40), (random 40)]);
                 _profileWaypoint = [_position, 100, "MOVE", "FULL", 100, [], "LINE", "NO CHANGE", "CARELESS"] call ALIVE_fnc_createProfileWaypoint;
                 [(_profiles select 0), "addWaypoint", _profileWaypoint] call ALIVE_fnc_profileEntity;
@@ -692,7 +692,7 @@ switch (_taskState) do {
                 {
                     _position = (_remotePosition getPos [(random 200), (random 200)]);
                     _profiles = [_x, _position, random(360), true, _enemyFaction, true] call ALIVE_fnc_createProfilesFromGroupConfig;
-                    _profileID = _profiles select 0 select 2 select 4;
+                    _profileID = (_profiles select 0) get "profileID";
                     _position = (_taskPosition getPos [(random 40), (random 40)]);
                     _profileWaypoint = [_position, 100, "MOVE", "FULL", 100, [], "LINE", "NO CHANGE", "CARELESS"] call ALIVE_fnc_createProfileWaypoint;
                     [(_profiles select 0), "addWaypoint", _profileWaypoint] call ALIVE_fnc_profileEntity;
@@ -869,8 +869,8 @@ switch (_taskState) do {
                         private ["_profile","_active","_unit"];
                         _profile = _x;
 
-                        _active = _profile select 2 select 1;
-                        _unit = _profile select 2 select 10;
+                        _active = _profile get "active";
+                        _unit = _profile get "leader";
 
                         if(_active && {vehicle _unit == _unit} && {(getpos _unit) select 2 < 2} && {_unit distance _taskPosition <= 10}) then {
                             [_unit] joinSilent grpNull;

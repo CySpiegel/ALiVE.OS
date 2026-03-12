@@ -301,11 +301,11 @@ switch(_operation) do {
         _eventData = _args select 1;
 
         _side = _eventData select 0;
-        _position = _eventData select 1 select 2 select 1;
-        _size = _eventData select 1 select 2 select 2;
-        _type = _eventData select 1 select 2 select 3;
-        _priority = _eventData select 1 select 2 select 4;
-        _clusterID = _eventData select 1 select 2 select 6;
+        _position = (_eventData select 1) get "center";
+        _size = (_eventData select 1) get "size";
+        _type = (_eventData select 1) get "objectiveType";
+        _priority = (_eventData select 1) get "priority";
+        _clusterID = (_eventData select 1) get "clusterID";
 
         [_logic,"storeClusterEventToSector",[_clusterID,[_operation,floor(time),_position,_side,_type,_size,_priority]]] call MAINCLASS;
 
@@ -317,11 +317,11 @@ switch(_operation) do {
         _eventData = _args select 1;
 
         _side = _eventData select 0;
-        _position = _eventData select 1 select 2 select 1;
-        _size = _eventData select 1 select 2 select 2;
-        _type = _eventData select 1 select 2 select 3;
-        _priority = _eventData select 1 select 2 select 4;
-        _clusterID = _eventData select 1 select 2 select 6;
+        _position = (_eventData select 1) get "center";
+        _size = (_eventData select 1) get "size";
+        _type = (_eventData select 1) get "objectiveType";
+        _priority = (_eventData select 1) get "priority";
+        _clusterID = (_eventData select 1) get "clusterID";
 
         [_logic,"storeClusterEventToSector",[_clusterID,[_operation,floor(time),_position,_side,_type,_size,_priority]]] call MAINCLASS;
 
@@ -333,11 +333,11 @@ switch(_operation) do {
         _eventData = _args select 1;
 
         _side = _eventData select 0;
-        _position = _eventData select 1 select 2 select 1;
-        _size = _eventData select 1 select 2 select 2;
-        _type = _eventData select 1 select 2 select 3;
-        _priority = _eventData select 1 select 2 select 4;
-        _clusterID = _eventData select 1 select 2 select 6;
+        _position = (_eventData select 1) get "center";
+        _size = (_eventData select 1) get "size";
+        _type = (_eventData select 1) get "objectiveType";
+        _priority = (_eventData select 1) get "priority";
+        _clusterID = (_eventData select 1) get "clusterID";
 
         [_logic,"storeClusterEventToSector",[_clusterID,[_operation,floor(time),_position,_side,_type,_size,_priority]]] call MAINCLASS;
 
@@ -349,11 +349,11 @@ switch(_operation) do {
         _eventData = _args select 1;
 
         _side = _eventData select 0;
-        _position = _eventData select 1 select 2 select 1;
-        _size = _eventData select 1 select 2 select 2;
-        _type = _eventData select 1 select 2 select 3;
-        _priority = _eventData select 1 select 2 select 4;
-        _clusterID = _eventData select 1 select 2 select 6;
+        _position = (_eventData select 1) get "center";
+        _size = (_eventData select 1) get "size";
+        _type = (_eventData select 1) get "objectiveType";
+        _priority = (_eventData select 1) get "priority";
+        _clusterID = (_eventData select 1) get "clusterID";
 
         [_logic,"storeClusterEventToSector",[_clusterID,[_operation,floor(time),_position,_side,_type,_size,_priority]]] call MAINCLASS;
 
@@ -365,11 +365,11 @@ switch(_operation) do {
         _eventData = _args select 1;
 
         _side = _eventData select 0;
-        _position = _eventData select 1 select 2 select 1;
-        _size = _eventData select 1 select 2 select 2;
-        _type = _eventData select 1 select 2 select 3;
-        _priority = _eventData select 1 select 2 select 4;
-        _clusterID = _eventData select 1 select 2 select 6;
+        _position = (_eventData select 1) get "center";
+        _size = (_eventData select 1) get "size";
+        _type = (_eventData select 1) get "objectiveType";
+        _priority = (_eventData select 1) get "priority";
+        _clusterID = (_eventData select 1) get "clusterID";
 
         [_logic,"storeClusterEventToSector",[_clusterID,[_operation,floor(time),_position,_side,_type,_size,_priority]]] call MAINCLASS;
 

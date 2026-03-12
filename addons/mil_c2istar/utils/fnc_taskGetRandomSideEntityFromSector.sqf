@@ -53,8 +53,8 @@ if(count _taskSector > 0) then {
 
                     if(_ignoreInVehicle) then {
 
-                        _vehiclesInCommandOf = _entityProfile select 2 select 8;
-                        _vehiclesInCargoOf = _entityProfile select 2 select 9;
+                        _vehiclesInCommandOf = _entityProfile get "vehiclesInCommandOf";
+                        _vehiclesInCargoOf = _entityProfile get "vehiclesInCargoOf";
 
                         if(count _vehiclesInCommandOf == 0 && count _vehiclesInCargoOf == 0) then {
 

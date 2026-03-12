@@ -29,7 +29,7 @@ params [
     ["_debug", false]
 ];
 
-private _agent = _agentData select 2 select 5;
+private _agent = _agentData get "unit";
 private _dayState = (call ALIVE_fnc_getEnvironment) select 0;
 
 // set initial fall back commands
@@ -80,7 +80,7 @@ if(count (ALIVE_civCommands select 1) > 0) then {
 
     // check global posture adjust command probability accordingly
 
-    private _agentCluster = [ALIVE_clusterHandler, "getCluster", _agentData select 2 select 9] call ALIVE_fnc_clusterHandler;
+    private _agentCluster = [ALIVE_clusterHandler, "getCluster", _agentData get "homeCluster"] call ALIVE_fnc_clusterHandler;
     private _clusterHostilityLevel = [_agentCluster, "posture", 0] call ALIVE_fnc_hashGet;
     [_agentData, "posture", _clusterHostilityLevel] call ALIVE_fnc_hashSet;
     _agent setVariable ["posture", _clusterHostilityLevel];
@@ -161,7 +161,7 @@ if(count (ALIVE_civCommands select 1) > 0) then {
 
     // DEBUG -------------------------------------------------------------------------------------
     if(_debug) then {
-        private _agentID = _agentData select 2 select 3;
+        private _agentID = _agentData get "agentID";
         ["----------------------------------------------------------------------------------------"] call ALIVE_fnc_dump;
         ["Select Civilian Command [%1]", _agentID] call ALiVE_fnc_dump;
         ["Select Civilian Command - Time of day: %1", _dayState] call ALiVE_fnc_dump;

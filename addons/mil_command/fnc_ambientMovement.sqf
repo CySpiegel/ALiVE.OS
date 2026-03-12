@@ -70,7 +70,7 @@ if (count _vehiclesInCommandOf > 0) then {
         private _vehicleProfile = [ALIVE_profileHandler, "getProfile", _x] call ALIVE_fnc_profileHandler;
 
         if !(isnil "_vehicleProfile") then {
-            _vehicleObjectType = _vehicleProfile select 2 select 6; //[_profile,"objectType"] call ALIVE_fnc_hashGet;
+            _vehicleObjectType = _vehicleProfile get "objectType"; //[_profile,"objectType"] call ALIVE_fnc_hashGet;
 
             switch (_vehicleObjectType) do {
                 case ("Car") : {

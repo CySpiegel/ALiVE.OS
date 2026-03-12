@@ -55,24 +55,24 @@ _createMarker = {
     _markerCount = _markerCount + 1;
 };
 
-_debug = _profile select 2 select 0; //[_profile,"debug"] call ALIVE_fnc_hashGet;
-_active = _profile select 2 select 1; //[_profile,"active"] call ALIVE_fnc_hashGet;
-_position = _profile select 2 select 2; //[_profile,"position"] call ALIVE_fnc_hashGet;
-_side = _profile select 2 select 3; //[_profile, "side"] call MAINCLASS;
-_profileID = _profile select 2 select 4; //[_profile,"profileID"] call ALIVE_fnc_hashGet;
-_type = _profile select 2 select 5; //[_profile,"type"] call ALIVE_fnc_hashGet;
-_objectType = _profile select 2 select 6; //[_profile,"objectType"] call ALIVE_fnc_hashGet;
-_vehicleAssignments = _profile select 2 select 7; //[_profile,"vehicleAssignments"] call ALIVE_fnc_hashGet;
+_debug = _profile get "debug"; //[_profile,"debug"] call ALIVE_fnc_hashGet;
+_active = _profile get "active"; //[_profile,"active"] call ALIVE_fnc_hashGet;
+_position = _profile get "position"; //[_profile,"position"] call ALIVE_fnc_hashGet;
+_side = _profile get "side"; //[_profile, "side"] call MAINCLASS;
+_profileID = _profile get "profileID"; //[_profile,"profileID"] call ALIVE_fnc_hashGet;
+_type = _profile get "type"; //[_profile,"type"] call ALIVE_fnc_hashGet;
+_objectType = _profile get "objectType"; //[_profile,"objectType"] call ALIVE_fnc_hashGet;
+_vehicleAssignments = _profile get "vehicleAssignments"; //[_profile,"vehicleAssignments"] call ALIVE_fnc_hashGet;
 _direction = random 360;
 
 switch(_type) do {
 
     case "entity": {
-        _vehiclesInCommandOf = _profile select 2 select 8; //[_profile,"vehiclesInCommandOf",[]] call ALIVE_fnc_hashSet;
-        _vehiclesInCargoOf = _profile select 2 select 9; //[_profile,"vehiclesInCargoOf",[]] call ALIVE_fnc_hashSet;
-        _unitClasses = _profile select 2 select 11; //[_profile,"unitClasses"] call ALIVE_fnc_hashGet;
-        _despawnPosition = _profile select 2 select 23; //[_profile,"despawnPosition"] call ALIVE_fnc_hashGet;
-        _hasSimulated = _profile select 2 select 24; //[_profile,"hasSimulated"] call ALIVE_fnc_hashGet;
+        _vehiclesInCommandOf = _profile get "entitiesInCommandOf"; //[_profile,"vehiclesInCommandOf",[]] call ALIVE_fnc_hashSet;
+        _vehiclesInCargoOf = _profile get "entitiesInCargoOf"; //[_profile,"vehiclesInCargoOf",[]] call ALIVE_fnc_hashSet;
+        _unitClasses = _profile get "unitClasses"; //[_profile,"unitClasses"] call ALIVE_fnc_hashGet;
+        _despawnPosition = _profile get "despawnPosition"; //[_profile,"despawnPosition"] call ALIVE_fnc_hashGet;
+        _hasSimulated = _profile get "hasSimulated"; //[_profile,"hasSimulated"] call ALIVE_fnc_hashGet;
 
         _inCommand = if (count _vehiclesInCommandOf > 0) then {true} else {false};
         _inCar = false;
@@ -104,7 +104,7 @@ switch(_type) do {
 
                         if !(isnil "_vehicleProfile") then {
                             //_vehicleClass = _vehicleProfile select 2 select 11; //[_profile,"vehicleClass"] call ALIVE_fnc_hashGet;
-                            _vehicleObjectType = _vehicleProfile select 2 select 6; //[_profile,"objectType"] call ALIVE_fnc_hashGet;
+                            _vehicleObjectType = _vehicleProfile get "objectType"; //[_profile,"objectType"] call ALIVE_fnc_hashGet;
 
                             _vehicles pushback _vehicleProfile;
 
@@ -188,8 +188,8 @@ switch(_type) do {
                         //systemChat str(position (_vehicleProfile select 2 select 10));
                         // vehicle is already spawned, move it..
 
-                        if (_vehicleProfile select 2 select 1) then {
-                            _vehicle = _vehicleProfile select 2 select 10;
+                        if (_vehicleProfile get "active") then {
+                            _vehicle = _vehicleProfile get "vehicle";
                             if !(isNil '_vehicle') then {
                                 //_vehicle setPos _spawnPosition;
                                // systemChat "Set position of lead vehicle!";
@@ -207,12 +207,12 @@ switch(_type) do {
 
                             _vehicleProfile = _x;
 
-                            _vehicleClass = _vehicleProfile select 2 select 11; //[_vehicleProfile,"vehicleClass"] call ALIVE_fnc_hashGet;
+                            _vehicleClass = _vehicleProfile get "vehicleClass"; //[_vehicleProfile,"vehicleClass"] call ALIVE_fnc_hashGet;
 
                             if (_inAir) then {
                                 _position = _spawnPosition getPos [(100 * ((_forEachIndex)+1)), _direction];
                                 //group of vehicles being paradropped?
-                                _position = [_position,0,50,20,0,0.5,0,[],[_position], _vehicleProfile select 2 select 6] call ALIVE_fnc_findFilteredSafePos;
+                                _position = [_position,0,50,20,0,0.5,0,[],[_position], _vehicleProfile get "objectType"] call ALIVE_fnc_findFilteredSafePos;
                             } else {
                                 //_position = _spawnPosition getPos [(20 * ((_forEachIndex)+1)), _direction];
                                 _position = _spawnPosition getPos [(20 * ((_forEachIndex)+1)), _direction];
@@ -249,8 +249,8 @@ switch(_type) do {
                             [_vehicleProfile,"mergePositions"] call ALIVE_fnc_profileVehicle;
 
                             // vehicle is already spawned, move it..
-                            if (_vehicleProfile select 2 select 1) then {
-                                _vehicle = _vehicleProfile select 2 select 10;
+                            if (_vehicleProfile get "active") then {
+                                _vehicle = _vehicleProfile get "vehicle";
                                 if !(isNil '_vehicle') then {
                                     //_vehicle setPos _position;
                                 };
@@ -271,8 +271,8 @@ switch(_type) do {
                             [_vehicleProfile,"mergePositions"] call ALIVE_fnc_profileVehicle;
 
                             // vehicle is already spawned, move it..
-                            if (_vehicleProfile select 2 select 1) then {
-                                _vehicle = _vehicleProfile select 2 select 10;
+                            if (_vehicleProfile get "active") then {
+                                _vehicle = _vehicleProfile get "vehicle";
                                 if !(isNil '_vehicle') then {
                                     //_vehicle setPos _spawnPosition;
                                 };
@@ -313,17 +313,17 @@ switch(_type) do {
 
     case "vehicle": {
         /*
-        _entitiesInCommandOf = _profile select 2 select 8; //[_profile,"entitiesInCommandOf",[]] call ALIVE_fnc_hashSet;
-        _entitiesInCommandOf = _profile select 2 select 9; //[_profile,"entitiesInCargoOf",[]] call ALIVE_fnc_hashSet;
-        _vehicleClass = _profile select 2 select 11; //[_profile,"vehicleClass"] call ALIVE_fnc_hashGet;
-        _direction = _profile select 2 select 12; //[_profile,"direction"] call ALIVE_fnc_hashGet;
-        _fuel = _profile select 2 select 13; //[_profile,"fuel"] call ALIVE_fnc_hashGet;
-        _ammo = _profile select 2 select 14; //[_profile,"ammo"] call ALIVE_fnc_hashGet;
-        _engineOn = _profile select 2 select 15; //[_profile,"engineOn"] call ALIVE_fnc_hashGet;
-        _damage = _profile select 2 select 16; //[_profile,"damage"] call ALIVE_fnc_hashGet;
+        _entitiesInCommandOf = _profile get "vehiclesInCommandOf"; //[_profile,"entitiesInCommandOf",[]] call ALIVE_fnc_hashSet;
+        _entitiesInCommandOf = _profile get "vehiclesInCargoOf"; //[_profile,"entitiesInCargoOf",[]] call ALIVE_fnc_hashSet;
+        _vehicleClass = _profile get "vehicleClass"; //[_profile,"vehicleClass"] call ALIVE_fnc_hashGet;
+        _direction = _profile get "unitCount"; //[_profile,"direction"] call ALIVE_fnc_hashGet;
+        _fuel = _profile get "group"; //[_profile,"fuel"] call ALIVE_fnc_hashGet;
+        _ammo = _profile get "companyID"; //[_profile,"ammo"] call ALIVE_fnc_hashGet;
+        _engineOn = _profile get "groupID"; //[_profile,"engineOn"] call ALIVE_fnc_hashGet;
+        _damage = _profile get "waypoints"; //[_profile,"damage"] call ALIVE_fnc_hashGet;
         */
-        _despawnPosition = _profile select 2 select 20; //[_profile,"despawnPosition"] call ALIVE_fnc_hashGet;
-        _hasSimulated = _profile select 2 select 21; //[_profile,"hasSimulated"] call ALIVE_fnc_hashGet;
+        _despawnPosition = _profile get "ranks"; //[_profile,"despawnPosition"] call ALIVE_fnc_hashGet;
+        _hasSimulated = _profile get "units"; //[_profile,"hasSimulated"] call ALIVE_fnc_hashGet;
 
         // the vehicle has been simulated
         // let the entity profile in command of the vehicle

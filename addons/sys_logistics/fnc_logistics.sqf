@@ -1180,7 +1180,7 @@ switch (_operation) do {
 
             _convertedData = [] call ALIVE_fnc_hashCreate;
 
-            if (isnil {[(_data select 2 select 0),"ASL_ID"] call ALiVE_fnc_HashGet}) then {
+            if (isnil {[(_data get "debug"),"ASL_ID"] call ALiVE_fnc_HashGet}) then {
                 _selection_1 = {_x select 1};
                 _selection_2 = {_x select 0};
             } else {

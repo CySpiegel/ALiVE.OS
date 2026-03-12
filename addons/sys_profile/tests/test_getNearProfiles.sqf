@@ -107,7 +107,7 @@ _markers = [];
 
 {
     //_x call ALIVE_fnc_inspectHash;
-    _position = _x select 2 select 2;
+    _position = _x get "position";
     _position = (_position getPos [5, (random 360)]);
 
     if(count _position > 0) then {
@@ -128,7 +128,7 @@ _profiles = [getPos player, 500, ["WEST","vehicle","Car"]] call ALIVE_fnc_getNea
 TIMEREND
 
 {
-    _position = _x select 2 select 2;
+    _position = _x get "position";
     _position = (_position getPos [5, (random 360)]);
 
     if(count _position > 0) then {

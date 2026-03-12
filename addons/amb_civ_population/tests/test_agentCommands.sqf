@@ -150,7 +150,7 @@ _agent = [ALIVE_agentHandler,"getAgent",_agentID] call ALIVE_fnc_agentHandler;
 ["CLOSEST AGENT HASH:"] call ALIVE_fnc_dump;
 
 _agent call ALIVE_fnc_inspectHash;
-unit = _agent select 2 select 5;
+unit = _agent get "unit";
 
 // draw agent icon
 

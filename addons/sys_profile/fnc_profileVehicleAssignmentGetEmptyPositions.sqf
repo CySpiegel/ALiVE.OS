@@ -29,8 +29,8 @@ private ["_profileVehicle","_vehicleClass","_vehicleAssignments","_emptyPosition
 
 _profileVehicle = _this;
 
-_vehicleClass = _profileVehicle select 2 select 11; //[_profileVehicle, "vehicleClass"] call ALIVE_fnc_hashGet;
-_vehicleAssignments = _profileVehicle select 2 select 7; //[_profileVehicle, "vehicleAssignments"] call ALIVE_fnc_hashGet;
+_vehicleClass = _profileVehicle get "vehicleClass"; //[_profileVehicle, "vehicleClass"] call ALIVE_fnc_hashGet;
+_vehicleAssignments = _profileVehicle get "vehicleAssignments"; //[_profileVehicle, "vehicleAssignments"] call ALIVE_fnc_hashGet;
 
 // prepare data
 _emptyPositionData = [_vehicleClass] call ALIVE_fnc_configGetVehicleEmptyPositions;

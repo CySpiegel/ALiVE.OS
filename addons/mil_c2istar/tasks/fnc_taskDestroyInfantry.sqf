@@ -101,8 +101,8 @@ switch (_taskState) do {
             private["_entityPosition","_entityID"];
 
             // _targetEntity call ALIVE_fnc_inspectHash;
-            _entityPosition = _targetEntity select 2 select 2;
-            _entityID = _targetEntity select 2 select 4;
+            _entityPosition = _targetEntity get "position";
+            _entityID = _targetEntity get "profileID";
 
             private["_stagingPosition","_dialogOptions","_dialogOption"];
 
@@ -247,8 +247,8 @@ switch (_taskState) do {
             _profiles = [_entitiesState,"profiles"] call ALIVE_fnc_hashGet;
 
             {
-                _position = _x select 2 select 2;
-                _objectType = _x select 2 select 6;
+                _position = _x get "position";
+                _objectType = _x get "objectType";
                 [_position,_taskEnemySide,_taskPlayers,_taskID,"entity",_objectType] call ALIVE_fnc_taskCreateMarkersForPlayers;
 
             } forEach _profiles;

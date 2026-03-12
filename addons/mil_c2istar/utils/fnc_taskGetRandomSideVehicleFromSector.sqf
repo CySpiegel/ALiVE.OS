@@ -46,7 +46,7 @@ if(count _taskSector > 0) then {
 
             if!(isNil "_vehicleProfile") then {
 
-                _inCommand = _vehicleProfile select 2 select 8;
+                _inCommand = _vehicleProfile get "entitiesInCommandOf";
 
                 if(count _inCommand > 0) then {
 
@@ -55,7 +55,7 @@ if(count _taskSector > 0) then {
 
                     if!(isNil "_commandProfile") then {
 
-                        _vehiclesInCommandOf = _commandProfile select 2 select 8;
+                        _vehiclesInCommandOf = _commandProfile get "entitiesInCommandOf";
 
                         _targetVehicles = _vehiclesInCommandOf;
 

@@ -71,8 +71,8 @@ if!(isNil "_registeredProfile") then {
             //["Player profiler - Registered profile found, remove disconnecting player from profile"] call ALiVE_fnc_dump;
 
             _profileEntity = _registeredProfile;
-            _group = _profileEntity select 2 select 13;
-            _profileID = _profileEntity select 2 select 4;
+            _group = _profileEntity get "group";
+            _profileID = _profileEntity get "profileID";
             _units = units _group;
             _existingPlayers = [];
 
@@ -157,8 +157,8 @@ if!(isNil "_registeredProfile") then {
             //["Player profiler - Registered profile found, remove killed player from profile"] call ALiVE_fnc_dump;
 
             _profileEntity = _registeredProfile;
-            _group = _profileEntity select 2 select 13;
-            _profileID = _profileEntity select 2 select 4;
+            _group = _profileEntity get "group";
+            _profileID = _profileEntity get "profileID";
             _units = units _group;
             _existingPlayers = [];
 
@@ -373,7 +373,7 @@ if!(isNil "_registeredProfile") then {
                 _ranks = [];
                 _damages = [];
                 _unitCount = 0;
-                _profileID = _profileEntity select 2 select 4;
+                _profileID = _profileEntity get "profileID";
 
                 {
                     _unit = _x;
@@ -554,7 +554,7 @@ if!(isNil "_registeredProfile") then {
                 _ranks = [];
                 _damages = [];
                 _unitCount = 0;
-                _profileID = _profileEntity select 2 select 4;
+                _profileID = _profileEntity get "profileID";
 
                 {
                     _unit = _x;

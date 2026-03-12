@@ -378,29 +378,29 @@ switch (_taskState) do {
 
                         _HVTProfile1 = [_unitDetails select 0,_taskEnemySide,_taskEnemyFaction,_taskPosition,random(360),_taskEnemyFaction,true] call ALIVE_fnc_createProfileEntity;
 
-                        _HVTProfile1ID = _HVTProfile1 select 2 select 4;
+                        _HVTProfile1ID = _HVTProfile1 get "profileID";
 
                         _units = [[_taskEnemyFaction],1,ALiVE_MIL_CQB_UNITBLACKLIST,true] call ALiVE_fnc_chooseRandomUnits;
 
                         _HVTProfile2 = [_units,_taskEnemySide,_taskEnemyFaction,_taskPosition,random(360),_taskEnemyFaction,true] call ALIVE_fnc_createProfileEntity;
-                        _HVTProfile2ID = _HVTProfile2 select 2 select 4;
+                        _HVTProfile2ID = _HVTProfile2 get "profileID";
 
                         waitUntil {
                             sleep 1;
-                            _HVT1Active = _HVTProfile1 select 2 select 1;
-                            _HVT2Active = _HVTProfile2 select 2 select 1;
+                            _HVT1Active = _HVTProfile1 get "active";
+                            _HVT2Active = _HVTProfile2 get "active";
 
                             (_HVT1Active && _HVT2Active)
                         };
 
-                        _HVTGroup = _HVTProfile1 select 2 select 13;
+                        _HVTGroup = _HVTProfile1 get "group";
                         _HVT = leader _HVTGroup;
                         _HVT setpos [getpos _table select 0,(getpos _table select 1)-2,0];
                         _HVT setdir ([_HVT, _table] call BIS_fnc_dirTo);
                         _HVT setName [format["%1 %2",(_unitDetails select 1), (_unitDetails select 2)], (_unitDetails select 1), (_unitDetails select 2)];
                         _HVT setRank toUpper(_unitDetails select 3);
 
-                        _HVTGroup2 = _HVTProfile2 select 2 select 13;
+                        _HVTGroup2 = _HVTProfile2 get "group";
                         _HVT2 = leader _HVTGroup2;
                         _HVT2 setpos [getpos _table select 0,(getpos _table select 1)+2,0];
                         _HVT2 setdir ([_HVT2, _table] call BIS_fnc_dirTo);
@@ -423,7 +423,7 @@ switch (_taskState) do {
                         _remotePosition = [_taskPosition, 2000, 1, true] call ALIVE_fnc_getPositionDistancePlayers;
 
                         _HVTProfile1 = [_units,_taskEnemySide,_taskEnemyFaction,_remotePosition,random(360),_taskEnemyFaction,true] call ALIVE_fnc_createProfileEntity;
-                        _HVTProfile1ID = _HVTProfile1 select 2 select 4;
+                        _HVTProfile1ID = _HVTProfile1 get "profileID";
 
                         [_remotePosition,_taskPosition,_taskEnemySide,_taskEnemyFaction,_HVTProfile1] call ALIVE_fnc_taskCreateVehicleInsertionForUnits;
 
@@ -454,7 +454,7 @@ switch (_taskState) do {
                         _extractionPosition = [_taskPosition, 4000, 1, true] call ALIVE_fnc_getPositionDistancePlayers;
 
                         _HVTProfile1 = [_units,_taskEnemySide,_taskEnemyFaction,_taskPosition,random(360),_taskEnemyFaction,true] call ALIVE_fnc_createProfileEntity;
-                        _HVTProfile1ID = _HVTProfile1 select 2 select 4;
+                        _HVTProfile1ID = _HVTProfile1 get "profileID";
 
                         [_remotePosition,_taskPosition,_extractionPosition,_taskEnemySide,_taskEnemyFaction,_HVTProfile1] call ALIVE_fnc_taskCreateVehicleExtractionForUnits;
 
@@ -514,12 +514,12 @@ switch (_taskState) do {
 
                     _profile = _x;
 
-                    _active = _profile select 2 select 1;
-                    _inCargo = _profile select 2 select 9;
+                    _active = _profile get "active";
+                    _inCargo = _profile get "vehiclesInCargoOf";
 
                     if(_active) then {
 
-                        _group = _profile select 2 select 13;
+                        _group = _profile get "group";
                         _position = getPos leader _group;
                         [_position,_taskEnemySide,_taskPlayers,_taskID,"HVT"] call ALIVE_fnc_taskCreateMarkersForPlayers;
 
@@ -531,7 +531,7 @@ switch (_taskState) do {
                                 _cargoProfile = [ALIVE_profileHandler, "getProfile", _cargoProfileID] call ALIVE_fnc_profileHandler;
 
                                 if!(isNil "_cargoProfile") then {
-                                    _position = _cargoProfile select 2 select 2;
+                                    _position = _cargoProfile get "position";
                                     [_position,_taskEnemySide,_taskPlayers,_taskID,"HVT"] call ALIVE_fnc_taskCreateMarkersForPlayers;
 
                                     if(_HVTSpawnType == "extraction") then {
@@ -555,7 +555,7 @@ switch (_taskState) do {
                             } forEach _inCargo;
                         }else{
 
-                            _position = _x select 2 select 2;
+                            _position = _x get "position";
                             [_position,_taskEnemySide,_taskPlayers,_taskID,"HVT"] call ALIVE_fnc_taskCreateMarkersForPlayers;
 
                             if(_HVTSpawnType == "extraction") then {

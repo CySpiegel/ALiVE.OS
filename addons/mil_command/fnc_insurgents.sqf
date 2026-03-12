@@ -53,7 +53,7 @@ if (isnil "_pos") exitwith {};
 
 
 waituntil {sleep 0.5; [_profile,"active"] call ALiVE_fnc_HashGet};
-waituntil {sleep 0.5; !isnil {(_profile select 2 select 13)} && {!isnull (_profile select 2 select 13)}};
+waituntil {sleep 0.5; !isnil {(_profile get "group")} && {!isnull (_profile get "group")}};
 
 
 
@@ -62,7 +62,7 @@ if (_type == "entity") then {
 
     private ["_driver","_gunner"];
 
-    private _group = _profile select 2 select 13;
+    private _group = _profile get "group";
     private _units = +(units _group);
 
     waituntil {

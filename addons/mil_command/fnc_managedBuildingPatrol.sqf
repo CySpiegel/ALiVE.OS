@@ -34,10 +34,10 @@ _args = _this select 3;
 _state = _this select 4;
 _debug = _this select 5;
 
-_profileID = _profile select 2 select 4;
-_leader = _profile select 2 select 10;
-_group = _profile select 2 select 13;
-_units = _profile select 2 select 21;
+_profileID = _profile get "profileID";
+_leader = _profile get "leader";
+_group = _profile get "group";
+_units = _profile get "units";
 
 _nextState = _state;
 _nextStateArgs = [];

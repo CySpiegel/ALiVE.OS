@@ -39,15 +39,15 @@ private _hitChance = 1;
 private _critChance = 0;            // simulates hit such as a helicopter using rocket, inf using rpg
 private _critDamage = 0;
 
-if ((_attacker select 2 select 5) == "entity") then {               // [_attacker,"type"] call ALiVE_fnc_hashGet
+if ((_attacker get "type") == "entity") then {               // [_attacker,"type"] call ALiVE_fnc_hashGet
 
     //--------------------------
     // attacker is infantry squad
     //--------------------------
 
-    private _unitCount = count (_attacker select 2 select 11);      // [_attacker,"unitClasses"] call ALiVE_fnc_hashGet
+    private _unitCount = count (_attacker get "unitClasses");      // [_attacker,"unitClasses"] call ALiVE_fnc_hashGet
 
-    if ((_victim select 2 select 5) == "entity") then {             // [_victim,"type"] call ALiVE_fnc_hashGet
+    if ((_victim get "type") == "entity") then {             // [_victim,"type"] call ALiVE_fnc_hashGet
         // victim is infantry squad
         // figure damage of inf vs inf
 
@@ -59,7 +59,7 @@ if ((_attacker select 2 select 5) == "entity") then {               // [_attacke
         // victim is in vehicle(s)
         // figure damage of inf vs veh
 
-        private _victimObjectType = _victim select 2 select 6;      // [_victim,"objectType"] call ALiVE_fnc_hashGet
+        private _victimObjectType = _victim get "objectType";      // [_victim,"objectType"] call ALiVE_fnc_hashGet
 
         switch (toLower _victimObjectType) do {
             case "car": {
@@ -123,11 +123,11 @@ if ((_attacker select 2 select 5) == "entity") then {               // [_attacke
         // victim is infantry squad
         // figure damage of veh vs inf
 
-        private _attackerObjectType = _attacker select 2 select 6; // [_attacker,"objectType"] call ALiVE_fnc_hashGet
+        private _attackerObjectType = _attacker get "objectType"; // [_attacker,"objectType"] call ALiVE_fnc_hashGet
 
         switch (toLower _attackerObjectType) do {
             case "car": {
-                private _attackerVehicleClass = _attacker select 2 select 11; // [_attacker,"vehicleClass"] call ALiVE_fnc_hashGet
+                private _attackerVehicleClass = _attacker get "vehicleClass"; // [_attacker,"vehicleClass"] call ALiVE_fnc_hashGet
 
                 if ([_attackerVehicleClass] call ALiVE_fnc_isArmed) then {
                     _hitChance = 0.80;
@@ -135,8 +135,8 @@ if ((_attacker select 2 select 5) == "entity") then {               // [_attacke
                     _critChance = 0.15;
                     _critDamage = 1;
                 } else {
-                    private _commandingEntity = [MOD(profileHandler),"getProfile", (_attacker select 2 select 8) select 0] call ALiVE_fnc_profileHandler;
-                    private _unitCount = count (_attacker select 2 select 11);
+                    private _commandingEntity = [MOD(profileHandler),"getProfile", (_attacker get "entitiesInCommandOf") select 0] call ALiVE_fnc_profileHandler;
+                    private _unitCount = count (_attacker get "vehicleClass");
 
                     _hitChance = 0.75;
                     _damageOutput = 0.008 * _unitCount;
@@ -145,7 +145,7 @@ if ((_attacker select 2 select 5) == "entity") then {               // [_attacke
                 };
             };
             case "truck": {
-                private _attackerVehicleClass = _attacker select 2 select 11; // [_attacker,"vehicleClass"] call ALiVE_fnc_hashGet
+                private _attackerVehicleClass = _attacker get "vehicleClass"; // [_attacker,"vehicleClass"] call ALiVE_fnc_hashGet
 
                 if ([_attackerVehicleClass] call ALiVE_fnc_isArmed) then {
                     _hitChance = 0.80;
@@ -153,8 +153,8 @@ if ((_attacker select 2 select 5) == "entity") then {               // [_attacke
                     _critChance = 0.15;
                     _critDamage = 1.1;
                 } else {
-                    private _commandingEntity = [MOD(profileHandler),"getProfile", (_attacker select 2 select 8) select 0] call ALiVE_fnc_profileHandler;
-                    private _unitCount = count (_attacker select 2 select 11);
+                    private _commandingEntity = [MOD(profileHandler),"getProfile", (_attacker get "entitiesInCommandOf") select 0] call ALiVE_fnc_profileHandler;
+                    private _unitCount = count (_attacker get "vehicleClass");
 
                     _hitChance = 0.75;
                     _damageOutput = 0.008 * _unitCount;
@@ -169,7 +169,7 @@ if ((_attacker select 2 select 5) == "entity") then {               // [_attacke
                 _critDamage = 1.1;
             };
             case "tank": {
-                private _attackerVehicleClass = _attacker select 2 select 11; // [_attacker,"vehicleClass"] call ALiVE_fnc_hashGet
+                private _attackerVehicleClass = _attacker get "vehicleClass"; // [_attacker,"vehicleClass"] call ALiVE_fnc_hashGet
 
                 switch true do {
                     case ([_attackerVehicleClass] call ALiVE_fnc_isAA): {
@@ -179,8 +179,8 @@ if ((_attacker select 2 select 5) == "entity") then {               // [_attacke
                         _critDamage = 1.5;
                     };
                     case ([_attackerVehicleClass] call ALiVE_fnc_isArtillery): {
-                        private _attackerPos = _attacker select 2 select 2; // [_attacker,"position"] call ALiVE_fnc_hashGet
-                        private _victimPos = _victim select 2 select 2;     // [_victim,"position"] call ALiVE_fnc_hashGet
+                        private _attackerPos = _attacker get "position"; // [_attacker,"position"] call ALiVE_fnc_hashGet
+                        private _victimPos = _victim get "position";     // [_victim,"position"] call ALiVE_fnc_hashGet
                         private _attackDistance = _attackerPos distance2D _victimPos;
 
                         if (_attackDistance < 300) then {
@@ -238,8 +238,8 @@ if ((_attacker select 2 select 5) == "entity") then {               // [_attacke
         // victim is in vehicle(s)
         // figure damage of veh vs veh
 
-        private _attackerObjectType = toLower (_attacker select 2 select 6);    // [_attacker,"objectType"] call ALiVE_fnc_hashGet
-        private _victimObjectType = toLower (_victim select 2 select 6);        // [_victim,"objectType"] call ALiVE_fnc_hashGet
+        private _attackerObjectType = toLower (_attacker get "objectType");    // [_attacker,"objectType"] call ALiVE_fnc_hashGet
+        private _victimObjectType = toLower (_victim get "objectType");        // [_victim,"objectType"] call ALiVE_fnc_hashGet
 
         switch (_attackerObjectType) do {
             case "car": {
@@ -327,7 +327,7 @@ if ((_attacker select 2 select 5) == "entity") then {               // [_attacke
                 };
             };
             case "tank": {
-                private _attackerVehicleClass = _attacker select 2 select 11; // [_attacker,"vehicleClass"] call ALiVE_fnc_hashGet
+                private _attackerVehicleClass = _attacker get "vehicleClass"; // [_attacker,"vehicleClass"] call ALiVE_fnc_hashGet
 
                 switch true do {
                     case ([_attackerVehicleClass] call ALiVE_fnc_isAA): {
@@ -344,8 +344,8 @@ if ((_attacker select 2 select 5) == "entity") then {               // [_attacke
                         };
                     };
                     case ([_attackerVehicleClass] call ALiVE_fnc_isArtillery): {
-                        private _attackerPos = _attacker select 2 select 2; // [_attacker,"position"] call ALiVE_fnc_hashGet
-                        private _victimPos = _victim select 2 select 2;     // [_victim,"position"] call ALiVE_fnc_hashGet
+                        private _attackerPos = _attacker get "position"; // [_attacker,"position"] call ALiVE_fnc_hashGet
+                        private _victimPos = _victim get "position";     // [_victim,"position"] call ALiVE_fnc_hashGet
                         private _attackDistance = _attackerPos distance2D _victimPos;
 
                         if (_attackDistance < 300) then {

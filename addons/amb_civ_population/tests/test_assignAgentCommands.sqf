@@ -58,7 +58,7 @@ _agents = [ALIVE_agentHandler,"getAgents"] call ALIVE_fnc_agentHandler;
 STAT("Assign Command To All Agents");
 
 {
-    _type = _x select 2 select 4;
+    _type = _x get "type";
 
     if(_type == "agent") then {
         _x call ALIVE_fnc_inspectHash;

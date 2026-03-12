@@ -124,7 +124,7 @@ _maxWaypoints = 200;
 _waypointDestination = getPos player;
 
 {
-    _profileType = _x select 2 select 5; //[_x,"type"] call ALIVE_fnc_hashGet;
+    _profileType = _x get "type"; //[_x,"type"] call ALIVE_fnc_hashGet;
 
     if(_profileType == "entity") then {
         if(_forEachIndex < _maxWaypoints) then {

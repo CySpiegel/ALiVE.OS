@@ -128,7 +128,7 @@ private _faction = _this select 0;
             sleep 10;
 
             {
-                private _profileType = _x select 2 select 5;
+                private _profileType = _x get "type";
 
                 if(_profileType == "entity") then {
                     [_x, "destroy"] call ALIVE_fnc_profileEntity;
@@ -174,7 +174,7 @@ private _faction = _this select 0;
             sleep 10;
 
             {
-                _profileType = _x select 2 select 5;
+                _profileType = _x get "type";
 
                 if(_profileType == "entity") then {
                     [_x, "destroy"] call ALIVE_fnc_profileEntity;
@@ -220,7 +220,7 @@ private _faction = _this select 0;
             sleep 10;
 
             {
-                _profileType = _x select 2 select 5;
+                _profileType = _x get "type";
 
                 if(_profileType == "entity") then {
                     [_x, "destroy"] call ALIVE_fnc_profileEntity;

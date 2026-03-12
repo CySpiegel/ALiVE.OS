@@ -426,7 +426,7 @@ switch (_operation) do {
 		_civID = _civ getVariable ["agentID", ""];
 		if (_civID != "") then {
 			_civProfile = [ALIVE_agentHandler, "getAgent", _civID] call ALIVE_fnc_agentHandler;
-			_clusterID = _civProfile select 2 select 9;
+			_clusterID = _civProfile get "vehiclesInCargoOf";
 
 			//-- Set town hostility
 			_cluster = [ALIVE_clusterHandler, "getCluster", _clusterID] call ALIVE_fnc_clusterHandler;

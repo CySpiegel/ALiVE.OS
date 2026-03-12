@@ -95,8 +95,8 @@ switch (_taskState) do {
 
             _vehicleProfile = [ALIVE_profileHandler, "getProfile", _targetVehicle] call ALIVE_fnc_profileHandler;
             _vehicleProfile call ALIVE_fnc_inspectHash;
-            _vehiclePosition = _vehicleProfile select 2 select 2;
-            _vehicleType = _vehicleProfile select 2 select 11;
+            _vehiclePosition = _vehicleProfile get "position";
+            _vehicleType = _vehicleProfile get "vehicleClass";
             _vehicleName = getText(configFile >> "CfgVehicles" >> _vehicleType >> "displayName");
 
             private["_stagingPosition","_dialogOptions","_dialogOption"];
@@ -264,8 +264,8 @@ switch (_taskState) do {
             _profiles = [_vehiclesState,"profiles"] call ALIVE_fnc_hashGet;
 
             {
-                _position = _x select 2 select 2;
-                _objectType = _x select 2 select 6;
+                _position = _x get "position";
+                _objectType = _x get "objectType";
                 [_position,_taskEnemySide,_taskPlayers,_taskID,"vehicle",_objectType] call ALIVE_fnc_taskCreateMarkersForPlayers;
 
             } forEach _profiles;

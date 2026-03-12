@@ -3418,11 +3418,11 @@ switch (_operation) do {
             _profile = _args select 1;
 
             /*
-            _profileData pushBack (_profile select 2 select 1); // active
-            _profileData pushBack (_profile select 2 select 3); // side
-            _profileData pushBack (_profile select 2 select 2); // position
-            _profileData pushBack (_profile select 2 select 13); // group
-            _profileData pushBack (_profile select 2 select 16); // waypoints
+            _profileData pushBack (_profile get "active"); // active
+            _profileData pushBack (_profile get "side"); // side
+            _profileData pushBack (_profile get "position"); // position
+            _profileData pushBack (_profile get "group"); // group
+            _profileData pushBack (_profile get "waypoints"); // waypoints
             */
 
             if(count(_profile) > 0) then {

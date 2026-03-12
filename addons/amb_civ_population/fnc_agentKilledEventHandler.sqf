@@ -40,8 +40,8 @@ if (isnil "_agent" || {!isServer}) exitwith {};
 // log event
 
 private _position = getPosASL _unit;
-private _faction = _agent select 2 select 7;
-private _side = _agent select 2 select 8;
+private _faction = _agent get "faction";
+private _side = _agent get "side";
 
 private _event = ['AGENT_KILLED', [_position,_faction,_side,_killerSide],"Agent"] call ALIVE_fnc_event;
 private _eventID = [ALIVE_eventLog, "addEvent",_event] call ALIVE_fnc_eventLog;

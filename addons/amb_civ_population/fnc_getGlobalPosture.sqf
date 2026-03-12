@@ -28,8 +28,8 @@ private _activeClusters = [ALIVE_clusterHandler, "getActive"] call ALIVE_fnc_clu
 
 {
     private _cluster = _x;
-    private _position = _cluster select 2 select 2;
-    private _size = _cluster select 2 select 3;
+    private _position = _cluster get "position";
+    private _size = _cluster get "agentID";
     private _clusterHostility = [_cluster, "hostility"] call ALIVE_fnc_hashGet;
 
     private _nearUnits = [_cluster,_position, (_size*2)] call ALIVE_fnc_getAgentEnemyNear;

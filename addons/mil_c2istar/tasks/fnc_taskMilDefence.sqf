@@ -304,7 +304,7 @@ switch (_taskState) do {
             {
                 _position = (_remotePosition getPos [(random 200), (random 200)]);
                 _profiles = [_x, _position, random(360), true, _enemyFaction, true] call ALIVE_fnc_createProfilesFromGroupConfig;
-                _profileID = _profiles select 0 select 2 select 4;
+                _profileID = (_profiles select 0) get "profileID";
                 _position = (_taskPosition getPos [(random 40), (random 40)]);
                 _profileWaypoint = [_position, 100, "MOVE", "FULL", 100, [], "LINE", "NO CHANGE", "SAFE"] call ALIVE_fnc_createProfileWaypoint;
                 [(_profiles select 0), "addWaypoint", _profileWaypoint] call ALIVE_fnc_profileEntity;
@@ -336,7 +336,7 @@ switch (_taskState) do {
                 {
                     _position = (_remotePosition getPos [(random 200), (random 200)]);
                     _profiles = [_x, _position, random(360), true, _enemyFaction, true] call ALIVE_fnc_createProfilesFromGroupConfig;
-                    _profileID = _profiles select 0 select 2 select 4;
+                    _profileID = (_profiles select 0) get "profileID";
                     _position = (_taskPosition getPos [(random 40), (random 40)]);
                     _profileWaypoint = [_position, 100, "MOVE", "FULL", 100, [], "LINE", "NO CHANGE", "SAFE"] call ALIVE_fnc_createProfileWaypoint;
                     [(_profiles select 0), "addWaypoint", _profileWaypoint] call ALIVE_fnc_profileEntity;
@@ -399,7 +399,7 @@ switch (_taskState) do {
                 _totalDistance = 0;
 
                 {
-                    _position = _x select 2 select 2;
+                    _position = _x get "position";
                     _distance = _position distance _taskPosition;
                     _totalDistance = _totalDistance + _distance;
                 } forEach _entities;

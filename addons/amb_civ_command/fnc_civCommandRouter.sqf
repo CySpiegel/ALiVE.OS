@@ -148,15 +148,15 @@ switch(_operation) do {
 
             _args params ["_agent","_commands"];
 
-            private _agentID = _agent select 2 select 3; //[_agent,"agentID"] call ALIVE_fnc_hashGet;
+            private _agentID = _agent get "agentID"; //[_agent,"agentID"] call ALIVE_fnc_hashGet;
 
             // get the active command vars
             private _activeCommand = _commands select 0;
 
             _activeCommand params ["_commandName","_commandType","_commandArgs"];
 
-            private _debug = _logic select 2 select 0; //[logic,"debug"] call ALIVE_fnc_hashGet;
-            private _commandState = _logic select 2 select 1; //[logic,"commandState"] call ALIVE_fnc_hashGet;
+            private _debug = _logic get "debug"; //[logic,"debug"] call ALIVE_fnc_hashGet;
+            private _commandState = _logic get "active"; //[logic,"commandState"] call ALIVE_fnc_hashGet;
 
             // DEBUG -------------------------------------------------------------------------------------
             if(_debug) then {
@@ -182,7 +182,7 @@ switch(_operation) do {
                     [_commandState, _agentID, [_agent, _activeCommand]] call ALIVE_fnc_hashSet;
 
                     // if the managed commands loop is not running start it
-                    private _isManaging = _logic select 2 select 2;
+                    private _isManaging = _logic get "position";
                     if!(_isManaging) then {
                         [_logic,"startManagement"] call MAINCLASS;
                     };
@@ -205,10 +205,10 @@ switch(_operation) do {
         if(_args isEqualType []) then {
 
             private _agent = _args;
-            private _agentID = _agent select 2 select 3; //[_logic,"agentID"] call ALIVE_fnc_hashGet;
+            private _agentID = _agent get "agentID"; //[_logic,"agentID"] call ALIVE_fnc_hashGet;
 
-            private _debug = _logic select 2 select 0;
-            private _commandState = _logic select 2 select 1;
+            private _debug = _logic get "debug";
+            private _commandState = _logic get "active";
 
             // does the profile have currently active commands
             if(_agentID in keys _commandState) then {
@@ -256,7 +256,7 @@ switch(_operation) do {
                 // if there are no active commands shut down the
                 // management loop if it is running
                 if(count (_commandState select 1) == 0) then {
-                    private _isManaging = _logic select 2 select 2;
+                    private _isManaging = _logic get "position";
                     if(_isManaging) then {
                         [_logic,"stopManagement"] call MAINCLASS;
                     };
@@ -268,8 +268,8 @@ switch(_operation) do {
 
     case "startManagement": {
 
-        private _debug = _logic select 2 select 0;
-        private _commandState = _logic select 2 select 1;
+        private _debug = _logic get "debug";
+        private _commandState = _logic get "active";
 
         // DEBUG -------------------------------------------------------------------------------------
         if(_debug) then {
@@ -303,12 +303,12 @@ switch(_operation) do {
                         private _activeCommand = _x;
 
                         private _agent = _activeCommand select 0;
-                        private _agentID = _agent select 2 select 3; //[_logic,"agentID"] call ALIVE_fnc_hashGet;
+                        private _agentID = _agent get "agentID"; //[_logic,"agentID"] call ALIVE_fnc_hashGet;
 
                         // DEBUG -------------------------------------------------------------------------------------
                         if(_debug) then {
                             [_agent, "debug", false] call ALIVE_fnc_civilianAgent;
-                            [_agent, "position", position (_agent select 2 select 5)] call ALIVE_fnc_civilianAgent;
+                            [_agent, "position", position (_agent get "unit")] call ALIVE_fnc_civilianAgent;
                             [_agent, "debug", true] call ALIVE_fnc_civilianAgent;
                         };
                         // DEBUG -------------------------------------------------------------------------------------

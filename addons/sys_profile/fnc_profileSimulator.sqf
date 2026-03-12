@@ -101,12 +101,12 @@ if (!_simAttacks) then {
 
                     // gather info on this profile
 
-                    private _profilePosition = _profile select 2 select 2;
-                    private _isPlayer = _profile select 2 select 30;
+                    private _profilePosition = _profile get "position";
+                    private _isPlayer = _profile get "isPlayer";
 
                     // determine if entity occupies a vehicle
-                    private _vehiclesInCommandOf = _profile select 2 select 8;
-                    private _vehiclesInCargoOf = _profile select 2 select 9;
+                    private _vehiclesInCommandOf = _profile get "entitiesInCommandOf";
+                    private _vehiclesInCargoOf = _profile get "entitiesInCargoOf";
 
                     private _vehicleCommander = false;
                     private _isAir = false;
@@ -119,7 +119,7 @@ if (!_simAttacks) then {
                             private _vehicle = [MOD(ProfileHandler),"getProfile", _x] call ALiVE_fnc_ProfileHandler;
 
                             // if engineOn and vehicleClass is air vehicle
-                            if (!isnil "_vehicle" && {(_vehicle select 2 select 15)} && {(_vehicle select 2 select 11) isKindOf "Air"}) then {
+                            if (!isnil "_vehicle" && {(_vehicle get "engineOn")} && {(_vehicle get "vehicleClass") isKindOf "Air"}) then {
                                 _isAir = true;
                             };
                         } foreach _vehiclesInCommandOf;
@@ -135,7 +135,7 @@ if (!_simAttacks) then {
                     // check for combat opportunities
                     if (!_vehicleCargo && !_isPlayer && !_isAir && !_combat) then {
                         // get enemy sides
-                        private _side = _profile select 2 select 3;
+                        private _side = _profile get "side";
                         private _sideObj = [_side] call ALiVE_fnc_sideTextToObject;
                         private _sidesEnemy = [];
                         if (_sideObj getfriend east < 0.6) then {_sidesEnemy pushback "EAST"};
@@ -145,12 +145,12 @@ if (!_simAttacks) then {
                         // find and attack enemy profiles in-range
                         // only attack non-player, inactive entities
 
-                        private _nearEnemies = [_profilePosition, _combatRange, [_sidesEnemy,"entity","none", {!(_x select 2 select 1) && !(_x select 2 select 30)}], true] call ALiVE_fnc_getNearProfiles;
-                        _nearEnemies = _nearEnemies apply {_x select 2 select 4};
+                        private _nearEnemies = [_profilePosition, _combatRange, [_sidesEnemy,"entity","none", {!(_x get "active") && !(_x get "isPlayer")}], true] call ALiVE_fnc_getNearProfiles;
+                        _nearEnemies = _nearEnemies apply {_x get "profileID"};
 
                         if !(_nearEnemies isEqualTo []) then {
 
-                            private _profileID = _profile select 2 select 4;
+                            private _profileID = _profile get "profileID";
 
                             private _profileAttack = [nil,"create", [_profilePosition,_profileID,_nearEnemies,_side]] call ALiVE_fnc_profileAttack;
                             private _attackID = [MOD(profileCombatHandler),"addAttack", _profileAttack] call ALiVE_fnc_profileCombatHandler;
@@ -165,13 +165,13 @@ if (!_simAttacks) then {
                     };
 
 
-                    private _waypoints = _profile select 2 select 16;
+                    private _waypoints = _profile get "waypoints";
 
                     if (!_isPlayer && !_vehicleCargo && !_combat) then {
                         if (!(_waypoints isEqualTo [])) then {
                             // profile has waypoints
 
-                            private _active = _profile select 2 select 1;
+                            private _active = _profile get "active";
                             if (!_active) then {
 
                                 // profile is not spawned, simulate movement
@@ -182,7 +182,7 @@ if (!_simAttacks) then {
                                 private _statements = [_activeWaypoint,"statements"] call ALiVE_fnc_hashGet;
                                 private _distanceToWaypoint = _profilePosition distance2D _destination;
 
-                                private _speedPerSecondArray = _profile select 2 select 22;
+                                private _speedPerSecondArray = _profile get "speedPerSecond";
                                 private _speedPerSecond = _speedPerSecondArray select 1;
 
                                 switch ([_activeWaypoint,"speed"] call ALiVE_fnc_hashGet) do {
@@ -248,9 +248,9 @@ if (!_simAttacks) then {
                                         };
 
                                         if (_waypointComplete) then {
-                                            private _isCycling = _profile select 2 select 25;
+                                            private _isCycling = _profile get "isCycling";
                                             if (_isCycling) then {
-                                                private _waypointsCompleted = _profile select 2 select 17;
+                                                private _waypointsCompleted = _profile get "waypointsCompleted";
                                                 _waypointsCompleted pushback _activeWaypoint;
                                             };
 
@@ -317,9 +317,9 @@ if (!_simAttacks) then {
                                             if (isnil {[_profile,"boat"] call ALiVE_fnc_hashGet}) then {
                                                 if (_debug) then {["Profile Simulator is adding a boat to entity profile %1",_profileID] call ALiVE_fnc_dump};
 
-                                                private _unitPositions = _profile select 2 select 18;
+                                                private _unitPositions = _profile get "positions";
                                                 private _faction = [_profile, "faction"] call ALiVE_fnc_hashGet;
-                                                private _side = _profile select 2 select 3;
+                                                private _side = _profile get "side";
 
                                                 private _boatTypes = [(count _unitPositions) - 1, [_faction],"SHIP"] call ALiVE_fnc_findVehicleType;
                                                 private _boatType = if (count _boatTypes > 0) then {selectRandom _boatTypes} else {"C_Boat_Transport_02_F"};
@@ -386,7 +386,7 @@ if (!_simAttacks) then {
 
                                 // profile is spawned, update positions
 
-                                private _group = _profile select 2 select 13;
+                                private _group = _profile get "group";
                                 private _leader = leader _group;
                                 private _newPosition = getPosATL _leader;
 
@@ -465,9 +465,9 @@ if (!_simAttacks) then {
 
                                                     if (_debug) then {["Profile Simulator is adding a boat to entity profile (LIVE) %1",_profileID] call ALiVE_fnc_dump};
 
-                                                    private _unitPositions = _profile select 2 select 18;
+                                                    private _unitPositions = _profile get "positions";
                                                     private _faction = [_profile, "faction"] call ALiVE_fnc_hashGet;
-                                                    private _side = _profile select 2 select 3;
+                                                    private _side = _profile get "side";
 
                                                     private _boatTypes = [(count _unitPositions) - 1, [_faction],"SHIP"] call ALiVE_fnc_findVehicleType;
                                                     private _boatType = if (count _boatTypes > 0) then {selectRandom _boatTypes} else {"C_Boat_Transport_02_F"};
@@ -503,10 +503,10 @@ if (!_simAttacks) then {
                         } else {
                             // profile has no waypoints
 
-                            private _active = _profile select 2 select 1;
+                            private _active = _profile get "active";
                             if (_active) then {
-                                private _group = _profile select 2 select 13;
-                                private _leader = _profile select 2 select 10;
+                                private _group = _profile get "group";
+                                private _leader = _profile get "leader";
                                 private _currentWaypoint = currentWaypoint _group;
 
                                 if ((_currentWaypoint < count waypoints _group) && (_currentWaypoint > 0)) then {
@@ -565,7 +565,7 @@ if (!_simAttacks) then {
                     };
 
                     if (_isPlayer) then {
-                        private _leader = _profile select 2 select 10;
+                        private _leader = _profile get "leader";
                         private _newPosition = getPosATL _leader;
 
                         // verify that position is valid
@@ -665,15 +665,15 @@ if (!_simAttacks) then {
                                 _target = [MOD(profileHandler),"getProfile", _targetIDs select 0] call ALiVE_fnc_profileHandler;
 
                                 // if target is active, remove it
-                                if (isnil "_target" || {_target select 2 select 1}) then {
+                                if (isnil "_target" || {_target get "active"}) then {
                                     _targetIDs deleteat 0;
                                     _target = nil;
                                 };
                             };
 
                             if (!isnil "_target") then {
-                                private _attackerPos = _attacker select 2 select 2;                     // [_attacker,"position"] call ALiVE_fnc_hashGet;
-                                private _targetPos = _target select 2 select 2;                         // [_target,"position"] call ALiVE_fnc_hashGet;
+                                private _attackerPos = _attacker get "position";                     // [_attacker,"position"] call ALiVE_fnc_hashGet;
+                                private _targetPos = _target get "position";                         // [_target,"position"] call ALiVE_fnc_hashGet;
 
                               //  private _maxEngagementRange = [_attack,"maxRange"] call ALiVE_fnc_hashGet;
                                 private _maxEngagementRange = [MOD(profileCombatHandler),"combatRange"] call ALiVE_fnc_hashGet;
@@ -683,7 +683,7 @@ if (!_simAttacks) then {
                                     // vehicles entity commands, or just the entity
 
                                     private _profilesToAttackWith = [];
-                                    private _attackerVehiclesInCommandOf = _attacker select 2 select 8;
+                                    private _attackerVehiclesInCommandOf = _attacker get "vehiclesInCommandOf";
 
                                     {
                                         private _vehicleUnderCommand = [MOD(profileHandler),"getProfile", _x] call ALiVE_fnc_profileHandler;
@@ -701,7 +701,7 @@ if (!_simAttacks) then {
                                     // get targets to attack
 
                                     private _targetsToAttack = [];
-                                    private _targetVehiclesInCommandOf = _target select 2 select 8;
+                                    private _targetVehiclesInCommandOf = _target get "vehiclesInCommandOf";
 
                                     {
                                         private _targetToAttack = [MOD(profileHandler),"getProfile", _x] call ALiVE_fnc_profileHandler;
@@ -723,8 +723,8 @@ if (!_simAttacks) then {
                                         // if vehicle is destroyed, unassigned it from it's entity
 
                                         private _targetToAttack = _targetsToAttack select 0;
-                                        private _targetToAttackID = _targetToAttack select 2 select 4;
-                                        private _targetToAttackType = _targetToAttack select 2 select 5;
+                                        private _targetToAttackID = _targetToAttack get "profileID";
+                                        private _targetToAttackType = _targetToAttack get "type";
 
                                         private _profileToAttackHealth = [];
 
@@ -738,7 +738,7 @@ if (!_simAttacks) then {
                                             // init hitpoint values
 
                                             if (_profileToAttackHealth isEqualTo []) then {
-                                                private _vehicleClass = _targetToAttack select 2 select 11;
+                                                private _vehicleClass = _targetToAttack get "unitClasses";
                                                 private _totalHitpoints = _vehicleClass call ALiVE_fnc_configGetVehicleHitPoints;
 
                                                 if (_totalHitpoints isEqualTo []) then {
@@ -809,15 +809,15 @@ if (!_simAttacks) then {
                                                         _toBeKilled pushbackunique [_attacker,_targetToAttack];
                                                         _targetsToAttack deleteAt 0;
 
-                                                        private _attackTargetsKilled = _attack select 2 select 9;
-                                                        _attackTargetsKilled pushback (_targetToAttack select 2 select 4);
+                                                        private _attackTargetsKilled = _attack get "targetsKilled";
+                                                        _attackTargetsKilled pushback (_targetToAttack get "profileID");
                                                     };
                                                 } else {
                                                     _toBeKilled pushbackunique [_attacker,_targetToAttack];
                                                     _targetsToAttack deleteAt 0;
 
-                                                    private _attackTargetsKilled = _attack select 2 select 9;
-                                                    _attackTargetsKilled pushback (_targetToAttack select 2 select 4);
+                                                    private _attackTargetsKilled = _attack get "targetsKilled";
+                                                    _attackTargetsKilled pushback (_targetToAttack get "profileID");
                                                 };
                                             } else {
                                                 // attacking vehicle
@@ -874,15 +874,15 @@ if (!_simAttacks) then {
                                                     _toBeKilled pushbackunique [_attacker,_targetToAttack];
                                                     _targetsToAttack deleteAt 0;
 
-                                                    private _attackTargetsKilled = _attack select 2 select 9;
-                                                    _attackTargetsKilled pushback (_targetToAttack select 2 select 4);
+                                                    private _attackTargetsKilled = _attack get "targetsKilled";
+                                                    _attackTargetsKilled pushback (_targetToAttack get "profileID");
 
                                                     // if this vehicle is the last vehicle it's commanding entity controls
                                                     // kill the commanding entity as well
 
                                                     {
                                                         private _entityInCommandOf = [MOD(profileHandler),"getProfile", _x] call ALiVE_fnc_profileHandler;
-                                                        private _assignedVehicles = _entityInCommandOf select 2 select 8;
+                                                        private _assignedVehicles = _entityInCommandOf get "vehiclesInCommandOf";
 
                                                         if (_assignedVehicles isEqualTo [_targetToAttackID]) then {
                                                             _toBeKilled pushbackunique [_attacker, [MOD(profileHandler),"getProfile", _x] call ALiVE_fnc_profileHandler];
@@ -926,10 +926,10 @@ if (!_simAttacks) then {
 
             // remove crew from commanding entity
 
-            private _vehAssignments = _commandingEntity select 2 select 7;
+            private _vehAssignments = _commandingEntity get "vehicleAssignments";
 
             if (count (_vehAssignments select 1) > 0) then {
-                private _vehicleID = _subordinateVehicle select 2 select 4;
+                private _vehicleID = _subordinateVehicle get "profileID";
 
                 private _vehAssignment = [_vehAssignments,_vehicleID] call ALiVE_fnc_hashGet;
                 private _unitAssignments = +(_vehAssignment param [2, [], [[]]]);
@@ -953,15 +953,15 @@ if (!_simAttacks) then {
             private _killer = _x select 0;
             private _victim = _x select 1;
 
-            private _victimType = _victim select 2 select 5;
+            private _victimType = _victim get "type";
 
             if (_victimType == "entity") then {
-                private _victimPos = _victim select 2 select 2;
-                private _victimFaction = _victim select 2 select 29;
-                private _victimSide = _victim select 2 select 3;
-                private _killerSide = _killer select 2 select 3;
-                private _victimProfileID = _victim select 2 select 4;
-                private _victimObjectType = _victim select 2 select 6;
+                private _victimPos = _victim get "position";
+                private _victimFaction = _victim get "faction";
+                private _victimSide = _victim get "side";
+                private _killerSide = _killer get "side";
+                private _victimProfileID = _victim get "profileID";
+                private _victimObjectType = _victim get "objectType";
 								
                 // log event
                 private _event = ['PROFILE_KILLED', [_victimPos,_victimFaction,_victimSide,_killerSide,_victim,_killer,_victimProfileID,_victimObjectType], "ProfileSimulator"] call ALiVE_fnc_event;

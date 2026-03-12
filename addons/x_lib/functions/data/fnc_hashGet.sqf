@@ -5,12 +5,13 @@ SCRIPT(hashGet);
 Function: ALiVE_fnc_hashGet
 
 Description:
-Wrapper for CBA_fnc_hashGet
+Retrieves a value from a native Arma 3 HashMap by key.
+Supports an optional default value for missing keys.
 
 Parameters:
-Array - The hash
+HashMap - The hash
 String - The key to get value of
-Mixed - The default value to return if key not found
+Mixed (optional) - The default value to return if key not found
 
 Returns:
 Mixed - The value
@@ -31,26 +32,17 @@ ARJay
 Wolffy
 ---------------------------------------------------------------------------- */
 
-private ["_hash","_key","_default","_result"];
+private _hash = _this select 0;
+private _key = _this select 1;
 
-_hash = _this select 0;
-_key = _this select 1;
-
-//Avoid passing a non-existing hash or key to the CBA function
-if (isnil "_hash" || {isnil "_key"} || {!(typeName _hash == "ARRAY")}) exitwith {
+if (isNil "_hash" || {isNil "_key"}) exitWith {
     ["ALiVE_fnc_HashGet retrieved wrong input from %2 - %1",_this,_fnc_scriptNameParent] call ALiVE_fnc_Dump;
 };
 
-if(count _this > 2) then {
-    _default = _this select 2;
-    _result = [_hash, _key, _default] call CBA_fnc_hashGet;
+if (count _this > 2) then {
+    private _default = _this select 2;
+    _hash getOrDefault [_key, _default]
 } else {
-    _result = [_hash, _key] call CBA_fnc_hashGet;
+    private _result = _hash getOrDefault [_key, nil];
+    if !(isNil "_result") then {_result} else {nil}
 };
-// check for default value
-if(!(isNil "_result") && {typeName _result == "STRING"} && {_result == "UNDEF"} && {count _this > 2}) then {
-    _default = _this select 2;
-    _result = _default;
-};
-
-if !(isnil "_result") then {_result} else {nil};

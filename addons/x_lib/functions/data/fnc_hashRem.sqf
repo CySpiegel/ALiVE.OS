@@ -1,18 +1,18 @@
 #include "\x\alive\addons\x_lib\script_component.hpp"
-#include "\x\cba\addons\hashes\script_hashes.hpp"
 SCRIPT(hashRem);
 
 /* ----------------------------------------------------------------------------
 Function: ALiVE_fnc_hashRem
 
 Description:
-Wrapper for CBA_fnc_hashRem
+Removes a key from a native Arma 3 HashMap.
 
 Parameters:
-Array - The hash
+HashMap - The hash
 String - The key to remove
 
 Returns:
+HashMap - The hash
 
 Examples:
 (begin example)
@@ -25,14 +25,9 @@ Author:
 ARJay
 ---------------------------------------------------------------------------- */
 
-private ["_hash","_key","_defaultValue"];
+private _hash = _this select 0;
+private _key = _this select 1;
 
-_hash = _this select 0;
-_key = _this select 1;
+_hash deleteAt _key;
 
-private ["_defaultValue"];
-
-_defaultValue = _hash select HASH_DEFAULT_VALUE;
-[_hash, _key, if (isNil "_defaultValue") then { nil } else { _defaultValue }] call ALIVE_fnc_hashSet;
-
-_hash; // Return.
+_hash

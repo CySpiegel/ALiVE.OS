@@ -75,7 +75,7 @@ if(count _sideSectors > 0) then {
         _bestPlaces = [_sectorData,"bestPlaces"] call ALIVE_fnc_hashGet;
         _flatEmpty = [_sectorData,"flatEmpty"] call ALIVE_fnc_hashGet;
 
-        if("exposedHills" in (_bestPlaces select 1)) then {
+        if("exposedHills" in keys _bestPlaces) then {
             _exposedHills = [_bestPlaces,"exposedHills"] call ALIVE_fnc_hashGet;
             if(count _exposedHills > 0) then {
                 _targetPosition = (selectRandom _exposedHills);

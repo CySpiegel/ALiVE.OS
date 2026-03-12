@@ -178,7 +178,7 @@ switch(_operation) do {
 
             {
                 private _sectorData = [_x, "data",["",[],[],nil]] call ALIVE_fnc_HashGet;
-                if("clustersCiv" in (_sectorData select 1)) then {
+                if("clustersCiv" in keys _sectorData) then {
                     private _civClusters = [_sectorData,"clustersCiv"] call ALIVE_fnc_hashGet;
                     private _settlementClusters = [_civClusters,"settlement"] call ALIVE_fnc_hashGet;
                     {
@@ -196,7 +196,7 @@ switch(_operation) do {
                             [_cluster, "casualties", _clusterCasualties] call ALIVE_fnc_hashSet;
 
                             // update the hostility level
-                            if(_killerSide in (_clusterHostility select 1)) then {
+                            if(_killerSide in keys _clusterHostility) then {
                                 private _killerClusterHostility = [_clusterHostility, _killerSide] call ALIVE_fnc_hashGet;
                                 _killerClusterHostility = _killerClusterHostility + 10;
                                 [_clusterHostility,_killerSide,_killerClusterHostility] call ALIVE_fnc_hashSet;
@@ -399,7 +399,7 @@ switch(_operation) do {
                 if(!(_x == "super") && !(_x == "class")) then {
                     [_state,_x,[_logic,_x] call ALIVE_fnc_hashGet] call ALIVE_fnc_hashSet;
                 };
-            } forEach (_logic select 1);
+            } forEach (keys _logic);
 
             _result = _state;
         } else {
@@ -411,7 +411,7 @@ switch(_operation) do {
             // loop the passed hash and set vars on the class hash
             {
                 [_logic,_x,[_args,_x] call ALIVE_fnc_hashGet] call ALIVE_fnc_hashSet;
-            } forEach (_args select 1);
+            } forEach (keys _args);
         };
 
     };

@@ -141,7 +141,7 @@ switch(_operation) do {
                         case "units": {
                             private["_eastUnits","_westUnits","_civUnits","_guerUnits","_eastCount","_westCount","_civCount","_guerCount","_markerID","_alpha","_m"];
 
-                            if(_key in (_sectorData select 1)) then {
+                            if(_key in keys _sectorData) then {
 
                                 _plotData = [_sectorData, _key] call ALIVE_fnc_hashGet;
 
@@ -203,7 +203,7 @@ switch(_operation) do {
                         case "entitiesBySide": {
                             private["_eastProfiles","_westProfiles","_civProfiles","_guerProfiles","_eastCount","_westCount","_civCount","_guerCount","_markerID","_alpha", "_m"];
 
-                            if(_key in (_sectorData select 1)) then {
+                            if(_key in keys _sectorData) then {
 
                                 _plotData = [_sectorData, _key] call ALIVE_fnc_hashGet;
 
@@ -265,7 +265,7 @@ switch(_operation) do {
                         case "vehiclesBySide": {
                             private["_eastProfiles","_westProfiles","_civProfiles","_guerProfiles","_eastCount","_westCount","_civCount","_guerCount","_markerID","_alpha", "_m"];
 
-                            if(_key in (_sectorData select 1)) then {
+                            if(_key in keys _sectorData) then {
 
                                 _plotData = [_sectorData, _key] call ALIVE_fnc_hashGet;
 
@@ -327,7 +327,7 @@ switch(_operation) do {
                         case "active": {
                             private["_active","_activeCount","_markerID","_alpha", "_m"];
 
-                            if(_key in (_sectorData select 1)) then {
+                            if(_key in keys _sectorData) then {
 
                                 _plotData = [_sectorData, _key] call ALIVE_fnc_hashGet;
 
@@ -348,7 +348,7 @@ switch(_operation) do {
                         case "terrain": {
                             private["_alpha","_markerID","_m"];
 
-                            if(_key in (_sectorData select 1)) then {
+                            if(_key in keys _sectorData) then {
 
                                 _plotData = [_sectorData, _key] call ALIVE_fnc_hashGet;
 
@@ -376,7 +376,7 @@ switch(_operation) do {
                         case "terrainSamples": {
                             private["_landPositions","_shorePositions","_seaPositions","_m","_colour","_markerID","_alpha","_value"];
 
-                            if(_key in (_sectorData select 1)) then {
+                            if(_key in keys _sectorData) then {
                                 _plotData = [_sectorData, _key] call ALIVE_fnc_hashGet;
 
                                 _landPositions = [_plotData,"land"] call ALIVE_fnc_hashGet;
@@ -411,7 +411,7 @@ switch(_operation) do {
                         case "elevation": {
                             private["_m","_colour","_markerID","_alpha","_value"];
 
-                            if(_key in (_sectorData select 1)) then {
+                            if(_key in keys _sectorData) then {
                                 _plotData = [_sectorData, _key] call ALIVE_fnc_hashGet;
 
                                 _alpha = 0;
@@ -443,7 +443,7 @@ switch(_operation) do {
                         case "bestPlaces": {
                             private["_forestPositions","_hillsPositions","_meadowsPositions","_treesPositions","_housesPositions","_seaPositions","_m","_colour","_markerID","_alpha","_value"];
 
-                            if(_key in (_sectorData select 1)) then {
+                            if(_key in keys _sectorData) then {
                                 _plotData = [_sectorData, _key] call ALIVE_fnc_hashGet;
 
                                 _forestPositions = [_plotData,"forest"] call ALIVE_fnc_hashGet;
@@ -506,7 +506,7 @@ switch(_operation) do {
                         case "flatEmpty": {
                             private["_m","_colour","_markerID","_alpha","_value"];
 
-                            if(_key in (_sectorData select 1)) then {
+                            if(_key in keys _sectorData) then {
                                 _plotData = [_sectorData, _key] call ALIVE_fnc_hashGet;
 
                                 _dimensions = [20,20];
@@ -526,7 +526,7 @@ switch(_operation) do {
                         case "roads": {
                             private["_roadPositions","_crossroadPositions","_terminusPositions","_m","_colour","_markerID","_alpha","_value"];
 
-                            if(_key in (_sectorData select 1)) then {
+                            if(_key in keys _sectorData) then {
                                 _plotData = [_sectorData, _key] call ALIVE_fnc_hashGet;
 
                                 _roadPositions = [_plotData,"road"] call ALIVE_fnc_hashGet;
@@ -561,7 +561,7 @@ switch(_operation) do {
                         case "clustersMil": {
                             private["_consolidatedPositions","_airPositions","_heliPositions","_dimensions","_alpha","_position","_markerID","_m"];
 
-                            if(_key in (_sectorData select 1)) then {
+                            if(_key in keys _sectorData) then {
                                 _plotData = [_sectorData, _key] call ALIVE_fnc_hashGet;
 
                                 _consolidatedPositions = [_plotData,"consolidated"] call ALIVE_fnc_hashGet;
@@ -597,7 +597,7 @@ switch(_operation) do {
                             private["_consolidatedPositions","_powerPositions","_commsPositions","_marinePositions","_fuelPositions","_railPositions",
                             "_constructionPositions","_settlementPositions","_dimensions","_alpha","_position","_markerID","_m"];
 
-                            if(_key in (_sectorData select 1)) then {
+                            if(_key in keys _sectorData) then {
                                 _plotData = [_sectorData, _key] call ALIVE_fnc_hashGet;
 
                                 _consolidatedPositions = [_plotData,"consolidated"] call ALIVE_fnc_hashGet;
@@ -665,7 +665,7 @@ switch(_operation) do {
                         case "activeClusters": {
                             private["_cluster","_owner","_dimensions","_alpha","_color","_position","_markerID","_m"];
 
-                            if(_key in (_sectorData select 1)) then {
+                            if(_key in keys _sectorData) then {
                                 _plotData = [_sectorData, _key] call ALIVE_fnc_hashGet;
 
                                 {
@@ -705,7 +705,7 @@ switch(_operation) do {
                         case "casualties": {
                             private["_sideCasualties","_eastCount","_westCount","_civCount","_guerCount","_position","_markerID","_m","_alpha"];
 
-                            if(_key in (_sectorData select 1)) then {
+                            if(_key in keys _sectorData) then {
                                 _plotData = [_sectorData, _key] call ALIVE_fnc_hashGet;
 
                                 _sideCasualties = [_plotData,"side"] call ALIVE_fnc_hashGet;
@@ -715,19 +715,19 @@ switch(_operation) do {
                                 _civCount = 0;
                                 _guerCount = 0;
 
-                                if("EAST" in (_sideCasualties select 1)) then {
+                                if("EAST" in keys _sideCasualties) then {
                                     _eastCount = [_sideCasualties,"EAST"] call ALIVE_fnc_hashGet;
                                 };
 
-                                if("WEST" in (_sideCasualties select 1)) then {
+                                if("WEST" in keys _sideCasualties) then {
                                     _westCount = [_sideCasualties,"WEST"] call ALIVE_fnc_hashGet;
                                 };
 
-                                if("CIV" in (_sideCasualties select 1)) then {
+                                if("CIV" in keys _sideCasualties) then {
                                     _civCount = [_sideCasualties,"CIV"] call ALIVE_fnc_hashGet;
                                 };
 
-                                if("GUER" in (_sideCasualties select 1)) then {
+                                if("GUER" in keys _sideCasualties) then {
                                     _guerCount = [_sideCasualties,"GUER"] call ALIVE_fnc_hashGet;
                                 };
 

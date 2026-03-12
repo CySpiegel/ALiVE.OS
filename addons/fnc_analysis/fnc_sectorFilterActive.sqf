@@ -45,7 +45,7 @@ _filteredSectors = [];
     _sector = _x;
     _sectorData = [_sector, "data"] call ALIVE_fnc_sector;
 
-    if("active" in (_sectorData select 1)) then {
+    if("active" in keys _sectorData) then {
 
         _active = [_sectorData, "active"] call ALIVE_fnc_hashGet;
 

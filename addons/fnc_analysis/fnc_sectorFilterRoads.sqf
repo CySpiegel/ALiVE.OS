@@ -46,7 +46,7 @@ _filteredSectors = [];
     _sector = _x;
     _sectorData = [_sector, "data"] call ALIVE_fnc_sector;
 
-    if("roads" in (_sectorData select 1)) then {
+    if("roads" in keys _sectorData) then {
 
         _roads = [_sectorData, "roads"] call ALIVE_fnc_hashGet;
         _roadData = [_roads, _roadType] call ALIVE_fnc_hashGet;

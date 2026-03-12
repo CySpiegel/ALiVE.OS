@@ -159,7 +159,7 @@ switch(_operation) do {
 
         _eventsInProgress = [_logic, "eventsInProgress"] call ALIVE_fnc_hashGet;
 
-        if(_logEventID in (_eventsInProgress select 1)) then {
+        if(_logEventID in keys _eventsInProgress) then {
             _logisticsEvent = [_eventsInProgress,_logEventID] call ALIVE_fnc_hashGet;
             [_logisticsEvent,"destination",_position] call ALIVE_fnc_hashSet;
         };
@@ -180,7 +180,7 @@ switch(_operation) do {
 
         _eventsInProgress = [_logic, "eventsInProgress"] call ALIVE_fnc_hashGet;
 
-        if(_logEventID in (_eventsInProgress select 1)) then {
+        if(_logEventID in keys _eventsInProgress) then {
             [_eventsInProgress, _logEventID] call ALIVE_fnc_hashRem;
         };
 
@@ -206,7 +206,7 @@ switch(_operation) do {
 
         if (isnil "_sectorData") exitwith {};
 
-        if!("casualties" in (_sectorData select 1)) then {
+        if!("casualties" in keys _sectorData) then {
             _casualties = [] call ALIVE_fnc_hashCreate;
             [_casualties,"side",[] call ALIVE_fnc_hashCreate] call ALIVE_fnc_hashSet;
             [_casualties,"faction",[] call ALIVE_fnc_hashCreate] call ALIVE_fnc_hashSet;
@@ -218,11 +218,11 @@ switch(_operation) do {
         _factionCasualties = [_casualties,"faction"] call ALIVE_fnc_hashGet;
         _sideCasualties = [_casualties,"side"] call ALIVE_fnc_hashGet;
 
-        if!(_side in (_sideCasualties select 1)) then {
+        if!(_side in keys _sideCasualties) then {
             [_sideCasualties,_side,0] call ALIVE_fnc_hashSet;
         };
 
-        if!(_faction in (_factionCasualties select 1)) then {
+        if!(_faction in keys _factionCasualties) then {
             [_factionCasualties,_faction,0] call ALIVE_fnc_hashSet;
         };
 
@@ -260,7 +260,7 @@ switch(_operation) do {
 
         if (isnil "_sectorData") exitwith {};
 
-        if!("casualties" in (_sectorData select 1)) then {
+        if!("casualties" in keys _sectorData) then {
             _casualties = [] call ALIVE_fnc_hashCreate;
             [_casualties,"side",[] call ALIVE_fnc_hashCreate] call ALIVE_fnc_hashSet;
             [_casualties,"faction",[] call ALIVE_fnc_hashCreate] call ALIVE_fnc_hashSet;
@@ -272,11 +272,11 @@ switch(_operation) do {
         _factionCasualties = [_casualties,"faction"] call ALIVE_fnc_hashGet;
         _sideCasualties = [_casualties,"side"] call ALIVE_fnc_hashGet;
 
-        if!(_side in (_sideCasualties select 1)) then {
+        if!(_side in keys _sideCasualties) then {
             [_sideCasualties,_side,0] call ALIVE_fnc_hashSet;
         };
 
-        if!(_faction in (_factionCasualties select 1)) then {
+        if!(_faction in keys _factionCasualties) then {
             [_factionCasualties,_faction,0] call ALIVE_fnc_hashSet;
         };
 
@@ -395,13 +395,13 @@ switch(_operation) do {
 
         if (isnil "_sectorData") exitwith {};
 
-        if!("activeClusters" in (_sectorData select 1)) then {
+        if!("activeClusters" in keys _sectorData) then {
             [_sectorData,"activeClusters",[] call ALIVE_fnc_hashCreate] call ALIVE_fnc_hashSet;
         };
 
         _activeClusters = [_sectorData,"activeClusters"] call ALIVE_fnc_hashGet;
 
-        if!(_clusterID in (_activeClusters select 1)) then {
+        if!(_clusterID in keys _activeClusters) then {
             _activeCluster = [] call ALIVE_fnc_hashCreate;
             _activeCluster = [_activeCluster,"position",_position] call ALIVE_fnc_hashSet;
             _activeCluster = [_activeCluster,"type",_clusterType] call ALIVE_fnc_hashSet;
@@ -567,7 +567,7 @@ switch(_operation) do {
         {
             _sectorData = [_x,"data"] call ALIVE_fnc_hashGet;
 
-            if (!isnil "_sectorData" && {"entitiesBySide" in (_sectorData select 1)}) then {
+            if (!isnil "_sectorData" && {"entitiesBySide" in keys _sectorData}) then {
                 _entities = [_sectorData,"entitiesBySide"] call ALIVE_fnc_hashGet;
                 _sideEntities = [_entities,_side] call ALIVE_fnc_hashGet;
                 if(count _sideEntities > 0) then {
@@ -591,7 +591,7 @@ switch(_operation) do {
         {
             _sectorData = [_x,"data"] call ALIVE_fnc_hashGet;
 
-            if (!isnil "_sectorData" && {"vehiclesBySide" in (_sectorData select 1)}) then {
+            if (!isnil "_sectorData" && {"vehiclesBySide" in keys _sectorData}) then {
                 _vehicles = [_sectorData,"vehiclesBySide"] call ALIVE_fnc_hashGet;
                 _sideVehicles = [_vehicles,_side] call ALIVE_fnc_hashGet;
                 if(count _sideVehicles > 0) then {

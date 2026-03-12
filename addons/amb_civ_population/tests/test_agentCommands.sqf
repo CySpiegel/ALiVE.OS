@@ -73,7 +73,7 @@ _sectors pushback _sector;
 
 {
     _sectorData = [_x, "data"] call ALIVE_fnc_sector;
-    if("clustersCiv" in (_sectorData select 1)) then {
+    if("clustersCiv" in keys _sectorData) then {
         _civClusters = [_sectorData,"clustersCiv"] call ALIVE_fnc_hashGet;
         _settlementClusters = [_civClusters,"settlement"] call ALIVE_fnc_hashGet;
         {

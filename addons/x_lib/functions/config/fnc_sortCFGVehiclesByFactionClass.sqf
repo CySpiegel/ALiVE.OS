@@ -63,7 +63,7 @@ for "_i" from 0 to ((count _configPath) - 1) do
 
             if (!_civ && _side == 3 && (_configName isKindOf "Man" || _configName isKindOf "LandVehicle" || _configName isKindOf "Air" || _configName isKindOf "Ship")) exitwith {};
 
-            if!(_vehicleClass in (_sortedVehicles select 1)) then {
+            if!(_vehicleClass in keys _sortedVehicles) then {
                 [_sortedVehicles,_vehicleClass,[_configName]] call ALIVE_fnc_hashSet;
             }else{
                 _subSorted = [_sortedVehicles,_vehicleClass] call ALIVE_fnc_hashGet;

@@ -35,7 +35,7 @@ scopeName "main";
 if(count _taskSector > 0) then {
     _sectorData = [_taskSector,"data",["",[],[],nil]] call ALIVE_fnc_hashGet;
 
-    if("entitiesBySide" in (_sectorData select 1)) then {
+    if("entitiesBySide" in keys _sectorData) then {
 
         _entitiesInSector = [_sectorData,"entitiesBySide"] call ALIVE_fnc_hashGet;
         _sideEntities = [_entitiesInSector,_side] call ALIVE_fnc_hashGet;

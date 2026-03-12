@@ -124,7 +124,7 @@ _values = [];
 
                 if((_ammoMax > 1) && (_ammoType in _objMagazines)) then {
 
-                    if!(_ammoType in (_objAmmo select 1)) then {
+                    if!(_ammoType in keys _objAmmo) then {
 
                         _ammoConfig = configFile >> "cfgmagazines" >> _ammoType;
                         _ammoName = getText (_ammoConfig >> "displayName");
@@ -167,7 +167,7 @@ _values = [];
                 _rows pushback (_row);
                 _values pushback (_ammoName);
 
-            } foreach (_objAmmo select 1);
+            } forEach (keys _objAmmo);
 
         };
 
@@ -202,7 +202,7 @@ _values = [];
 
                 if(_ammoType in _objMagazines) then {
 
-                    if!(_ammoType in (_objAmmo select 1)) then {
+                    if!(_ammoType in keys _objAmmo) then {
 
                         _ammoConfig = configFile >> "cfgmagazines" >> _ammoType;
                         _ammoName = getText (_ammoConfig >> "displayName");
@@ -245,7 +245,7 @@ _values = [];
                 _rows pushback (_row);
                 _values pushback (_ammoName);
 
-            } foreach (_objAmmo select 1);
+            } forEach (keys _objAmmo);
 
         };
 
@@ -281,7 +281,7 @@ _values = [];
 
                 if((_ammoMax > 1) && (_ammoType in _objMagazines)) then {
 
-                    if!(_ammoType in (_objAmmo select 1)) then {
+                    if!(_ammoType in keys _objAmmo) then {
 
                         _ammoConfig = configFile >> "cfgmagazines" >> _ammoType;
                         _ammoName = getText (_ammoConfig >> "displayName");
@@ -324,7 +324,7 @@ _values = [];
                 _rows pushback (_row);
                 _values pushback (_ammoName);
 
-            } foreach (_objAmmo select 1);
+            } forEach (keys _objAmmo);
 
         };
 

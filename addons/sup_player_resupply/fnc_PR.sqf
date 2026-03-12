@@ -2538,7 +2538,7 @@ switch(_operation) do {
                                             if(_payloadClass in _groupNames) then {
                                                 _payloadInfo set [2,_x];
                                             };
-                                        } forEach (_groups select 1);
+                                        } forEach (keys _groups);
 
                                     };
 

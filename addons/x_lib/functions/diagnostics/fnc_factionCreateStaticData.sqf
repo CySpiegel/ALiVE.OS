@@ -192,7 +192,7 @@ if(_factionToGroupMappingOK) then {
                 };
 
 
-                if(_aliveCategory in (_factionCategoryGroups select 1)) then {
+                if(_aliveCategory in keys _factionCategoryGroups) then {
 
                     private _existingGroups = [_factionCategoryGroups,_aliveCategory] call ALIVE_fnc_hashGet;
 
@@ -277,7 +277,7 @@ private ["_groupCategory","_categoryGroups","_arrayContent","_groupClass","_conf
 
     ['[%1_factionCustomGroups, "%2", [%3]] call ALIVE_fnc_hashSet;',_faction,_groupCategory,_arrayContent] call ALIVE_fnc_dumpClipboard;
 
-} forEach (_factionCategoryGroups select 1);
+} forEach (keys _factionCategoryGroups);
 
 if(count(_factionCategoryGroups select 1) == 0) then {
     ['%1_typeMappings, "Air", "Air"] call ALIVE_fnc_hashSet;',_faction] call ALIVE_fnc_dumpClipboard;
@@ -319,7 +319,7 @@ for "_i" from 0 to count _config -1 do {
                     if([_class >> "scope"] call ALIVE_fnc_getConfigValue == 2) then {
                         _vehicleType = [_class >> "vehicleClass"] call ALIVE_fnc_getConfigValue;
 
-                        if!(_vehicleType in (_factionVehicles select 1)) then {
+                        if!(_vehicleType in keys _factionVehicles) then {
                             [_factionVehicles,_vehicleType,[]] call ALIVE_fnc_hashSet;
                         };
 
@@ -375,7 +375,7 @@ private ["_vehicleType","_vehicleClasses","_array","_vehicleClass","_configName"
     [_transport] call ALIVE_fnc_dumpClipboard;
     [_air] call ALIVE_fnc_dumpClipboard;
 
-} forEach (_factionVehicles select 1);
+} forEach (keys _factionVehicles);
 
 
 if(_dump) then {

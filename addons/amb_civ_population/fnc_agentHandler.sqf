@@ -160,7 +160,7 @@ switch(_operation) do {
                     if(!(_x == "super") && !(_x == "class")) then {
                         [_state,_x,[_logic,_x] call ALIVE_fnc_hashGet] call ALIVE_fnc_hashSet;
                     };
-                } forEach (_logic select 1);
+                } forEach (keys _logic);
 
                 _result = _state;
 
@@ -172,7 +172,7 @@ switch(_operation) do {
                 // loop the passed hash and set vars on the class hash
                 {
                     [_logic,_x,[_args,_x] call ALIVE_fnc_hashGet] call ALIVE_fnc_hashSet;
-                } forEach (_args select 1);
+                } forEach (keys _args);
         };
 
     };
@@ -210,7 +210,7 @@ switch(_operation) do {
             private ["_agentsCluster"];
 
             // store reference to main agent on by cluster hash
-            if(_agentCluster in (_agentsByCluster select 1)) then {
+            if(_agentCluster in keys _agentsByCluster) then {
                 _agentsCluster = [_agentsByCluster, _agentCluster] call ALIVE_fnc_hashGet;
             }else{
                 [_agentsByCluster, _agentCluster, [] call ALIVE_fnc_hashCreate] call ALIVE_fnc_hashSet;
@@ -287,7 +287,7 @@ switch(_operation) do {
 
         private _agentType = [_agent, "type"] call ALIVE_fnc_hashGet;
 
-        if(_agentID in (_agentsInActive select 1)) then {
+        if(_agentID in keys _agentsInActive) then {
             [_agentsInActive, _agentID] call ALIVE_fnc_hashRem;
         };
 
@@ -315,7 +315,7 @@ switch(_operation) do {
 
         private _agentType = [_agent, "type"] call ALIVE_fnc_hashGet;
 
-        if(_agentID in (_agentsActive select 1)) then {
+        if(_agentID in keys _agentsActive) then {
             [_agentsActive, _agentID] call ALIVE_fnc_hashRem;
         };
 

@@ -91,7 +91,7 @@ _gridData = [] call ALIVE_fnc_hashCreate;
     _sectorID = [_grid, "positionToGridIndex", _clusterCenter] call ALIVE_fnc_sectorGrid;
     _sectorID = format["%1_%2",_sectorID select 0, _sectorID select 1];
 
-    if(_sectorID in (_gridData select 1)) then {
+    if(_sectorID in keys _gridData) then {
         _sectorData = [_gridData, _sectorID] call ALIVE_fnc_hashGet;
     }else{
         _sectorData = [] call ALIVE_fnc_hashCreate;
@@ -119,7 +119,7 @@ _gridData = [] call ALIVE_fnc_hashCreate;
     _sectorID = [_grid, "positionToGridIndex", _clusterCenter] call ALIVE_fnc_sectorGrid;
     _sectorID = format["%1_%2",_sectorID select 0, _sectorID select 1];
 
-    if(_sectorID in (_gridData select 1)) then {
+    if(_sectorID in keys _gridData) then {
         _sectorData = [_gridData, _sectorID] call ALIVE_fnc_hashGet;
     }else{
         _sectorData = [] call ALIVE_fnc_hashCreate;
@@ -147,7 +147,7 @@ _gridData = [] call ALIVE_fnc_hashCreate;
     _sectorID = [_grid, "positionToGridIndex", _clusterCenter] call ALIVE_fnc_sectorGrid;
     _sectorID = format["%1_%2",_sectorID select 0, _sectorID select 1];
 
-    if(_sectorID in (_gridData select 1)) then {
+    if(_sectorID in keys _gridData) then {
         _sectorData = [_gridData, _sectorID] call ALIVE_fnc_hashGet;
     }else{
         _sectorData = [] call ALIVE_fnc_hashCreate;
@@ -187,7 +187,7 @@ _gridData = [] call ALIVE_fnc_hashCreate;
 
     _exportString = _exportString + format['[ALIVE_gridData, "%1", _sectorData] call ALIVE_fnc_hashSet;',_sectorID];
 
-} forEach (_gridData select 1);
+} forEach (keys _gridData);
 
 copyToClipboard _exportString;
 ["Adjustment complete, results have been copied to the clipboard"] call ALIVE_fnc_dump;

@@ -43,7 +43,7 @@ _filteredSectors = [];
     _sector = _x;
     _sectorData = [_sector, "data"] call ALIVE_fnc_sector;
 
-    if("bestPlaces" in (_sectorData select 1)) then {
+    if("bestPlaces" in keys _sectorData) then {
         _bestPlaces = [_sectorData, "bestPlaces"] call ALIVE_fnc_hashGet;
 
         _placesTypeData = [_bestPlaces,_placeType] call ALIVE_fnc_hashGet;

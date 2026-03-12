@@ -1251,7 +1251,7 @@ switch(_operation) do {
     case "requestPlayerTask": {
 
         private _type = _args select 0;
-        private _targets = +(_args select 1);
+        private _targets = +(keys _args);
         private _friendly = "";
 
         if (count _args > 2) then {
@@ -1290,7 +1290,7 @@ switch(_operation) do {
 
             // Target could be profiled aircraft, profile AA, non-profiled AA, building, HQ
             if (_target isEqualType "") then {
-                private _targetProfile = [ALiVE_profileHandler, "getProfile", (_targets select 1)] call ALiVE_fnc_ProfileHandler;
+                private _targetProfile = [ALiVE_profileHandler, "getProfile", (keys _targets)] call ALiVE_fnc_ProfileHandler;
                 if !(isNil "_targetProfile") then {
                     _destination = [_targetProfile,"position"] call ALiVE_fnc_hashGet;
                     _enemyFaction = [_targetProfile,"faction"] call ALiVE_fnc_hashGet;
@@ -2295,7 +2295,7 @@ switch(_operation) do {
 
                         // DEBUG -------------------------------------------------------------------------------------
                         if(_debug) then {
-                            ["ATO Updating %1 logic faction %2 with %3", _logic, _x, (_aircraft select 1)] call ALIVE_fnc_dump;
+                            ["ATO Updating %1 logic faction %2 with %3", _logic, _x, (keys _aircraft)] call ALIVE_fnc_dump;
                         };
                         // DEBUG -------------------------------------------------------------------------------------
 
@@ -2342,7 +2342,7 @@ switch(_operation) do {
                                 [_as, _assetAirspace, _airspaceAssets] call ALiVE_fnc_hashSet;
                             };
 
-                        } forEach (_aircraft select 1);
+                        } forEach (keys _aircraft);
                     }
                 } forEach _factions;
 
@@ -2360,7 +2360,7 @@ switch(_operation) do {
                 ["ATO - Analysis %1", _logic] call ALiVE_fnc_dump;
                 ["ATO - OPCOMs: %1", count _modules] call ALiVE_fnc_dump;
                 ["ATO - Factions: %1", [_logic, "factions"] call MAINCLASS] call ALiVE_fnc_dump;
-                ["ATO - Air Assets: %1", count (([_logic, "assets"] call MAINCLASS) select 1)] call ALiVE_fnc_dump;
+                ["ATO - Air Assets: %1", count keys ([_logic, "assets"] call MAINCLASS)] call ALiVE_fnc_dump;
                 ["ATO - Assets by Airspace:"] call ALiVE_fnc_dump;
                 ([_logic,"airspaceAssets"] call MAINCLASS) call ALIVE_fnc_inspectHash;
             };
@@ -2391,7 +2391,7 @@ switch(_operation) do {
             private _message = format[localize "STR_ALIVE_ATO_ESTABLISHED", _HQ, _factionName, _location];
 
             // If no air assets, exit
-            if (count (([_logic, "assets"] call MAINCLASS) select 1) == 0) exitWith {
+            if (count keys ([_logic, "assets"] call MAINCLASS) == 0) exitWith {
                 ["ATO %1 - Warning, air operations are being suspended as there are no available air assets within the airspace.", _logic] call ALiVE_fnc_dump;
                 _message = format[localize "STR_ALIVE_ATO_NOT_ESTABLISHED", _HQ, _factionName];
                 private _radioBroadcast = [objNull,_message,"side",_sideObject,false,false,false,true,_hqClass];
@@ -2967,7 +2967,7 @@ switch(_operation) do {
                         if (_airspace inArea _x) exitWith {
                             _tmpAirspace = _x;
                         };
-                    } forEach (([_logic, "airspaceAssets"] call MAINCLASS) select 1);
+                    } forEach (keys ([_logic, "airspaceAssets"] call MAINCLASS));
                     _airspace = _tmpAirspace;
                     _eventData set [3,_airspace];
                     [_event,"data",_eventData] call ALiVE_fnc_hashSet;
@@ -3004,7 +3004,7 @@ switch(_operation) do {
 
                     private _loaded = false;
                     // Handle addition 2 records (id,rev) when saved to ClownDB
-                    if (count (_assets  select 1) > 0 && {_assets select 1 select 0 == "_id" }) then {
+                    if (count keys _assets > 0 && {"_id" in keys _assets}) then {
                         _loaded = true;
                     };
 
@@ -3016,7 +3016,7 @@ switch(_operation) do {
                     // DEBUG -------------------------------------------------------------------------------------
 
                     // if there are still assets available
-                    if ( count (_assets select 1) > 0 || (_loaded && count (_assets select 1) > 2) ) then {
+                    if ( count keys _assets > 0 || (_loaded && count keys _assets > 2) ) then {
 
                         private _available = false;
 
@@ -3059,7 +3059,7 @@ switch(_operation) do {
                             // DEBUG -------------------------------------------------------------------------------------
                             if(_debug) then {
                                 ["ATO %1 - ATO request event received", _logic] call ALiVE_fnc_dump;
-                                private _cunt = if (_loaded) then {count (_assets select 1) - 2} else {count (_assets select 1)};
+                                private _cunt = if (_loaded) then {count keys _assets - 2} else {count keys _assets};
                                 ["ATO - %2 available assets for %1", _side, _cunt] call ALiVE_fnc_dump;
                                 _event call ALIVE_fnc_inspectHash;
                             };
@@ -3182,11 +3182,11 @@ switch(_operation) do {
                     };
 
                     // Cleanup killed assets
-                    private _allAssetIds = +(_assets select 1);
+                    private _allAssetIds = +(keys _assets);
                     private _currentAssetIds = [_logic, "removeUnregisteredProfiles", _allAssetIds] call MAINCLASS;
 
                     // Handle additional 2 records (id,rev) when saved to ClownDB
-                    if (count (_assets  select 1) > 0 && {_assets select 1 select 0 == "_id" }) then {
+                    if (count keys _assets > 0 && {"_id" in keys _assets}) then {
                         _loaded = true;
                     };
 
@@ -3197,12 +3197,12 @@ switch(_operation) do {
                     // DEBUG -------------------------------------------------------------------------------------
 
                     // Check to see if all existing assets are still available
-                    if ( count (_assets select 1) == 0 || (_loaded && count (_assets select 1) == 2) ) then {
+                    if ( count keys _assets == 0 || (_loaded && count keys _assets == 2) ) then {
                         _available = false;
                     };
 
                     // Check to see the current state of air assets, if less than 2 restrict ATOs
-                    if ((_loaded && count (_assets select 1) <= 4) || (!_loaded && count (_assets select 1) <= 2) ) then {
+                    if ((_loaded && count keys _assets <= 4) || (!_loaded && count keys _assets <= 2) ) then {
                         private _types = [_logic, "types"] call MAINCLASS;
                         private _orig = [_logic,"origTypes"] call MAINCLASS;
                         if (count _orig == 0) then {
@@ -3220,7 +3220,7 @@ switch(_operation) do {
 
                     };
 
-                    if ( (!_loaded && count (_assets select 1) > 2) || (_loaded && count (_assets select 1) > 4) ) then {
+                    if ( (!_loaded && count keys _assets > 2) || (_loaded && count keys _assets > 4) ) then {
                         private _types = [_logic, "types"] call MAINCLASS;
                         private _orig = [_logic, "origTypes",[]] call MAINCLASS;
                         if (count _orig == 0) then {
@@ -3704,7 +3704,7 @@ switch(_operation) do {
                 if (_eventAirspace inArea _x) exitWith {
                     _tmpAirspace = _x;
                 };
-            } forEach (_airspaceAssets select 1);
+            } forEach (keys _airspaceAssets);
             _eventAirspace = _tmpAirspace;
             _eventData set [3,_eventAirspace];
             [_event,"data",_eventData] call ALiVE_fnc_hashSet;
@@ -3712,7 +3712,7 @@ switch(_operation) do {
 
         // Check to see if request is within airspace, if not use 1st airspace
         if (_eventAirspace == "") then {
-            _eventAirspace = (_airspaceAssets select 1) select 0;
+            _eventAirspace = (keys _airspaceAssets) select 0;
             _eventData set [3,_eventAirspace];
             [_event,"data",_eventData] call ALiVE_fnc_hashSet;
         };
@@ -3832,7 +3832,7 @@ switch(_operation) do {
                                     };
                                 } forEach ([[_logic,"airspaceAssets"] call MAINCLASS, _x] call ALiVE_fnc_hashGet);
                             };
-                        } forEach ([_logic,"airspaceAssets"] call MAINCLASS select 1);
+                        } forEach (keys ([_logic,"airspaceAssets"] call MAINCLASS));
                     };
 
                     // Check to see if they are available - check damage, fuel, ammo, parked or on CAP

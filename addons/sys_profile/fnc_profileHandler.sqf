@@ -301,7 +301,7 @@ switch(_operation) do {
                 if(!(_x == "super") && !(_x == "class")) then {
                     [_state,_x,[_logic,_x] call ALIVE_fnc_hashGet] call ALIVE_fnc_hashSet;
                 };
-            } forEach (_logic select 1);
+            } forEach (keys _logic);
 
             _result = _state;
         } else {
@@ -312,7 +312,7 @@ switch(_operation) do {
             // loop the passed hash and set vars on the class hash
             {
                 [_logic,_x,[_args,_x] call ALIVE_fnc_hashGet] call ALIVE_fnc_hashSet;
-            } forEach (_args select 1);
+            } forEach (keys _args);
         };
     };
 
@@ -992,7 +992,7 @@ switch(_operation) do {
                 };
             };
 
-        } forEach (_profiles select 1);
+        } forEach (keys _profiles);
 
         private _state = [_logic, "state"] call MAINCLASS;
         _state call ALIVE_fnc_inspectHash;
@@ -1308,7 +1308,7 @@ switch(_operation) do {
                 _profile = _x;
                 _profileType = [_profile,"type"] call ALIVE_fnc_hashGet;
 
-                if("vehicleAssignmentKeys" in (_profile select 1)) then {
+                if("vehicleAssignmentKeys" in keys _profile) then {
                     _vehicleAssignmentKeys = [_profile,"vehicleAssignmentKeys"] call ALIVE_fnc_hashGet;
                     _vehicleAssignmentValues = [_profile,"vehicleAssignmentValues"] call ALIVE_fnc_hashGet;
 
@@ -1359,19 +1359,19 @@ switch(_operation) do {
                     [_profileEntity, "damages", [_profile,"damages"] call ALIVE_fnc_hashGet] call ALIVE_fnc_profileEntity;
                     */
 
-                    if("vehicleAssignmentKeys" in (_profile select 1)) then {
+                    if("vehicleAssignmentKeys" in keys _profile) then {
                         [_profileEntity, "vehicleAssignments", _rebuiltHash] call ALIVE_fnc_hashSet;
                     };
 
-                    if("vehiclesInCommandOf" in (_profile select 1)) then {
+                    if("vehiclesInCommandOf" in keys _profile) then {
                         [_profileEntity, "vehiclesInCommandOf", [_profile,"vehiclesInCommandOf"] call ALIVE_fnc_hashGet] call ALIVE_fnc_hashSet;
                     };
 
-                    if("vehiclesInCargoOf" in (_profile select 1)) then {
+                    if("vehiclesInCargoOf" in keys _profile) then {
                         [_profileEntity, "vehiclesInCargoOf", [_profile,"vehiclesInCargoOf"] call ALIVE_fnc_hashGet] call ALIVE_fnc_hashSet;
                     };
 
-                    if("spawnType" in (_profile select 1)) then {
+                    if("spawnType" in keys _profile) then {
                         [_profileEntity, "spawnType", [_profile,"spawnType"] call ALIVE_fnc_hashGet] call ALIVE_fnc_hashSet;
                     };
 
@@ -1400,11 +1400,11 @@ switch(_operation) do {
 
                     [_profileEntity, "damages", _damages] call ALIVE_fnc_profileEntity;
 
-                    if("activeCommands" in (_profile select 1)) then {
+                    if("activeCommands" in keys _profile) then {
                         [_profileEntity, "activeCommands", [_profile,"activeCommands"] call ALIVE_fnc_hashGet] call ALIVE_fnc_hashSet;
                     };
 
-                    if("boat" in (_profile select 1)) then {
+                    if("boat" in keys _profile) then {
                         [_profileEntity, "boat", [_profile,"boat"] call ALIVE_fnc_hashGet] call ALIVE_fnc_hashSet;
                     };
 
@@ -1449,19 +1449,19 @@ switch(_operation) do {
                     [_profileVehicle, "fuel", [_profile,"fuel"] call ALIVE_fnc_hashGet] call ALIVE_fnc_profileVehicle;
                     */
 
-                    if("vehicleAssignmentKeys" in (_profile select 1)) then {
+                    if("vehicleAssignmentKeys" in keys _profile) then {
                         [_profileVehicle, "vehicleAssignments", _rebuiltHash] call ALIVE_fnc_hashSet;
                     };
 
-                    if("entitiesInCommandOf" in (_profile select 1)) then {
+                    if("entitiesInCommandOf" in keys _profile) then {
                         [_profileVehicle, "entitiesInCommandOf", [_profile,"entitiesInCommandOf"] call ALIVE_fnc_hashGet] call ALIVE_fnc_hashSet;
                     };
 
-                    if("entitiesInCargoOf" in (_profile select 1)) then {
+                    if("entitiesInCargoOf" in keys _profile) then {
                         [_profileVehicle, "entitiesInCargoOf", [_profile,"entitiesInCargoOf"] call ALIVE_fnc_hashGet] call ALIVE_fnc_hashSet;
                     };
 
-                    if("spawnType" in (_profile select 1)) then {
+                    if("spawnType" in keys _profile) then {
                         [_profileVehicle, "spawnType", [_profile,"spawnType"] call ALIVE_fnc_hashGet] call ALIVE_fnc_profileVehicle;
                     };
 

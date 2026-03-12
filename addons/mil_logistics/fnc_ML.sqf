@@ -1521,7 +1521,7 @@ switch(_operation) do {
                 // reserved objectives
                 {
                     _tacom_state = '';
-                    if("tacom_state" in (_x select 1)) then {
+                    if("tacom_state" in keys _x) then {
                         _tacom_state = [_x,"tacom_state","none"] call ALIVE_fnc_hashGet;
                     };
 
@@ -1636,7 +1636,7 @@ switch(_operation) do {
                             // if the state of the objective is reserved
                             // objective is available for use
                             _tacom_state = '';
-                            if("tacom_state" in (_primaryReinforcementObjective select 1)) then {
+                            if("tacom_state" in keys _primaryReinforcementObjective) then {
                                 _tacom_state = [_primaryReinforcementObjective,"tacom_state","none"] call ALIVE_fnc_hashGet;
                             };
 
@@ -1670,7 +1670,7 @@ switch(_operation) do {
                         // if the state of the objective is reserved
                         // objective is available for use
                         _tacom_state = '';
-                        if("tacom_state" in (_primaryReinforcementObjective select 1)) then {
+                        if("tacom_state" in keys _primaryReinforcementObjective) then {
                             _tacom_state = [_primaryReinforcementObjective,"tacom_state","none"] call ALIVE_fnc_hashGet;
                         };
 

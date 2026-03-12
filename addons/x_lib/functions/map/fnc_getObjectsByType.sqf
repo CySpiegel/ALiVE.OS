@@ -88,7 +88,7 @@ _expanded = [];
             _expanded pushback _p3dname;
         };
     } forEach _types;
-} forEach (_object_hash select 1);
+} forEach (keys _object_hash);
 
 
 _data_array = [];

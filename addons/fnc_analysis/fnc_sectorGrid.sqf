@@ -192,7 +192,7 @@ switch(_operation) do {
                     if (!(_x == "super") && !(_x == "class")) then {
                         [_state,_x,[_logic,_x] call ALiVE_fnc_hashGet] call ALiVE_fnc_hashSet;
                     };
-                } forEach (_logic select 1);
+                } forEach (keys _logic);
 
                 _result = _state;
             } else {
@@ -201,7 +201,7 @@ switch(_operation) do {
 
                 {
                     [_logic,_x, [_args,_x] call ALiVE_fnc_hashGet] call ALiVE_fnc_hashSet;
-                } forEach (_args select 1);
+                } forEach (keys _args);
             };
 
         };

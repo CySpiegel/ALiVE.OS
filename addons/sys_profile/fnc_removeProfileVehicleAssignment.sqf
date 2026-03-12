@@ -33,7 +33,7 @@ private _vehicleID = [_profileVehicle, "profileID"] call ALIVE_fnc_hashGet;
 private _entityAssignments = [_profileEntity,"vehicleAssignments", ["",[],[],""]] call ALIVE_fnc_hashGet;
 private _vehicleAssignments = [_profileVehicle,"vehicleAssignments", ["",[],[],""]] call ALIVE_fnc_hashGet;
 
-if(_entityID in (_vehicleAssignments select 1)) then {
+if(_entityID in keys _vehicleAssignments) then {
     // if spawned make the units get out
 
     private _profileActive = [_profileEntity,"active"] call ALIVE_fnc_hashGet;

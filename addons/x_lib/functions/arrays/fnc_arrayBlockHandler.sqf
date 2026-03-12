@@ -91,7 +91,7 @@ switch(_operation) do {
 
                 //_pointers call ALIVE_fnc_inspectHash;
 
-                if(_blockKey in (_pointers select 1)) then {
+                if(_blockKey in keys _pointers) then {
                     _currentPointer = [_pointers,_blockKey] call ALIVE_fnc_hashGet;
                 }else{
                     _currentPointer = 0;
@@ -129,7 +129,7 @@ switch(_operation) do {
                             if(!(_x == "super") && !(_x == "class")) then {
                                 [_state,_x,[_logic,_x] call ALIVE_fnc_hashGet] call ALIVE_fnc_hashSet;
                             };
-                        } forEach (_logic select 1);
+                        } forEach (keys _logic);
 
                         _result = _state;
 
@@ -142,7 +142,7 @@ switch(_operation) do {
                         // loop the passed hash and set vars on the class hash
                         {
                             [_logic,_x,[_args,_x] call ALIVE_fnc_hashGet] call ALIVE_fnc_hashSet;
-                        } forEach (_args select 1);
+                        } forEach (keys _args);
                 };
         };
         default {

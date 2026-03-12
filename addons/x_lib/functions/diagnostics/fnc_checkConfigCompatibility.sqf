@@ -404,7 +404,7 @@ for "_i" from 0 to count _config -1 do {
                     if([_class >> "scope"] call _cfgValue == 2) then {
                         _vehicleType = [_class >> "vehicleClass"] call _cfgValue;
 
-                        if!(_vehicleType in (_factionVehicles select 1)) then {
+                        if!(_vehicleType in keys _factionVehicles) then {
                             [_factionVehicles,_vehicleType,[]] call ALIVE_fnc_hashSet;
                         };
 
@@ -484,7 +484,7 @@ _spawnPosition = (getPosATL player) getPos [10, 0];
 
         } forEach _vehicleClasses;
 
-    } forEach (_factionVehicles select 1);
+    } forEach (keys _factionVehicles);
 
 };
 

@@ -48,7 +48,7 @@ _filteredSectors = [];
     _sector = _x;
     _sectorData = [_sector, "data"] call ALIVE_fnc_sector;
 
-    if(_clusterCategory in (_sectorData select 1)) then {
+    if(_clusterCategory in keys _sectorData) then {
 
         _clusterData = [_sectorData, _clusterCategory] call ALIVE_fnc_hashGet;
         _clusterTypeData = [_clusterData, _clusterType] call ALIVE_fnc_hashGet;

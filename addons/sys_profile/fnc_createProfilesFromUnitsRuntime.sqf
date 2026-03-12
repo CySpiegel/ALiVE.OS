@@ -186,7 +186,7 @@ if(_debug) then {
 
                     _profileVehicleAssignments = [_profileVehicle, "vehicleAssignments"] call ALIVE_fnc_hashGet;
 
-                    if!(_entityID in (_profileVehicleAssignments select 1)) then {
+                    if!(_entityID in keys _profileVehicleAssignments) then {
                         _assignments = [_vehicle,_group] call ALIVE_fnc_vehicleAssignmentToProfileVehicleAssignment;
 
                         _vehicleAssignments = [_vehicleID,_entityID,_assignments];

@@ -32,7 +32,7 @@ PARAMS_3(_pos,_sides,_value);
 _sector = [ALIVE_sectorGrid, "positionToSector", _pos] call ALIVE_fnc_sectorGrid;
 _sectorData = [_sector,"data",["",[],[],nil]] call ALIVE_fnc_hashGet;
 
-if ("clustersCiv" in (_sectorData select 1)) then {
+if ("clustersCiv" in keys _sectorData) then {
     _civClusters = [_sectorData,"clustersCiv"] call ALIVE_fnc_hashGet;
     _settlementClusters = [_civClusters,"settlement"] call ALIVE_fnc_hashGet;
 

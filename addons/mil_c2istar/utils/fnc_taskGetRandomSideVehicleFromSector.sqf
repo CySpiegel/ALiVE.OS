@@ -32,7 +32,7 @@ _targetVehicles = [];
 if(count _taskSector > 0) then {
     _sectorData = [_taskSector,"data",["",[],[],nil]] call ALIVE_fnc_hashGet;
 
-    if("vehiclesBySide" in (_sectorData select 1)) then {
+    if("vehiclesBySide" in keys _sectorData) then {
 
         _vehiclesInSector = [_sectorData,"vehiclesBySide"] call ALIVE_fnc_hashGet;
         _sideVehicles = [_vehiclesInSector,_side] call ALIVE_fnc_hashGet;

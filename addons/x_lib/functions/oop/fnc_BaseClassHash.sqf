@@ -70,7 +70,7 @@ switch(_operation) do {
     case "destroy": {
         {
             [_logic, _x] call ALIVE_fnc_hashRem;
-        } forEach +(_logic select 1);
+        } forEach +(keys _logic);
 
         _logic = nil;
     };

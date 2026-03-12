@@ -39,7 +39,7 @@ _filteredSectors = [];
     _sector = _x;
     _sectorData = [_sector, "data"] call ALIVE_fnc_sector;
 
-    if("flatEmpty" in (_sectorData select 1)) then {
+    if("flatEmpty" in keys _sectorData) then {
         _flatEmpty = [_sectorData, "flatEmpty"] call ALIVE_fnc_hashGet;
 
         if(count _flatEmpty > 0) then {

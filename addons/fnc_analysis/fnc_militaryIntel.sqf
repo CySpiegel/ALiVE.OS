@@ -172,7 +172,7 @@ switch(_operation) do {
 
         _activeAnalysisJobs = [ALIVE_liveAnalysis, "getAnalysisJobs"] call ALIVE_fnc_liveAnalysis;
 
-        if("activeSectors" in (_activeAnalysisJobs select 1)) then {
+        if("activeSectors" in keys _activeAnalysisJobs) then {
             _activeAnalysis = [_activeAnalysisJobs, "activeSectors"] call ALIVE_fnc_hashGet;
             _args = [_activeAnalysis, "args"] call ALIVE_fnc_hashGet;
             _args set [0, _runEvery];
@@ -195,7 +195,7 @@ switch(_operation) do {
 
         _activeAnalysisJobs = [ALIVE_liveAnalysis, "getAnalysisJobs"] call ALIVE_fnc_liveAnalysis;
 
-        if("gridProfileEntity" in (_activeAnalysisJobs select 1)) then {
+        if("gridProfileEntity" in keys _activeAnalysisJobs) then {
             _gridProfileAnalysis = [_activeAnalysisJobs, "gridProfileEntity"] call ALIVE_fnc_hashGet;
             _args = [_gridProfileAnalysis, "args"] call ALIVE_fnc_hashGet;
             _args set [0, _runEvery];

@@ -120,7 +120,7 @@ switch(_operation) do {
                 if(!(_x == "super") && !(_x == "class")) then {
                     [_state,_x,[_logic,_x] call ALIVE_fnc_hashGet] call ALIVE_fnc_hashSet;
                 };
-            } forEach (_logic select 1);
+            } forEach (keys _logic);
 
             _result = _state;
 
@@ -132,7 +132,7 @@ switch(_operation) do {
             // loop the passed hash and set vars on the class hash
             {
                 [_logic,_x,[_args,_x] call ALIVE_fnc_hashGet] call ALIVE_fnc_hashSet;
-            } forEach (_args select 1);
+            } forEach (keys _args);
         };
 
     };
@@ -199,7 +199,7 @@ switch(_operation) do {
         private _clustersInActive = [_logic, "clustersInActive"] call ALIVE_fnc_hashGet;
         private _clustersActive = [_logic, "clustersActive"] call ALIVE_fnc_hashGet;
 
-        if(_clusterID in (_clustersInActive select 1)) then {
+        if(_clusterID in keys _clustersInActive) then {
             [_clustersInActive, _clusterID] call ALIVE_fnc_hashRem;
         };
 
@@ -214,7 +214,7 @@ switch(_operation) do {
         private _clustersInActive = [_logic, "clustersInActive"] call ALIVE_fnc_hashGet;
         private _clustersActive = [_logic, "clustersActive"] call ALIVE_fnc_hashGet;
 
-        if(_clusterID in (_clustersActive select 1)) then {
+        if(_clusterID in keys _clustersActive) then {
             [_clustersActive, _clusterID] call ALIVE_fnc_hashRem;
         };
 

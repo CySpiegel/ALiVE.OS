@@ -56,7 +56,7 @@ if !(isClass _path) then {
 				if !(isClass _path) then {_path = configFile >> "CfgFactionClasses" >> _x};
 		   };
 
-		} foreach (ALiVE_factionCustomMappings select 1);
+		} forEach (keys ALiVE_factionCustomMappings);
 	};
 };
 

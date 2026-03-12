@@ -34,7 +34,7 @@ private _nearAgents = [];
      private _agentProfile = [ALIVE_agentHandler, "getAgent", _x] call ALIVE_fnc_agentHandler;
      private _position = _agentProfile select 2 select 2;
      _nearAgents pushback [_agentProfile, _position distance _pos];
-} foreach (_agentsActive select 1);
+} forEach (keys _agentsActive);
 
 private _sortCode = {
     private _dist = _this select 1;

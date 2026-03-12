@@ -54,7 +54,7 @@ if(_debug) then {
     ["Player profiler - Player Group Units: %1",units group _player] call ALiVE_fnc_dump;
 };
 
-if(_uid in (_profileIndex select 1)) then {
+if(_uid in keys _profileIndex) then {
     _registeredProfile = [_profileIndex, _uid] call ALIVE_fnc_hashGet;
 };
 
@@ -358,7 +358,7 @@ if!(isNil "_registeredProfile") then {
             if(count _existingPlayers > 0) then {
                 _uuid = _existingPlayers select 0;
                 //["Player profiler - checking other players for profile: %1",_uuid] call ALiVE_fnc_dump;
-                if(_uuid in (_profileIndex select 1)) then {
+                if(_uuid in keys _profileIndex) then {
                    _existingProfile = [_profileIndex, _uid] call ALIVE_fnc_hashGet;
                 };
             };
@@ -539,7 +539,7 @@ if!(isNil "_registeredProfile") then {
             if(count _existingPlayers > 0) then {
                 _uuid = _existingPlayers select 0;
                 //["Player profiler - checking other players for profile: %1",_uuid] call ALiVE_fnc_dump;
-                if(_uuid in (_profileIndex select 1)) then {
+                if(_uuid in keys _profileIndex) then {
                    _existingProfile = [_profileIndex, _uid] call ALIVE_fnc_hashGet;
                 };
             };

@@ -627,7 +627,7 @@ switch(_operation) do {
 
                     _markers pushback _iedm;
 
-                } foreach (_ieds select 1);
+                } forEach (keys _ieds);
 
             };
 

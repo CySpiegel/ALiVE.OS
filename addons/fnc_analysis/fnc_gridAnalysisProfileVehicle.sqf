@@ -49,7 +49,7 @@ _updatedSectors = [];
     //_sectorData call ALIVE_fnc_inspectHash;
 
     if (count (_sectorData select 1) > 0) then {
-        if("entitiesBySide" in (_sectorData select 1)) then {
+        if("entitiesBySide" in keys _sectorData) then {
             _sideProfiles = [_sectorData, "entitiesBySide"] call ALIVE_fnc_hashGet;
             [_sideProfiles, "EAST", []] call ALIVE_fnc_hashSet;
             [_sideProfiles, "WEST", []] call ALIVE_fnc_hashSet;
@@ -94,7 +94,7 @@ _profiles = [ALIVE_profileHandler, "profiles"] call ALIVE_fnc_hashGet;
         //_sectorData call ALIVE_fnc_inspectHash;
 
         if (count (_sectorData select 1) > 0) then {
-            if("vehiclesBySide" in (_sectorData select 1)) then {
+            if("vehiclesBySide" in keys _sectorData) then {
                 _sideProfiles = [_sectorData, "vehiclesBySide"] call ALIVE_fnc_hashGet;
                 _sideProfile = [_sideProfiles, _side] call ALIVE_fnc_hashGet;
             }else{

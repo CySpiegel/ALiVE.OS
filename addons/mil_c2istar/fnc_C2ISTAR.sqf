@@ -749,7 +749,7 @@ switch(_operation) do {
 	                _task = [ALIVE_generatedTasks,_x] call ALIVE_fnc_hashGet;
 	                _generateOptions pushback (_task select 0);
 	                _generateValues pushback _x;
-	            } forEach (ALIVE_generatedTasks select 1);
+	            } forEach (keys ALIVE_generatedTasks);
             };
 
             private ["_taskingState","_playerListOptions","_playerListValues","_factionsDataSource"];

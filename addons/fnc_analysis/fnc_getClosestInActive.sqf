@@ -40,7 +40,7 @@ ASSERT_TRUE(typeName _position == "ARRAY",_err);
 _sector = [ALIVE_sectorGrid, "positionToSector", _position] call ALIVE_fnc_sectorGrid;
 _sectorData = [_sector, "data",["",[],[],nil]] call ALIVE_fnc_hashGet;
 
-if("active" in (_sectorData select 1)) then {
+if("active" in keys _sectorData) then {
     _active = [_sectorData, "active"] call ALIVE_fnc_hashGet;
 
     if(count _active > 0) then {

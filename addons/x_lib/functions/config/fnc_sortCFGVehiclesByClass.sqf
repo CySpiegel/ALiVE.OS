@@ -61,7 +61,7 @@ for "_i" from 0 to ((count _configPath) - 1) do
 
             if ((count _whitelist > 0 && {!(_configName in _whitelist)}) || {count _blacklist > 0 && {_configName in _blacklist}}) exitwith {};
 
-            if!(_vehicleClass in (_sortedVehicles select 1)) then {
+            if!(_vehicleClass in keys _sortedVehicles) then {
                 [_sortedVehicles,_vehicleClass,[_configName]] call ALIVE_fnc_hashSet;
             }else{
                 _subSorted = [_sortedVehicles,_vehicleClass] call ALIVE_fnc_hashGet;

@@ -127,7 +127,7 @@ switch(_operation) do {
                 if(!(_x == "super") && !(_x == "class")) then {
                     [_state,_x,[_logic,_x] call ALIVE_fnc_hashGet] call ALIVE_fnc_hashSet;
                 };
-            } forEach (_logic select 1);
+            } forEach (keys _logic);
 
             _result = _state;
 
@@ -137,7 +137,7 @@ switch(_operation) do {
             // Restore state
             {
                 [_logic,_x,[_args,_x] call ALIVE_fnc_hashGet] call ALIVE_fnc_hashSet;
-            } forEach (_args select 1);
+            } forEach (keys _args);
         };
 
     };
@@ -211,7 +211,7 @@ switch(_operation) do {
             private _commandState = _logic select 2 select 1;
 
             // does the profile have currently active commands
-            if(_agentID in (_commandState select 1)) then {
+            if(_agentID in keys _commandState) then {
                 private _activeCommandState = [_commandState, _agentID] call ALIVE_fnc_hashGet;
 
                 // get the active command vars

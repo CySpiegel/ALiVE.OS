@@ -1195,7 +1195,7 @@ switch(_operation) do {
                         _sector = _x;
                         _centerPosition = [_sector, "center"] call ALIVE_fnc_sector;
                         _sectorData = _sector select 2 select 0;
-                        if("active" in (_sectorData select 1)) then {
+                        if("active" in keys _sectorData) then {
                             _active = [_sectorData, "active"] call ALIVE_fnc_hashGet;
 
                             _sides = [];

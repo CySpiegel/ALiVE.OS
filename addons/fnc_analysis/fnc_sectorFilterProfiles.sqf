@@ -47,7 +47,7 @@ _filteredSectors = [];
 
     switch(_profileType) do {
         case "entity": {
-            if("entitiesBySide" in (_sectorData select 1)) then {
+            if("entitiesBySide" in keys _sectorData) then {
                 _sideProfiles = [_sectorData, "entitiesBySide"] call ALIVE_fnc_hashGet;
                 _sideProfile = [_sideProfiles, _profileSide] call ALIVE_fnc_hashGet;
                 if(count _sideProfile > 0) then {
@@ -56,7 +56,7 @@ _filteredSectors = [];
             };
         };
         case "vehicle": {
-            if("vehiclesBySide" in (_sectorData select 1)) then {
+            if("vehiclesBySide" in keys _sectorData) then {
                 _sideProfiles = [_sectorData, "vehiclesBySide"] call ALIVE_fnc_hashGet;
                 _sideProfile = [_sideProfiles, _profileSide] call ALIVE_fnc_hashGet;
                 if(count _sideProfile > 0) then {

@@ -117,14 +117,14 @@ switch(_operation) do {
                 if(!(_x == "super") && !(_x == "class")) then {
                     [_state,_x,[_logic,_x] call ALIVE_fnc_hashGet] call ALIVE_fnc_hashSet;
                 };
-            } forEach (_logic select 1);
+            } forEach (keys _logic);
 
             _result = _state;
         } else {
             ASSERT_TRUE(_args isEqualType [],str typeName _args);
             {
                 [_logic,_x,[_args,_x] call ALIVE_fnc_hashGet] call ALIVE_fnc_hashSet;
-            } forEach (_args select 1);
+            } forEach (keys _args);
         };
 
     };

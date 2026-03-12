@@ -1196,7 +1196,7 @@ switch (_operation) do {
 
                 {[_convertedObject,call _selection_1,[_args,call _selection_2] call ALiVE_fnc_HashGet] call ALiVE_fnc_HashSet} foreach _dataSet;
                 [_convertedData,_x,_convertedObject] call ALiVE_fnc_HashSet;
-            } foreach (_data select 1);
+            } forEach (keys _data);
 
             if(ALiVE_SYS_DATA_DEBUG_ON) then {
                 _convertedData call ALiVE_fnc_InspectHash;

@@ -3250,7 +3250,7 @@ switch(_operation) do {
         private _unitRank = [_unitHash,"rank"] call ALiVE_fnc_hashGet;
         private _unitPosition = [_unitHash,"position"] call ALiVE_fnc_hashGet;
 
-        if (_unitVehicle in (_customUnits select 1)) then {
+        if (_unitVehicle in keys _customUnits) then {
             private _customUnit = [_customUnits,_unitVehicle] call ALiVE_fnc_hashGet;
             _unitDisplayName = [_customUnit,"displayName"] call ALiVE_fnc_hashGet;
         } else {
@@ -3459,7 +3459,7 @@ switch(_operation) do {
             _context ctrlSetText "Class name cannot be left blank";
         };
 
-        if (_className in (_factions select 1)) exitWith {
+        if (_className in keys _factions) exitWith {
             _context ctrlSetText "A faction with that class name already exists!";
         };
 
@@ -3542,7 +3542,7 @@ switch(_operation) do {
             _context ctrlSetText "Class name cannot be left blank";
         };
 
-        if (_newClassname in (_factions select 1)) exitWith {
+        if (_newClassname in keys _factions) exitWith {
             _context ctrlSetText "A faction with that class name already exists!";
         };
 
@@ -3632,7 +3632,7 @@ switch(_operation) do {
             _context ctrlSetText "Class name cannot be left blank";
         };
 
-        if (_className in (_factions select 1)) exitWith {
+        if (_className in keys _factions) exitWith {
             _context ctrlSetText "A faction with that class name already exists!";
         };
 

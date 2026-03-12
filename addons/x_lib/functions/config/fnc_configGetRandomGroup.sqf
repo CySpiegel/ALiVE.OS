@@ -54,7 +54,7 @@ if(!isNil "ALIVE_factionCustomMappings") then {
             _type = _mappedType;
         };
 
-        if("Groups" in (_customMappings select 1)) then {
+        if("Groups" in keys _customMappings) then {
 
             _groups = [_customMappings, "Groups"] call ALIVE_fnc_hashGet;
 
@@ -62,7 +62,7 @@ if(!isNil "ALIVE_factionCustomMappings") then {
 
             if (count (_groups select 1) > 0) then {
 
-                if(_type in (_groups select 1)) then {
+                if(_type in keys _groups) then {
 
                     _groups = [_groups, _type] call ALIVE_fnc_hashGet;
 

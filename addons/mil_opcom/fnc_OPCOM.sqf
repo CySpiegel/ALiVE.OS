@@ -1198,7 +1198,7 @@ switch(_operation) do {
 	                                        _agents = [];
 
 	                                        // Get amb civilian clusterdata
-	                                        if ("clustersCiv" in (_sectorData select 1)) then {
+	                                        if ("clustersCiv" in keys _sectorData) then {
 
 	                                            if (isnil "ALIVE_agentHandler") exitwith {};
 
@@ -1355,7 +1355,7 @@ switch(_operation) do {
 	                _agents = [];
 
 	                // Get amb civilian clusterdata
-	                if ("clustersCiv" in (_sectorData select 1)) then {
+	                if ("clustersCiv" in keys _sectorData) then {
 
 	                    if (isnil "ALIVE_agentHandler") exitwith {};
 
@@ -2866,7 +2866,7 @@ switch(_operation) do {
                             if(!(_x == "super") && !(_x == "class")) then {
                                 [_state,_x,[_logic,_x] call ALIVE_fnc_hashGet] call ALIVE_fnc_hashSet;
                             };
-                        } forEach (_logic select 1);
+                        } forEach (keys _logic);
 
                         _result = _state;
 
@@ -2879,7 +2879,7 @@ switch(_operation) do {
                         // loop the passed hash and set vars on the class hash
                         {
                             [_logic,_x,[_args,_x] call ALIVE_fnc_hashGet] call ALIVE_fnc_hashSet;
-                        } forEach (_args select 1);
+                        } forEach (keys _args);
                 };
         };
 

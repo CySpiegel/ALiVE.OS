@@ -30,7 +30,7 @@ _taskPlayers = _this select 3;
 
 // ["RADIO BROADCAST: %1",_this] call ALiVE_fnc_dump;
 
-if(_messageCode in (_taskDialog select 1)) then {
+if(_messageCode in keys _taskDialog) then {
 
     _sideObject = [_taskSide] call ALIVE_fnc_sideTextToObject;
     _messages = [_taskDialog,_messageCode] call ALIVE_fnc_hashGet;

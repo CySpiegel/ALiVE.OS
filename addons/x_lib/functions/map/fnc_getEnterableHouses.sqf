@@ -18,7 +18,7 @@ Examples:
 (begin example)
 // get array of all enterable houses across the map
 _center = getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition");
-_spawnhouses = [_center, (_center select 0) min (_center select 1)] call ALIVE_fnc_getEnterableHouses;
+_spawnhouses = [_center, (_center select 0) min keys _center] call ALIVE_fnc_getEnterableHouses;
 (end)
 
 See Also:

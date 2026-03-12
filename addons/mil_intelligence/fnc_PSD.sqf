@@ -114,7 +114,7 @@ switch(_operation) do {
             // if player analysis is running, turn on plot sectors
             _activeAnalysisJobs = [ALIVE_liveAnalysis, "getAnalysisJobs"] call ALIVE_fnc_liveAnalysis;
 
-            if("activeSectors" in (_activeAnalysisJobs select 1)) then {
+            if("activeSectors" in keys _activeAnalysisJobs) then {
                 _activeAnalysis = [_activeAnalysisJobs, "activeSectors"] call ALIVE_fnc_hashGet;
                 _args = [_activeAnalysis, "args"] call ALIVE_fnc_hashGet;
                 _args set [4, [true]];

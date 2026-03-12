@@ -164,7 +164,7 @@ _guerEntities = [];
     _constructionClusters = _constructionClusters + _sectorConstructionClusters;
     _settlementClusters = _settlementClusters + _sectorSettlementClusters;
 
-    if("entitiesBySide" in (_sectorData select 1)) then {
+    if("entitiesBySide" in keys _sectorData) then {
         _sectorEntitiesBySide = [_sectorData, "entitiesBySide"] call ALIVE_fnc_hashGet;
         _sectorEastEntities = [_sectorEntitiesBySide, "EAST"] call ALIVE_fnc_hashGet;
         _sectorWestEntities = [_sectorEntitiesBySide, "WEST"] call ALIVE_fnc_hashGet;

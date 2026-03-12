@@ -35,7 +35,7 @@ _profileType = _profile select 2 select 5; //[_profile,"type"] call ALIVE_fnc_ha
 _profileID = _profile select 2 select 4; //[_profile,"profileID"] call ALIVE_fnc_hashGet;
 _profileActive = _profile select 2 select 1; //[_profile,"active"] call ALIVE_fnc_hashGet;
 
-if!(_profileID in (_linkedProfiles select 1)) then {
+if!(_profileID in keys _linkedProfiles) then {
 
     [_linkedProfiles, _profileID, _profile] call ALIVE_fnc_hashSet;
 

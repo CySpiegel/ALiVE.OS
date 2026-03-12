@@ -118,7 +118,7 @@ switch (_func) do
 
     case "in": // _args = "key"
     {
-        _args in (_data select 1);
+        _args in keys _data;
     };
 
     case "insert": // _args = ["key", value]

@@ -94,6 +94,20 @@ switch (typeName _this) do
         (_output + "]") // Return
     };
 
+    case "HASHMAP":
+    {
+        private _output = "{";
+        private _first = true;
+
+        {
+            if (!_first) then {_output = _output + ","};
+            _output = _output + (_x call ALiVE_fnc_encodeJSON) + ":" + (_y call ALiVE_fnc_encodeJSON);
+            _first = false;
+        } forEach _this;
+
+        (_output + "}") // Return
+    };
+
     // For all other types, just convert to string
     default {str(_this) call ALiVE_fnc_encodeJSON};
 };

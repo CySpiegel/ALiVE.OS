@@ -86,6 +86,21 @@ switch (_func) do
                 };
             };
 
+            // Native HashMap support
+            if (_typeName == "HASHMAP") exitWith
+            {
+                private _ret = "{";
+                private _first = true;
+
+                {
+                    if (!_first) then {_ret = _ret + ","};
+                    _ret = _ret + format["%1:",str(_x)] + (_y call _fnc_varSqfToJson);
+                    _first = false;
+                } forEach _this;
+
+                _ret + "}" // Return js object
+            };
+
             str(if (_typeName in JSON_DATA_TYPES) then {_this} else {str(_this)});
         };
 

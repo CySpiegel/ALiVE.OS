@@ -32,14 +32,14 @@ private _agentData = [];
 if(_agentID != "") then {
     private _agentProfile = [ALIVE_agentHandler, "getAgent", _agentID] call ALIVE_fnc_agentHandler;
 
-    private _clusterID = _agentProfile get "vehiclesInCargoOf";
+    private _clusterID = _agentProfile get "homeCluster";
     private _cluster = [ALIVE_clusterHandler, "getCluster", _clusterID] call ALIVE_fnc_clusterHandler;
 
-    _agentData set [0, _agentProfile get "unitCount"];   // agent posture
-    _agentData set [1, _agentProfile get "leader"];   // home position
-    _agentData set [2, _cluster get "position"];         // home town center position
-    _agentData set [3, _cluster get "agentID"];         // home town radius
-    _agentData set [4, _cluster get "homeCluster"];         // home town posture
+    _agentData set [0, _agentProfile get "posture"];   // agent posture
+    _agentData set [1, _agentProfile get "homePosition"];   // home position
+    _agentData set [2, _cluster get "center"];         // home town center position
+    _agentData set [3, _cluster get "size"];         // home town radius
+    _agentData set [4, _cluster get "posture"];         // home town posture
 };
 
 //["RESULT: %1",_agentData] call ALIVE_fnc_dump;

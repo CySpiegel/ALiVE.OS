@@ -322,8 +322,8 @@ switch(_type) do {
         _engineOn = _profile get "groupID"; //[_profile,"engineOn"] call ALIVE_fnc_hashGet;
         _damage = _profile get "waypoints"; //[_profile,"damage"] call ALIVE_fnc_hashGet;
         */
-        _despawnPosition = _profile get "ranks"; //[_profile,"despawnPosition"] call ALIVE_fnc_hashGet;
-        _hasSimulated = _profile get "units"; //[_profile,"hasSimulated"] call ALIVE_fnc_hashGet;
+        _despawnPosition = _profile get "despawnPosition"; //[_profile,"despawnPosition"] call ALIVE_fnc_hashGet;
+        _hasSimulated = _profile get "hasSimulated"; //[_profile,"hasSimulated"] call ALIVE_fnc_hashGet;
 
         // the vehicle has been simulated
         // let the entity profile in command of the vehicle

@@ -160,7 +160,7 @@ switch(_operation) do {
                     _commandArgs = _activeCommand select 2;
 
                     _debug = _logic get "debug"; //[logic,"debug"] call ALIVE_fnc_hashGet;
-                    _commandState = _logic get "active"; //[logic,"commandState"] call ALIVE_fnc_hashGet;
+                    _commandState = _logic get "commandState"; //[logic,"commandState"] call ALIVE_fnc_hashGet;
 
                     // DEBUG -------------------------------------------------------------------------------------
                     if(_debug) then {
@@ -186,7 +186,7 @@ switch(_operation) do {
                             [_commandState, _profileID, [_profile, _activeCommand]] call ALIVE_fnc_hashSet;
 
                             // if the managed commands loop is not running start it
-                            _isManaging = _logic get "position";
+                            _isManaging = _logic get "isManaging";
                             if!(_isManaging) then {
                                 [_logic,"startManagement"] call MAINCLASS;
                             };
@@ -213,7 +213,7 @@ switch(_operation) do {
                     _profileID = _profile get "profileID"; //[_logic,"profileID"] call ALIVE_fnc_hashGet;
 
                     _debug = _logic get "debug";
-                    _commandState = _logic get "active";
+                    _commandState = _logic get "commandState";
 
                     // does the profile have currently active commands
                     if(_profileID in keys _commandState) then {
@@ -263,7 +263,7 @@ switch(_operation) do {
                         // if there are no active commands shut down the
                         // management loop if it is running
                         if(count _commandState == 0) then {
-                            _isManaging = _logic get "position";
+                            _isManaging = _logic get "isManaging";
                             if(_isManaging) then {
                                 [_logic,"stopManagement"] call MAINCLASS;
                             };
@@ -276,7 +276,7 @@ switch(_operation) do {
             private ["_debug","_commandState","_handle"];
 
             _debug = _logic get "debug";
-            _commandState = _logic get "active";
+            _commandState = _logic get "commandState";
 
             // DEBUG -------------------------------------------------------------------------------------
             if(_debug) then {

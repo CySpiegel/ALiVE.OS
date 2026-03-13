@@ -52,7 +52,7 @@ TRACE_1("AMBCP - input",_this);
 params [
     ["_logic", objNull, [objNull]],
     ["_operation", "", [""]],
-    ["_args", objNull, [objNull,[],"",0,true,false]]
+    ["_args", objNull, [objNull,[],"",0,true,false,createHashMap]]
 ];
 _result = true;
 
@@ -422,7 +422,7 @@ switch(_operation) do {
 
 
                 if !(isnil "ALIVE_clustersCivSettlement") then {
-                     _clusters = ALIVE_clustersCivSettlement select 2;
+                     _clusters = values ALIVE_clustersCivSettlement;
                      _clusters = [_clusters,_sizeFilter,_priorityFilter] call ALIVE_fnc_copyClusters;
                      _clusters = [_clusters, _taor] call ALIVE_fnc_clustersInsideMarker;
                      _clusters = [_clusters, _blacklist] call ALIVE_fnc_clustersOutsideMarker;

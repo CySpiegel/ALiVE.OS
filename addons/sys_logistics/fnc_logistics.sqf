@@ -336,7 +336,7 @@ switch (_operation) do {
 
             //GVAR(STORE) call ALiVE_fnc_InspectHash;
 
-            _result = GVAR(STORE) select 1;
+            _result = keys GVAR(STORE);
         };
 
         case "id" : {
@@ -1109,7 +1109,7 @@ switch (_operation) do {
 
                     [_logic,"removeObject",_x] call ALiVE_fnc_logistics;
                 };
-             } foreach ((GVAR(STORE) select 1) - _existing);
+             } foreach ((keys GVAR(STORE)) - _existing);
 
              private _buildings = [];
 

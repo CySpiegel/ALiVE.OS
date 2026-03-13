@@ -89,7 +89,7 @@ if (count _staticWeapons > 0) then
 
 if (count _units == 0) exitwith {};
 
-private _buildings = nearestObjects [_position,ALIVE_garrisonPositions select 1,_radius];
+private _buildings = nearestObjects [_position, keys ALIVE_garrisonPositions, _radius];
 if (count _buildings == 0 || _profileCount > 3) then {
 	 // DEBUG -------------------------------------------------------------------------------------
 	 if (ALiVE_SYS_PROFILE_DEBUG_ON) then {

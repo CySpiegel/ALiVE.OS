@@ -905,7 +905,7 @@ switch (_operation) do {
                     _markerName = _marker;
                     _markerPos = getmarkerPos _marker;
                 };
-            } foreach (GVAR(STORE) select 1);
+            } foreach (keys GVAR(STORE));
 
             LOG(_markerName);
 

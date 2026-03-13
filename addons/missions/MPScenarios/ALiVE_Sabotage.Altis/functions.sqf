@@ -537,7 +537,7 @@ SABOTAGE_fnc_initServer = {
                     _objects = (nearestObjects [_x select 1,[_x select 0],20]);
                     if (count _objects > 0) then {(_objects select 0) setdamage 1};
                 } foreach _killed;
-            } foreach (SABOTAGE_STORE select 2);
+            } foreach (values SABOTAGE_STORE);
         };
     };
 

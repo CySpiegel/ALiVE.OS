@@ -54,7 +54,7 @@ TRACE_1("CMP - input",_this);
 params [
     ["_logic", objNull, [objNull]],
     ["_operation", "", [""]],
-    ["_args", objNull, [objNull,[],"",0,true,false]]
+    ["_args", objNull, [objNull,[],"",0,true,false,createHashMap]]
 ];
 
 private _result = true;

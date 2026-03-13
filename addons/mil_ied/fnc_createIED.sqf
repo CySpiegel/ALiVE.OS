@@ -37,7 +37,7 @@ if ((count _this) > 3) then {
 
 // Get IEDs from store if available
 _IEDs = [[GVAR(STORE), "IEDs"] call ALiVE_fnc_hashGet, _town, [] call ALiVE_fnc_hashCreate] call ALiVE_fnc_hashGet;
-_IEDcount = count (_IEDs select 1);
+_IEDcount = count (keys _IEDs);
 
 // IF first time creating IEDs for location go work out how many IEDs
 if (_IEDcount == 0) then {
@@ -145,7 +145,7 @@ for "_j" from 1 to _numIEDs do {
 
     } else {
         private ["_data"];
-        _ID = (_IEDs select 1) select (_j-1);
+        _ID = (keys _IEDs) select (_j-1);
         _data = [_IEDs, _ID] call ALiVE_fnc_hashGet;
         _dud = [_data, "IEDDud"] call ALiVE_fnc_hashGet;
         _IED = createVehicle [[_data, "IEDskin", "ALIVE_IEDUrbanSmall_Remote_Ammo"] call ALiVE_fnc_hashGet, [_data, "IEDpos",[0,0,0]] call ALiVE_fnc_hashGet, [], 0, "NONE"];

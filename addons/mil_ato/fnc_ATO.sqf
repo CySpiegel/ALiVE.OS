@@ -68,7 +68,7 @@ TRACE_1("ATO - input",_this);
 params [
     ["_logic", objNull, [objNull]],
     ["_operation", "", [""]],
-    ["_args", objNull, [objNull,[],"",0,true,false]]
+    ["_args", objNull, [objNull,[],"",0,true,false,createHashMap]]
 ];
 
 ALiVE_fnc_catapultLaunch = {
@@ -2284,7 +2284,7 @@ switch(_operation) do {
             } else {
 
                 // Update ATO module and aircraft state
-                private _factions = ALIVE_globalATO select 1;
+                private _factions = keys ALIVE_globalATO;
                 private _assets = [] call ALIVE_fnc_hashCreate;
                 private _as = [_logic,"airspaceAssets",[] call ALIVE_fnc_hashCreate] call ALiVE_fnc_ATO;
 

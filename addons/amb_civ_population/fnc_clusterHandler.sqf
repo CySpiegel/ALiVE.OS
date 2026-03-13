@@ -41,7 +41,7 @@ TRACE_1("clusterHandler - input",_this);
 params [
     ["_logic", objNull, [objNull,[],createHashMap]],
     ["_operation", "", [""]],
-    ["_args", objNull, [objNull,[],"",0,true,false]]
+    ["_args", objNull, [objNull,[],"",0,true,false,createHashMap]]
 ];
 //_result = true;
 
@@ -227,7 +227,7 @@ switch(_operation) do {
         if(_args isEqualType "") then {
             private _clusterID = _args;
             private _clusters = [_logic, "clusters"] call ALIVE_fnc_hashGet;
-            private _clusterIndex = _clusters select 1;
+            private _clusterIndex = keys _clusters;
 
             if(_clusterID in _clusterIndex) then {
                 _result = [_clusters, _clusterID] call ALIVE_fnc_hashGet;

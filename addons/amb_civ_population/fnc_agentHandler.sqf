@@ -69,7 +69,7 @@ TRACE_1("agentHandler - input",_this);
 params [
     ["_logic", objNull, [objNull,[],createHashMap]],
     ["_operation", "", [""]],
-    ["_args", objNull, [objNull,[],"",0,true,false]]
+    ["_args", objNull, [objNull,[],"",0,true,false,createHashMap]]
 ];
 //_result = true;
 

@@ -46,7 +46,7 @@ TRACE_1("battlefieldAnalysis - input",_this);
 params [
     ["_logic", objNull, [objNull,[],createHashMap]],
     ["_operation", "", [""]],
-    ["_args", objNull, [objNull,[],"",0,true,false]]
+    ["_args", objNull, [objNull,[],"",0,true,false,createHashMap]]
 ];
 //_result = true;
 
@@ -474,7 +474,7 @@ switch(_operation) do {
             if !(isnil "_sectorData") then {
                 _clusters = [_sectorData,"activeClusters"] call ALIVE_fnc_hashGet;
 
-                private _clusterID = _clusters select 1 select 0;
+                private _clusterID = (keys _clusters) select 0;
 
                 {
                     _owner = [_x,"owner"] call ALIVE_fnc_hashGet;
@@ -495,9 +495,9 @@ switch(_operation) do {
                             _clustersOwnedBySide pushback _x;
                         };
                     };
-                } forEach (_clusters select 2);
+                } forEach (values _clusters);
             };
-        } forEach (_activeSectors select 2);
+        } forEach (values _activeSectors);
 
         _result = _clustersOwnedBySide;
     };
@@ -524,7 +524,7 @@ switch(_operation) do {
             if !(isnil "_sectorData") then {
                 _clusters = [_sectorData,"activeClusters"] call ALIVE_fnc_hashGet;
 
-                private _clusterID = _clusters select 1 select 0;
+                private _clusterID = (keys _clusters) select 0;
 
                 {
                     _owner = [_x,"owner"] call ALIVE_fnc_hashGet;
@@ -547,10 +547,10 @@ switch(_operation) do {
                             _clustersOwnedBySide pushback _x;
                         };
                     };
-                } forEach (_clusters select 2);
+                } forEach (values _clusters);
 
             };
-        } forEach (_activeSectors select 2);
+        } forEach (values _activeSectors);
 
         _result = _clustersOwnedBySide;
     };

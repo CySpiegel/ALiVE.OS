@@ -48,7 +48,7 @@ TRACE_1("sectorPlot - input",_this);
 params [
     ["_logic", objNull, [objNull,[],createHashMap]],
     ["_operation", "", [""]],
-    ["_args", objNull, [objNull,[],"",0,true,false]]
+    ["_args", objNull, [objNull,[],"",0,true,false,createHashMap]]
 ];
 _result = true;
 
@@ -698,7 +698,7 @@ switch(_operation) do {
                                     _m = [_markerID,_position,_dimensions,_alpha,_color,"ELLIPSE"] call _createMarker;
                                     _markers pushback _m;
 
-                                } forEach (_plotData select 2);
+                                } forEach (values _plotData);
 
                             };
                         };

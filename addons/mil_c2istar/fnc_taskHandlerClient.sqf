@@ -44,7 +44,7 @@ if !(_this isEqualType []) exitWith {};
 params [
     ["_logic", [], [[]]],
     ["_operation", "", [""]],
-    ["_args", objNull, [objNull,[],"",0,true,false]]
+    ["_args", objNull, [objNull,[],"",0,true,false,createHashMap]]
 ];
 //_result = true;
 

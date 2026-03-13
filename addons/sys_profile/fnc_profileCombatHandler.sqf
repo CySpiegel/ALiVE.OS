@@ -157,15 +157,15 @@ switch (_operation) do {
 
         // store attacker in combatBySide
 
-        private _profilesInCombatBySide = ([_logic,"profilesInCombatBySide"] call ALiVE_fnc_hashGet) select 2;
+        private _profilesInCombatBySide = [_logic,"profilesInCombatBySide"] call ALiVE_fnc_hashGet;
 
         private _attackerID = [_attack,"attacker"] call ALiVE_fnc_hashGet;
         private _attackerSide = [_attack,"attackerSide"] call ALiVE_fnc_hashGet;
 
         switch (_attackerSide) do {
-            case "EAST": {(_profilesInCombatBySide select 0) pushback _attackerID};
-            case "WEST": {(_profilesInCombatBySide select 1) pushback _attackerID};
-            case "GUER": {(_profilesInCombatBySide select 2) pushback _attackerID};
+            case "EAST": {(_profilesInCombatBySide get "EAST") pushback _attackerID};
+            case "WEST": {(_profilesInCombatBySide get "WEST") pushback _attackerID};
+            case "GUER": {(_profilesInCombatBySide get "GUER") pushback _attackerID};
         };
 
         // log event
@@ -187,7 +187,7 @@ switch (_operation) do {
         private _attacks = _args;
 
         private _attacksByID = [_logic,"attacksByID"] call ALiVE_fnc_hashGet;
-        private _profilesInCombatBySide = ([_logic,"profilesInCombatBySide"] call ALiVE_fnc_hashGet) select 2;
+        private _profilesInCombatBySide = [_logic,"profilesInCombatBySide"] call ALiVE_fnc_hashGet;
         private _debug = [_logic,"debug"] call ALiVE_fnc_hashGet;
 
         {
@@ -206,15 +206,15 @@ switch (_operation) do {
 
                 switch (_attackerSide) do {
                     case "EAST": {
-                        private _array = (_profilesInCombatBySide select 0);
+                        private _array = (_profilesInCombatBySide get "EAST");
                         _array deleteAt (_array find _attackerID);
                     };
                     case "WEST": {
-                        private _array = (_profilesInCombatBySide select 1);
+                        private _array = (_profilesInCombatBySide get "WEST");
                         _array deleteAt (_array find _attackerID);
                     };
                     case "GUER": {
-                        private _array = (_profilesInCombatBySide select 2);
+                        private _array = (_profilesInCombatBySide get "GUER");
                         _array deleteAt (_array find _attackerID);
                     };
                 };

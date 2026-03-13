@@ -262,7 +262,7 @@ switch(_operation) do {
 
                         // if there are no active commands shut down the
                         // management loop if it is running
-                        if(count (_commandState select 1) == 0) then {
+                        if(count _commandState == 0) then {
                             _isManaging = _logic get "position";
                             if(_isManaging) then {
                                 [_logic,"stopManagement"] call MAINCLASS;
@@ -341,14 +341,14 @@ switch(_operation) do {
                                     };
                                 };
                             };
-                        } forEach (_commandState select 2);
+                        } forEach values _commandState;
 
                     };
 
                     sleep 5;
 
                     //Exit if _logic has been destroyed
-                    isnil "_logic" || {count (_logic select 1) == 0}
+                    isnil "_logic" || {count _logic == 0}
                 };
             };
 

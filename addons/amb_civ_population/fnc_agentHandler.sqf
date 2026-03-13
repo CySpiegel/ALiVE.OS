@@ -123,14 +123,13 @@ switch(_operation) do {
         private _agents = [_logic, "agents"] call ALIVE_fnc_hashGet;
 
         if(count _agents > 0) then {
-            {
-                _result = [_x, "debug", false] call ALIVE_fnc_civilianAgent;
-            } forEach (_agents select 2);
+            {_result = [_x, "debug", false] call ALIVE_fnc_civilianAgent;
+            } forEach values _agents;
 
             if(_args) then {
                 {
                     _result = [_x, "debug", true] call ALIVE_fnc_civilianAgent;
-                } forEach (_agents select 2);
+                } forEach values _agents;
 
                 // DEBUG -------------------------------------------------------------------------------------
                 if(_args) then {
@@ -349,7 +348,7 @@ switch(_operation) do {
         if(_args isEqualType "") then {
             private _agentID = _args;
             private _agents = [_logic, "agents"] call ALIVE_fnc_hashGet;
-            private _agentIndex = _agents select 1;
+            private _agentIndex = keys _agents;
 
             if(_agentID in _agentIndex) then {
                 _result = [_agents, _agentID] call ALIVE_fnc_hashGet;

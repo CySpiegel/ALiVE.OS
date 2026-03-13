@@ -49,7 +49,7 @@ switch (_taskState) do {
         _taskCurrent = _taskData select 9;
         _taskApplyType = _taskData select 10;
 
-        _tasksCurrent = ([ALiVE_TaskHandler,"tasks",["",[],[],nil]] call ALiVE_fnc_HashGet) select 2;
+        _tasksCurrent = values ([ALiVE_TaskHandler,"tasks",createHashMap] call ALiVE_fnc_HashGet);
 
         if (_taskID == "") exitwith {["C2ISTAR - Task Assasination - Wrong input for _taskID!"] call ALiVE_fnc_Dump};
         if (_requestPlayerID == "") exitwith {["C2ISTAR - Task Assasination - Wrong input for _requestPlayerID!"] call ALiVE_fnc_Dump};

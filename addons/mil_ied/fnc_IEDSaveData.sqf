@@ -42,13 +42,13 @@ _missionName = format["%1_%2", ALIVE_sys_data_GROUP_ID, _missionName];
 
 _data = [MOD(MIL_IED),"state"] call ALiVE_fnc_IED;
 
-if (count (_data select 1) == 0) exitwith {
+if (count _data == 0) exitwith {
     ["ALiVE SAVE IED DATA HAS NO ENTRIES: %1! DO NOT SAVE...",_data] call ALIVE_fnc_dump;
 };
 
 _result = [false,[]];
 
-_message = format["ALiVE IED - Preparing to save %1 IEDs..",count(_data select 1)];
+_message = format["ALiVE IED - Preparing to save %1 IEDs..",count _data];
 _messages = _result select 1;
 _messages pushback _message;
 

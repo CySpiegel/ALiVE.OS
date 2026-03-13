@@ -928,7 +928,7 @@ if (!_simAttacks) then {
 
             private _vehAssignments = _commandingEntity get "vehicleAssignments";
 
-            if (count (_vehAssignments select 1) > 0) then {
+            if (count _vehAssignments > 0) then {
                 private _vehicleID = _subordinateVehicle get "profileID";
 
                 private _vehAssignment = [_vehAssignments,_vehicleID] call ALiVE_fnc_hashGet;

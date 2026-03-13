@@ -82,7 +82,7 @@ switch (_state) do {
             _agent setVariable ["ALIVE_agentBusy", true, false];
 
             private _agents = [ALIVE_agentHandler, "getActive"] call ALIVE_fnc_agentHandler;
-            _agents = _agents select 2;
+            _agents = values _agents;
 
             if(count _agents > 0) then {
                 private _partners = [];

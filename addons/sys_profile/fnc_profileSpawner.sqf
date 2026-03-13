@@ -66,7 +66,7 @@ if (_spawnSources isEqualTo []) then {
                 } else {
                     private _vehicleAssignments = [_profile,"vehicleAssignments"] call ALiVE_fnc_HashGet;
 
-                    if (isNil "_vehicleAssignments" || {(_vehicleAssignments select 1) isEqualTo []}) then {
+                    if (isNil "_vehicleAssignments" || {count _vehicleAssignments == 0}) then {
                         [_profile,"despawn"] call ALiVE_fnc_profileVehicle;
                     };
                 };
@@ -144,7 +144,7 @@ if (_spawnSources isEqualTo []) then {
                 	// if ship
                 	if (_objectType == "ship") then {_isShip = true; };
                 	// if _objectType contains boat or ship
-                  if (!_isShip && {!((_vehicleAssignments select 1) isEqualTo [])}) then {
+                  if (!_isShip && {count _vehicleAssignments > 0}) then {
                        if (["boat", _objectType] call BIS_fnc_inString || ["ship", _objectType] call BIS_fnc_inString) then {
                         	_isWater = false;
                        };
@@ -218,7 +218,7 @@ if (!(_profilesToSpawnQueue isEqualTo []) && {time - _lastProfileSpawnedTime > A
             } else {
                 private _vehicleAssignments = [_profile,"vehicleAssignments"] call ALiVE_fnc_HashGet;
 
-                if (isNil "_vehicleAssignments" || {(_vehicleAssignments select 1) isEqualTo []}) then {
+                if (isNil "_vehicleAssignments" || {count _vehicleAssignments == 0}) then {
                     [_profile,"spawn"] spawn ALiVE_fnc_profileVehicle;
                 };
             };

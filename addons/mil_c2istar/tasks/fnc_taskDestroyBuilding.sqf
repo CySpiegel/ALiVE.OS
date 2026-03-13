@@ -51,7 +51,7 @@ switch (_taskState) do {
         private _taskCurrent = [_task, 9, "", [""]] call BIS_fnc_param;
         private _taskApplyType = [_task, 10, "", [""]] call BIS_fnc_param;
         private _targetBuildings = [_task, 11, [], [objnull,[]]] call BIS_fnc_param;
-        private _tasksCurrent = ([ALiVE_TaskHandler,"tasks",["",[],[],nil]] call ALiVE_fnc_HashGet) select 2;
+        private _tasksCurrent = values ([ALiVE_TaskHandler,"tasks",createHashMap] call ALiVE_fnc_HashGet);
 
         private _targetBuilding = objNull;
 

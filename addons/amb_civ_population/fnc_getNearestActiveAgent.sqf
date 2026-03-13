@@ -41,7 +41,7 @@ private _sortCode = {
      _dist
 };
 
-if (count (_agentsActive select 1) > 0) then {
+if (count _agentsActive > 0) then {
     _nearAgents = [_nearAgents, _sortCode] call ALiVE_fnc_shellSort;
     _result = (_nearAgents select 0) select 0;
 };

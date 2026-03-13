@@ -958,7 +958,7 @@ switch(_operation) do {
             if((_x get "type") == "entity") then {
                 _unitCount = _unitCount + ([_x,"unitCount"] call ALIVE_fnc_profileEntity);
             }
-        } forEach (([_logic,"profiles"] call ALIVE_fnc_hashGet) select 2);
+        } forEach values ([_logic,"profiles"] call ALIVE_fnc_hashGet);
 
         _result = _unitCount;
     };
@@ -1103,8 +1103,8 @@ switch(_operation) do {
             if!(_isPlayer) then {
 
                 _vehicleAssignments = _profile get "vehicleAssignments";
-                _assignmentKeys = _vehicleAssignments select 1;
-                _assignmentValues = _vehicleAssignments select 2;
+                _assignmentKeys = keys _vehicleAssignments;
+                _assignmentValues = values _vehicleAssignments;
 
                 if(_profileType == "entity") then {
 

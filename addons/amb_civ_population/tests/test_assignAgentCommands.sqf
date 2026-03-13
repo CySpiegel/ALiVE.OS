@@ -65,6 +65,6 @@ STAT("Assign Command To All Agents");
         //[_x, "setActiveCommand", ["ALIVE_fnc_cc_suicideTarget", "managed", [WEST]]] call ALIVE_fnc_civilianAgent;
         [_x, "setActiveCommand", ["ALIVE_fnc_cc_rogueTarget", "managed", [WEST]]] call ALIVE_fnc_civilianAgent;
     };
-} foreach (_agents select 2);
+} foreach values _agents;
 
 

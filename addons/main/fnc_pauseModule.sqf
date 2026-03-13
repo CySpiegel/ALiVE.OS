@@ -38,7 +38,7 @@ if !(isServer) exitwith {
 
     if (tolower(typeOf _mod) in _modules) then {
 
-        _handler = _mod getvariable ["handler",["",[],[],nil]];
+        _handler = _mod getvariable ["handler",createHashMap];
         _mainclass = _mod getvariable ["class",([_handler,"class"] call ALiVE_fnc_HashGet)];
 
         if (typeName _mainClass == "STRING") then {_mainclass = compile _mainclass};
@@ -50,7 +50,7 @@ if !(isServer) exitwith {
 
             //Default: Call "pause" operation of the module main class
             default {
-                if (count (_handler select 1) > 0) then {
+                if (count _handler > 0) then {
                     [_handler,"pause",true] call _mainclass;
                 } else {
                     [_mod,"pause",true] call _mainclass;

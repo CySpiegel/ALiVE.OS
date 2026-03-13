@@ -65,13 +65,13 @@ private _isPersistent = false;
     if (_isPersistent) exitWith {};
 } forEach OPCOM_instances;
 
-if (!_isPersistent || count (_data select 1) == 0) exitwith {
+if (!_isPersistent || count _data == 0) exitwith {
     //[["ALiVE_LOADINGSCREEN"],"BIS_fnc_endLoadingScreen",true,false] call BIS_fnc_MP;
 };
 
 _result = [false,[]];
 
-_message = format["ALiVE Military Logistics - Preparing to save %1 forcepools..",count(_data select 1)];
+_message = format["ALiVE Military Logistics - Preparing to save %1 forcepools..",count _data];
 _messages = _result select 1;
 _messages pushback _message;
 

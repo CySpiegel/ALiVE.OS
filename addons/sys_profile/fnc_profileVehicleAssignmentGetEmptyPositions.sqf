@@ -36,7 +36,7 @@ _vehicleAssignments = _profileVehicle get "vehicleAssignments"; //[_profileVehic
 _emptyPositionData = [_vehicleClass] call ALIVE_fnc_configGetVehicleEmptyPositions;
 
 // if the vehicle already has assignments
-if(count (_vehicleAssignments select 1) > 0) then {
+if(count _vehicleAssignments > 0) then {
     {
         _indexes = _x select 2;
         // subtract occupied positions from empty position data
@@ -46,7 +46,7 @@ if(count (_vehicleAssignments select 1) > 0) then {
             _emptyPositionData set [_i, _emptyPositions - _countCurrentPosition];
         };
 
-    } forEach (_vehicleAssignments select 2);
+    } forEach values _vehicleAssignments;
 };
 
 _emptyPositionData

@@ -741,7 +741,7 @@ switch(_operation) do {
             _logic setvariable ["_rev",[_args,"_rev"] call ALiVE_fnc_hashGet,true];
 
             //Restore houselist and groups if a houselist is provided
-            if (count (([_args, "houses",["",[],[],nil]] call ALiVE_fnc_hashGet) select 1) > 0) then {
+            if (count ([_args, "houses",createHashMap] call ALiVE_fnc_hashGet) > 0) then {
 
                 //Reset groups and markers
                 {[_logic, "delGroup", _x] call ALiVE_fnc_CQB} forEach (_logic getVariable ["groups",[]]);
@@ -769,7 +769,7 @@ switch(_operation) do {
 
                         _data pushback _house;
                     };
-                } forEach (([_args, "houses"] call ALiVE_fnc_hashGet) select 2);
+                } forEach values ([_args, "houses"] call ALiVE_fnc_hashGet);
 
             //If no houselist was provided take the existing houselist
             } else {
@@ -956,7 +956,7 @@ switch(_operation) do {
                 private _sector = [ALIVE_sectorGrid, "positionToSector", _housePosition] call ALIVE_fnc_sectorGrid;
 
                 // Make sure we got back a hash because we might be testing a
-                // position outside the ALIVE_sectorGrid returning ["",[],[],nil]
+                // position outside the ALIVE_sectorGrid returning createHashMap
                 if ([_sector] call ALiVE_fnc_isHash) then {
                     private _sectorID = [_sector, "id"] call ALiVE_fnc_sector;
 

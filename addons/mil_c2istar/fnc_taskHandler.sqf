@@ -1477,7 +1477,7 @@ switch (_operation) do {
                     [_managedTasks, _x] call ALIVE_fnc_hashRem;
                 } forEach _managedTasksToRemove;
 
-                if (count (_managedTasks select 1) > 0) then {
+                if (count _managedTasks > 0) then {
                     // for each of the tasks
                     {
                         private _taskID = _x;
@@ -1537,7 +1537,7 @@ switch (_operation) do {
                                 };
                             };
                         };
-                    } forEach (_managedTasks select 2);
+                    } forEach values _managedTasks;
                 } else {
                     private _autoGenerateSides = [_logic, "autoGenerateSides", ["", [], [], ""]] call ALIVE_fnc_hashGet;
                     private _generatedTasks = 0;

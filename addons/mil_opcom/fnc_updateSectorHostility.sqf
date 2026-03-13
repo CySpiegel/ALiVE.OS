@@ -30,7 +30,7 @@ if (isnil QMOD(SECTORGRID) || {isnil QMOD(CLUSTERHANDLER)} || {isnil QMOD(SECTOR
 PARAMS_3(_pos,_sides,_value);
 
 _sector = [ALIVE_sectorGrid, "positionToSector", _pos] call ALIVE_fnc_sectorGrid;
-_sectorData = [_sector,"data",["",[],[],nil]] call ALIVE_fnc_hashGet;
+_sectorData = [_sector,"data",createHashMap] call ALIVE_fnc_hashGet;
 
 if ("clustersCiv" in keys _sectorData) then {
     _civClusters = [_sectorData,"clustersCiv"] call ALIVE_fnc_hashGet;

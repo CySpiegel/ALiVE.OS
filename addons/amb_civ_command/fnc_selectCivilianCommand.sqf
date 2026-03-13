@@ -76,7 +76,7 @@ if(_agent getVariable ["ALIVE_agentGatheringRequested",false]) exitWith {
 
 // there are commands available
 
-if(count (ALIVE_civCommands select 1) > 0) then {
+if(count ALIVE_civCommands > 0) then {
 
     // check global posture adjust command probability accordingly
 

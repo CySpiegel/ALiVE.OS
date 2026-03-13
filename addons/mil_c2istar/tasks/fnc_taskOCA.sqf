@@ -50,7 +50,7 @@ switch (_taskState) do {
         _taskApplyType = [_taskData, 10, "", [""]] call BIS_fnc_param;
         _targetBuildings = [_taskData, 11, [], [objnull]] call BIS_fnc_param;
 
-        _tasksCurrent = ([ALiVE_TaskHandler,"tasks",["",[],[],nil]] call ALiVE_fnc_HashGet) select 2;
+        _tasksCurrent = values ([ALiVE_TaskHandler,"tasks",createHashMap] call ALiVE_fnc_HashGet);
 
         /*
         //Inputs
@@ -167,9 +167,9 @@ switch (_taskState) do {
 
 
                     // Choose cluster
-                    if (count (_OCAClusters select 1) > 1) then {
+                    if (count _OCAClusters > 1) then {
 
-                        private _totalIndexes = (count (_OCAClusters select 1))-1;
+                        private _totalIndexes = (count _OCAClusters)-1;
                         private _index = 0;
                         switch (_taskLocationType) do {
                             case ("Short") : {_index = floor(_totalIndexes/ceil(_totalIndexes*0.8)); _index = floor(random _index)};
@@ -177,8 +177,8 @@ switch (_taskState) do {
                             case ("Long") : {_index = floor(_totalIndexes/ceil(_totalIndexes*0.1))};
                         };
 
-                        _targetBuildings = [_OCAClusters, ((_OCAClusters select 1) select _index)] call ALiVE_fnc_hashGet;
-                        private _cluster = [ALiVE_clustersMil, ((_OCAClusters select 1) select _index)] call ALiVE_fnc_HashGet;
+                        _targetBuildings = [_OCAClusters, ((keys _OCAClusters) select _index)] call ALiVE_fnc_hashGet;
+                        private _cluster = [ALiVE_clustersMil, ((keys _OCAClusters) select _index)] call ALiVE_fnc_HashGet;
                         _taskLocation = [_cluster,"center"] call ALiVE_fnc_hashGet;
                     };
                 } else {

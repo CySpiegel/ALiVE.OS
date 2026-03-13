@@ -6182,7 +6182,7 @@ switch(_operation) do {
                 {
                     private _groupCategory = [_groupCategories,_x] call ALiVE_fnc_hashGet;
                     private _configName = [_groupCategory,"configName"] call ALiVE_fnc_hashGet;
-                    private _groups = ([_groupCategory,"groups"] call ALiVE_fnc_hashGet) select 2;
+                    private _groups = values ([_groupCategory,"groups"] call ALiVE_fnc_hashGet);
 
                     private _groupClassnames = _groups apply {[_x,"configName"] call ALiVE_fnc_hashGet};
 

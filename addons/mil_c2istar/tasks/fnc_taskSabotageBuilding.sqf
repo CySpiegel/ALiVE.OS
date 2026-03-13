@@ -47,7 +47,7 @@ switch (_taskState) do {
 				"_taskApplyType"
 			];
 
-        private _tasksCurrent = ([ALiVE_TaskHandler, "tasks", ["", [], [], nil]] call ALiVE_fnc_HashGet) select 2;
+        private _tasksCurrent = values ([ALiVE_TaskHandler, "tasks", createHashMap] call ALiVE_fnc_HashGet);
 
         if (_taskID == "") exitwith {["C2ISTAR - Task SabotageBuilding - Wrong input for _taskID!"] call ALiVE_fnc_Dump};
         if (_requestPlayerID == "") exitwith {["C2ISTAR - Task SabotageBuilding - Wrong input for _requestPlayerID!"] call ALiVE_fnc_Dump};

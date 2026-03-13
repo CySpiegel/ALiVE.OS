@@ -436,7 +436,7 @@ switch (_operation) do {
 
         //["VEHICLE %1 mergePosition: %2",_logic select 2 select 4,_position] call ALIVE_fnc_dump;
 
-        if (count (_assignments select 1) > 0) then {
+        if (count _assignments > 0) then {
             [_assignments,_position] call ALIVE_fnc_profileVehicleAssignmentsSetAllPositions;
         };
     };

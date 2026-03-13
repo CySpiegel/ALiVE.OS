@@ -25,7 +25,7 @@ nil
 ---------------------------------------------------------------------------- */
 if (isnil "_this") exitwith {};
 
-params [["_object", objNull, [objNull]], ["_state", ["",[],[],nil], [[]]]];
+params [["_object", objNull, [objNull]], ["_state", createHashMap, [createHashMap]]];
 
 private ["_id","_data"];
 

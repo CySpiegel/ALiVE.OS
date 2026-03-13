@@ -43,13 +43,13 @@ _missionName = format["%1_%2", ALIVE_sys_data_GROUP_ID, _missionName];
 
 _data = [MOD(SYS_LOGISTICS),"state"] call ALiVE_fnc_logistics;
 
-if (count (_data select 1) == 0) exitwith {
+if (count _data == 0) exitwith {
     //[["ALiVE_LOADINGSCREEN"],"BIS_fnc_endLoadingScreen",true,false] call BIS_fnc_MP;
 };
 
 _result = [false,[]];
 
-_message = format["ALiVE Player Logistics - Preparing to save %1 logistics items..",count(_data select 1)];
+_message = format["ALiVE Player Logistics - Preparing to save %1 logistics items..",count _data];
 _messages = _result select 1;
 _messages pushback _message;
 

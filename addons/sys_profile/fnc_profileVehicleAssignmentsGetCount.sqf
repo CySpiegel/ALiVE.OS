@@ -38,6 +38,6 @@ _result = 0;
             _result = _result + count(_x);
         };
     } forEach _assignment;
-} forEach (_assignments select 2);
+} forEach values _assignments;
 
 _result

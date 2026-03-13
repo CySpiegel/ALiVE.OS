@@ -285,7 +285,7 @@ switch(_operation) do {
                     } forEach _jobsToCancel;
 
                     //Exit if Logic has been destroyed
-                    isnil "_logic" || {count (_logic select 1) == 0};
+                    isnil "_logic" || {count _logic == 0};
                 };
             };
         };

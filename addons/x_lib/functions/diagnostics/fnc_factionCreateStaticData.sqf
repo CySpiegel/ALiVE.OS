@@ -279,7 +279,7 @@ private ["_groupCategory","_categoryGroups","_arrayContent","_groupClass","_conf
 
 } forEach (keys _factionCategoryGroups);
 
-if(count(_factionCategoryGroups select 1) == 0) then {
+if(count _factionCategoryGroups == 0) then {
     ['%1_typeMappings, "Air", "Air"] call ALIVE_fnc_hashSet;',_faction] call ALIVE_fnc_dumpClipboard;
     ['%1_typeMappings, "Armored", "Armored"] call ALIVE_fnc_hashSet;',_faction] call ALIVE_fnc_dumpClipboard;
     ['%1_typeMappings, "Infantry", "Infantry"] call ALIVE_fnc_hashSet;',_faction] call ALIVE_fnc_dumpClipboard;

@@ -40,21 +40,19 @@ _missionName = format["%1_%2", ALIVE_sys_data_GROUP_ID, _missionName];
 
 private _keys = [];
 private _values = [];
-private _data = [] call ALiVE_fnc_HashCreate;
+private _data = createHashMap;
 {
     if ((_x getvariable ["CQB_persistent","false"]) == "true") then {
         private _state = [_x,"state"] call ALiVE_fnc_CQB;
         private _houses = [_state,"houses"] call ALiVE_fnc_HashGet;
 
-        _keys = _keys + (_houses select 1);
-        _values = _values + (_houses select 2);
-
-        _data set [1,_keys];
-        _data set [2,_values];
+        {
+            _data set [_x, _y];
+        } forEach _houses;
     };
 } foreach (MOD(CQB) getVariable ["instances",[]]);
 
-if (count (_data select 1) == 0) exitwith {
+if (count _data == 0) exitwith {
     [["ALiVE_LOADINGSCREEN"],"BIS_fnc_endLoadingScreen",true,false] call BIS_fnc_MP;
 };
 

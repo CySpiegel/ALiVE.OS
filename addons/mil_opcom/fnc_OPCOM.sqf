@@ -733,7 +733,7 @@ switch(_operation) do {
             _reserved = [_logic,"ProfileIDsReserve",[]] call ALiVE_fnc_HashGet;
             _pos = [_profile,"position"] call ALiVE_fnc_HashGet;
 
-	        _vehicles = ([_profile,"vehicleAssignments",[[],[]]] call ALIVE_fnc_hashGet) select 1;
+	        _vehicles = keys ([_profile,"vehicleAssignments",createHashMap] call ALIVE_fnc_hashGet);
 	        if (count _vehicles > 0) then {
 	        	_vehicleProfile = [ALiVE_ProfileHandler,"getProfile",_vehicles select 0] call ALiVE_fnc_ProfileHandler;
             };
@@ -1193,8 +1193,8 @@ switch(_operation) do {
 
 	                                        // Get sector data
 	                                        _sector = [ALIVE_sectorGrid, "positionToSector", _center] call ALIVE_fnc_sectorGrid;
-	                                        _sectorData = [_sector,"data",["",[],[],nil]] call ALIVE_fnc_hashGet;
-	                                        _entitiesBySide = [_sectorData, "entitiesBySide",["",[],[],nil]] call ALIVE_fnc_hashGet;
+	                                        _sectorData = [_sector,"data",createHashMap] call ALIVE_fnc_hashGet;
+	                                        _entitiesBySide = [_sectorData, "entitiesBySide",createHashMap] call ALIVE_fnc_hashGet;
 	                                        _agents = [];
 
 	                                        // Get amb civilian clusterdata
@@ -1204,12 +1204,12 @@ switch(_operation) do {
 
 	                                            _civClusters = [_sectorData,"clustersCiv"] call ALIVE_fnc_hashGet;
 	                                            _settlementClusters = [_civClusters,"settlement",[]] call ALIVE_fnc_hashGet;
-	                                            _agentClusterData = [ALIVE_agentHandler,"agentsByCluster",["",[],[],nil]] call ALiVE_fnc_hashGet;
+	                                            _agentClusterData = [ALIVE_agentHandler,"agentsByCluster",createHashMap] call ALiVE_fnc_hashGet;
 
 	                                            if (count _settlementClusters <= 0) exitwith {};
 
 	                                            _settlementClusters = [_settlementClusters,[_center],{_Input0 distance (_x select 0)},"ASCEND"] call ALiVE_fnc_SortBy;
-	                                            _agents =  ([_agentClusterData,_settlementClusters select 0 select 1,["",[],[],nil]] call ALiVE_fnc_HashGet) select 1;
+	                                            _agents =  keys ([_agentClusterData,_settlementClusters select 0 select 1,createHashMap] call ALiVE_fnc_HashGet);
 
 	                                            [_objective,"agents",_agents] call ALiVE_fnc_HashSet;
 	                                        };
@@ -1350,8 +1350,8 @@ switch(_operation) do {
 
 	                // Get sector data
 	                _sector = [ALIVE_sectorGrid, "positionToSector", _center] call ALIVE_fnc_sectorGrid;
-	                _sectorData = [_sector,"data",["",[],[],nil]] call ALIVE_fnc_hashGet;
-	                _entitiesBySide = [_sectorData, "entitiesBySide",["",[],[],nil]] call ALIVE_fnc_hashGet;
+	                _sectorData = [_sector,"data",createHashMap] call ALIVE_fnc_hashGet;
+	                _entitiesBySide = [_sectorData, "entitiesBySide",createHashMap] call ALIVE_fnc_hashGet;
 	                _agents = [];
 
 	                // Get amb civilian clusterdata
@@ -1361,12 +1361,12 @@ switch(_operation) do {
 
 	                    _civClusters = [_sectorData,"clustersCiv"] call ALIVE_fnc_hashGet;
 	                    _settlementClusters = [_civClusters,"settlement",[]] call ALIVE_fnc_hashGet;
-	                    _agentClusterData = [ALIVE_agentHandler,"agentsByCluster",["",[],[],nil]] call ALiVE_fnc_hashGet;
+	                    _agentClusterData = [ALIVE_agentHandler,"agentsByCluster",createHashMap] call ALiVE_fnc_hashGet;
 
 	                    if (count _settlementClusters <= 0) exitwith {};
 
 	                    _settlementClusters = [_settlementClusters,[_center],{_Input0 distance (_x select 0)},"ASCEND"] call ALiVE_fnc_SortBy;
-	                    _agents =  ([_agentClusterData,_settlementClusters select 0 select 1,["",[],[],nil]] call ALiVE_fnc_HashGet) select 1;
+	                    _agents =  keys ([_agentClusterData,_settlementClusters select 0 select 1,createHashMap] call ALiVE_fnc_HashGet);
 
 	                    [_objective,"agents",_agents] call ALiVE_fnc_HashSet;
 	                };
@@ -1425,8 +1425,8 @@ switch(_operation) do {
 
 	                    // Get civilian factions from Amb Civs
 	                    If (!isnil "ALiVE_Agenthandler") then {
-	                        _AllAgents = [ALiVE_Agenthandler,"agents",["",[],[],nil]] call ALiVE_fnc_HashGet;
-	                        if (count (_AllAgents select 2) > 0) exitwith {_civFactions = _civFactions + [[(_AllAgents get "debug"),"faction","CIV_F"] call ALiVE_fnc_HashGet]};
+	                        _AllAgents = [ALiVE_Agenthandler,"agents",createHashMap] call ALiVE_fnc_HashGet;
+	                        if (count _AllAgents > 0) exitwith {_civFactions = _civFactions + [[(_AllAgents get "debug"),"faction","CIV_F"] call ALiVE_fnc_HashGet]};
 	                    };
 
 	                    [time,_center,_id,_size,selectRandom _factions,[_objective,"suicide",[]] call ALiVE_fnc_HashGet,_sidesEnemy,_agents,_civFactions] spawn ALiVE_fnc_INS_suicide;
@@ -2581,7 +2581,7 @@ switch(_operation) do {
 
                         case ("entity") : {
 
-                            _assignments = ([_profile,"vehicleAssignments",["",[],[],nil]] call ALIVE_fnc_hashGet) select 1;
+                            _assignments = keys ([_profile,"vehicleAssignments",createHashMap] call ALIVE_fnc_hashGet);
                             _unitClasses = [_profile,"unitClasses",[]] call ALIVE_fnc_hashGet;
 
                             if (

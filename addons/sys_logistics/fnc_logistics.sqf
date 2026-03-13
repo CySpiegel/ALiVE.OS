@@ -1028,13 +1028,12 @@ switch (_operation) do {
             } foreach _startObjects;
 
             //Check if provided data is valid
-            if (count (_args select 1) == 0) exitwith {};
+            if (count _args == 0) exitwith {};
 
             private ["_collection"];
 
             //Reset store with provided data
-            GVAR(STORE) set [1,_args select 1];
-            GVAR(STORE) set [2,_args select 2];
+            { GVAR(STORE) set [_x, _y] } forEach _args;
 
             //defaults
             _createdObjects = [];

@@ -177,7 +177,7 @@ switch(_operation) do {
             _sectors pushback _sector;
 
             {
-                private _sectorData = [_x, "data",["",[],[],nil]] call ALIVE_fnc_HashGet;
+                private _sectorData = [_x, "data",createHashMap] call ALIVE_fnc_HashGet;
                 if("clustersCiv" in keys _sectorData) then {
                     private _civClusters = [_sectorData,"clustersCiv"] call ALIVE_fnc_hashGet;
                     private _settlementClusters = [_civClusters,"settlement"] call ALIVE_fnc_hashGet;

@@ -41,13 +41,13 @@ _missionName = format["%1_%2", ALIVE_sys_data_GROUP_ID, _missionName];
 
 _data = [MOD(SYS_patrolrep),"state"] call ALiVE_fnc_patrolrep;
 
-if (count (_data select 1) == 0) exitwith {
+if (count _data == 0) exitwith {
     //[["ALiVE_LOADINGSCREEN"],"BIS_fnc_endLoadingScreen",true,false] call BIS_fnc_MP;
 };
 
 _result = [false,[]];
 
-_message = format["ALiVE PATROLREP - Preparing to save %1 reports..",count(_data select 1)];
+_message = format["ALiVE PATROLREP - Preparing to save %1 reports..",count _data];
 _messages = _result select 1;
 _messages pushback _message;
 

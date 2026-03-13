@@ -46,7 +46,7 @@ _getClosestLandFromSectors = {
 
         {
             _sector = _x;
-            _sectorData = [_sector, "data",["",[],[],nil]] call ALIVE_fnc_hashGet;
+            _sectorData = [_sector, "data",createHashMap] call ALIVE_fnc_hashGet;
 
             //_sectorData call ALIVE_fnc_inspectHash;
 

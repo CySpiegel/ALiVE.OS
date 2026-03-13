@@ -40,13 +40,13 @@ _missionName = format["%1_%2_TASK", ALIVE_sys_data_GROUP_ID, _missionName];
 _data = [ALIVE_taskHandler,"exportTaskData"] call ALIVE_fnc_taskHandler;
 
 if (isNil "_data") exitWith {};
-if (count (_data select 1) == 0) exitwith {
+if (count _data == 0) exitwith {
     //[["ALiVE_LOADINGSCREEN"],"BIS_fnc_endLoadingScreen",true,false] call BIS_fnc_MP;
 };
 
 _result = [false,[]];
 
-_message = format["ALiVE C2ISTAR - Preparing to save %1 tasks..",count(_data select 1)];
+_message = format["ALiVE C2ISTAR - Preparing to save %1 tasks..",count _data];
 _messages = _result select 1;
 _messages pushback _message;
 

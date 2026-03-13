@@ -373,7 +373,7 @@ switch(_operation) do {
 
                 private _grid = [_logic,"grid"] call ALiVE_fnc_hashGet;
 
-                _result = ["",[],[],nil];
+                _result = createHashMap;
 
                 if((count _grid > 0 && count _grid > _columnIndex && _columnIndex >= 0)) then {
                     private _column = _grid select _columnIndex;
@@ -421,7 +421,7 @@ switch(_operation) do {
                 private _index = [(_indexX - 1),(_indexY - 1)];
                 private _sector = [_logic, "gridIndexToSector", _index] call MAINCLASS;
 
-                if (count (_sector select 1) > 0) then {
+                if (count _sector > 0) then {
                     _result pushback _sector;
                 };
 
@@ -430,7 +430,7 @@ switch(_operation) do {
                 _index = [(_indexX - 1),(_indexY)];
                 _sector = [_logic, "gridIndexToSector", _index] call MAINCLASS;
 
-                if (count (_sector select 1) > 0) then {
+                if (count _sector > 0) then {
                     _result pushback _sector;
                 };
 
@@ -439,7 +439,7 @@ switch(_operation) do {
                 _index = [(_indexX - 1),(_indexY + 1)];
                 _sector = [_logic, "gridIndexToSector", _index] call MAINCLASS;
 
-                if (count (_sector select 1) > 0) then {
+                if (count _sector > 0) then {
                     _result pushback _sector;
                 };
 
@@ -448,7 +448,7 @@ switch(_operation) do {
                 _index = [(_indexX),(_indexY + 1)];
                 _sector = [_logic, "gridIndexToSector", _index] call MAINCLASS;
 
-                if (count (_sector select 1) > 0) then {
+                if (count _sector > 0) then {
                     _result pushback _sector;
                 };
 
@@ -457,7 +457,7 @@ switch(_operation) do {
                 _index = [(_indexX + 1),(_indexY + 1)];
                 _sector = [_logic, "gridIndexToSector", _index] call MAINCLASS;
 
-                if (count (_sector select 1) > 0) then {
+                if (count _sector > 0) then {
                     _result pushback _sector;
                 };
 
@@ -466,7 +466,7 @@ switch(_operation) do {
                 _index = [(_indexX + 1),(_indexY)];
                 _sector = [_logic, "gridIndexToSector", _index] call MAINCLASS;
 
-                if (count (_sector select 1) > 0) then {
+                if (count _sector > 0) then {
                     _result pushback _sector;
                 };
 
@@ -475,7 +475,7 @@ switch(_operation) do {
                 _index = [(_indexX + 1),(_indexY - 1)];
                 _sector = [_logic, "gridIndexToSector", _index] call MAINCLASS;
 
-                if (count (_sector select 1) > 0) then {
+                if (count _sector > 0) then {
                     _result pushback _sector;
                 };
 
@@ -484,7 +484,7 @@ switch(_operation) do {
                 _index = [(_indexX),(_indexY - 1)];
                 _sector = [_logic, "gridIndexToSector", _index] call MAINCLASS;
 
-                if (count (_sector select 1) > 0) then {
+                if (count _sector > 0) then {
                     _result pushback _sector;
                 };
 

@@ -63,10 +63,10 @@ _updatedSectors = [];
     _position = getPosATL _player;
 
     _sector = [_grid, "positionToSector", _position] call ALIVE_fnc_sectorGrid;
-    _sectorData = [_sector,"data",["",[],[],nil]] call ALIVE_fnc_hashGet;
+    _sectorData = [_sector,"data",createHashMap] call ALIVE_fnc_hashGet;
     //_sectorData = _sector select 2 select 0; //[_sector, "data"] call ALIVE_fnc_sector;
 
-    if (count (_sectorData select 1) > 0) then {
+    if (count _sectorData > 0) then {
 
         _active = [_sectorData, "active",[]] call ALIVE_fnc_hashGet;
 

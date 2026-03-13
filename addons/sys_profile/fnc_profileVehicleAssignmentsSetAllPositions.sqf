@@ -40,4 +40,4 @@ _position = _this select 1;
         [_entityProfile,"position",_position] call ALIVE_fnc_profileEntity;
         [_entityProfile,"mergePositions"] call ALIVE_fnc_profileEntity;
     };
-} forEach (_assignments select 2);
+} forEach values _assignments;

@@ -43,7 +43,7 @@ _updatedSectors = [];
 {
     _sector = _x;
 
-    _sectorData = [_sector, "data", ["",[],[],nil]] call ALIVE_fnc_HashGet;
+    _sectorData = [_sector, "data", createHashMap] call ALIVE_fnc_HashGet;
 
     if("entitiesBySide" in keys _sectorData) then {
         _sideProfiles = [_sectorData, "entitiesBySide"] call ALIVE_fnc_hashGet;
@@ -84,12 +84,12 @@ _profiles = [ALIVE_profileHandler, "profiles"] call ALIVE_fnc_hashGet;
         };
 
         _sector = [_grid, "positionToSector", _position] call ALIVE_fnc_sectorGrid;
-        _sectorData = [_sector, "data", ["",[],[],nil]] call ALIVE_fnc_HashGet;
+        _sectorData = [_sector, "data", createHashMap] call ALIVE_fnc_HashGet;
         //_sectorData = _sector select 2 select 0; //[_sector, "data"] call ALIVE_fnc_sector;
 
         //_sectorData call ALIVE_fnc_inspectHash;
 
-        if (count (_sectorData select 1) > 0) then {
+        if (count _sectorData > 0) then {
             if("entitiesBySide" in keys _sectorData) then {
                 _sideProfiles = [_sectorData, "entitiesBySide"] call ALIVE_fnc_hashGet;
                 _sideProfile = [_sideProfiles, _side] call ALIVE_fnc_hashGet;

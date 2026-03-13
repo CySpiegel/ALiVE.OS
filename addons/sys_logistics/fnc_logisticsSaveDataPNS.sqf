@@ -39,11 +39,11 @@ _missionName = missionName;
 
 _data = [MOD(SYS_LOGISTICS),"state"] call ALiVE_fnc_logistics;
 
-if (count (_data select 1) == 0) exitwith {false};
+if (count _data == 0) exitwith {false};
 
 _result = [false,[]];
 
-_message = format["ALiVE Player Logistics - Preparing to save %1 logistics items..",count(_data select 1)];
+_message = format["ALiVE Player Logistics - Preparing to save %1 logistics items..",count _data];
 _messages = _result select 1;
 _messages pushback _message;
 

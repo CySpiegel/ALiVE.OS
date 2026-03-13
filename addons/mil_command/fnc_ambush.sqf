@@ -25,7 +25,7 @@ Highhead
 ---------------------------------------------------------------------------- */
 
 params [
-    ["_profile", ["",[],[],nil], [[]]],
+    ["_profile", createHashMap, [createHashMap]],
     ["_params", [], [[]]]
 ];
 
@@ -37,7 +37,7 @@ if (isnil "_profile") exitwith {};
 
 private _profileID = [_profile,"profileID"] call ALiVE_fnc_HashGet;
 private _type = [_profile,"type",""] call ALiVE_fnc_HashGet;
-private _assignments = [_profile,"vehicleAssignments",["",[],[],nil]] call ALIVE_fnc_HashGet;
+private _assignments = [_profile,"vehicleAssignments",createHashMap] call ALIVE_fnc_HashGet;
 private _pos = [_profile,"position"] call ALiVE_fnc_HashGet;
 private _bombs = [];
 

@@ -309,7 +309,7 @@ switch (_operation) do {
             	if (count _nearestAgent > 0) then {
                  	_clusterID = [_nearestAgent, "homeCluster"] call ALiVE_fnc_hashGet;
 				} else {
-					_clusterID = ([ALIVE_clusterHandler, "clusters"] call ALiVE_fnc_hashGet) select 1 select 0;
+					_clusterID = (keys ([ALIVE_clusterHandler, "clusters"] call ALiVE_fnc_hashGet)) select 0;
 				};
 			};
 			_cluster = [ALIVE_clusterHandler, "getCluster", _clusterID] call ALIVE_fnc_clusterHandler;

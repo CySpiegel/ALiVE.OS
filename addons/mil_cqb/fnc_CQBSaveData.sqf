@@ -54,13 +54,13 @@ _data = [] call ALiVE_fnc_HashCreate;
     };
 } foreach (MOD(CQB) getVariable ["instances",[]]);
 
-if (count (_data select 1) == 0) exitwith {
+if (count _data == 0) exitwith {
     //[["ALiVE_LOADINGSCREEN"],"BIS_fnc_endLoadingScreen",true,false] call BIS_fnc_MP;
 };
 
 _result = [false,[]];
 
-_message = format["ALiVE CQB - Preparing to save %1 CQB locations..",count(_data select 1)];
+_message = format["ALiVE CQB - Preparing to save %1 CQB locations..",count _data];
 _messages = _result select 1;
 _messages pushback _message;
 

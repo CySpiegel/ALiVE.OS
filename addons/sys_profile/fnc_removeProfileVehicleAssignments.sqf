@@ -32,7 +32,7 @@ params ["_profile"];
 private _profileType = [_profile,"type"] call ALIVE_fnc_hashGet;
 private _vehicleAssignments = [_profile,"vehicleAssignments"] call ALIVE_fnc_hashGet;
 
-private _assignedIDs = _vehicleAssignments select 1;
+private _assignedIDs = keys _vehicleAssignments;
 
 if (_profileType == "vehicle") then {
 

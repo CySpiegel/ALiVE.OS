@@ -26,7 +26,7 @@ Highhead, Jman
 
 private ["_type","_waypoints","_unit","_profile","_active","_args","_pos","_radius","_onlyProfiles","_assignments","_group","_profileType","_profileCount","_guardPatrolPercentage"];
 
-_profile = [_this, 0, ["",[],[],nil], [[]]] call BIS_fnc_param;
+_profile = [_this, 0, createHashMap, [createHashMap]] call BIS_fnc_param;
 _args = [_this, 1, 200, [-1,[]]] call BIS_fnc_param;
 // DEBUG -------------------------------------------------------------------------------------
 if (ALiVE_SYS_PROFILE_DEBUG_ON) then {
@@ -59,7 +59,7 @@ _id = [_profile,"profileID","error"] call ALiVE_fnc_HashGet;
 _pos = [_profile,"position"] call ALiVE_fnc_HashGet;
 _type = [_profile,"type",""] call ALiVE_fnc_HashGet;
 _waypoints = [_profile,"waypoints",[]] call ALiVE_fnc_HashGet;
-_assignments = [_profile,"vehicleAssignments",["",[],[],nil]] call ALIVE_fnc_HashGet;
+_assignments = [_profile,"vehicleAssignments",createHashMap] call ALIVE_fnc_HashGet;
 
 if (isnil "_pos") exitwith {
     // ["MIL COMMAND Garrison - Detected wrong input for profile %1! Exiting...",_id] call ALiVE_fnc_dump;
@@ -78,7 +78,7 @@ waituntil {
 };
 sleep 0.3;
 
-if (_type == "entity" && {count (_assignments select 1) == 0}) then {
+if (_type == "entity" && {count _assignments == 0}) then {
 
     _group = _profile get "group";
 

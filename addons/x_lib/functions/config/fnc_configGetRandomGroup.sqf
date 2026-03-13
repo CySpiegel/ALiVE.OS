@@ -60,7 +60,7 @@ if(!isNil "ALIVE_factionCustomMappings") then {
 
             //["Groups: %1",_groups] call ALIVE_fnc_dump;
 
-            if (count (_groups select 1) > 0) then {
+            if (count _groups > 0) then {
 
                 if(_type in keys _groups) then {
 

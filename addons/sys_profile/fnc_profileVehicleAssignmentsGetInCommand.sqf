@@ -58,6 +58,6 @@ _result = [];
         _result pushback _vehicle
     };
 
-} forEach (_assignments select 2);
+} forEach values _assignments;
 
 _result

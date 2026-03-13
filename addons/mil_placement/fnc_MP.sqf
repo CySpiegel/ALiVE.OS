@@ -476,7 +476,7 @@ switch(_operation) do {
                             private ["_sector","_sectorData","_flatEmpty","_id","_cluster"];
 
                             _sector = _x;
-                            _sectorData = [_sector, "data",["",[],[],nil]] call ALIVE_fnc_hashGet;
+                            _sectorData = [_sector, "data",createHashMap] call ALIVE_fnc_hashGet;
 
                             _flatEmpty = [_sectorData,"flatEmpty",[]] call ALIVE_fnc_hashGet;
 

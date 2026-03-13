@@ -42,10 +42,10 @@ if ([_data] call ALIVE_fnc_isHash) then {
     player createDiarySubject ["statsPage","ALiVE"];
 
     _prof = {
-        _profile = _profile + _key + " : " + str _value + "<br />";
+        _profile = _profile + _x + " : " + str _y + "<br />";
     };
 
-    [_data, _prof] call CBA_fnc_hashEachPair;
+    _prof forEach _data;
 
     player createDiaryRecord ["statsPage", ["Profile",
     "<br/><img size='7' image='\x\alive\addons\UI\logo_alive_crop.paa' /><br/><br/><t color='#ffff00' size='1.0' shadow='1' shadowColor='#000000' align='center'>ALiVE War Room Profile: " + _username + "</t><br/><br/><t align='left'>" + _profile + "</t><br/><br/>"

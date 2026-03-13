@@ -299,11 +299,11 @@ switch (_operation) do {
         [_logic, "updateTaskState", _eventData] call MAINCLASS;
 
         private _updateChildTask = {
-			private _parent = _value select 11;
-			private _curentState = _value select 8;
+			private _parent = _y select 11;
+			private _curentState = _y select 8;
 
 			if ((_parent == _taskID) && (_state != _curentState)) then {
-				_value params [
+				_y params [
 						"",
 						"_requestingPlayer",
 						"_side",
@@ -319,16 +319,14 @@ switch (_operation) do {
 						"_source"
 					];
 
-				private _childEventData = [_key, _requestingPlayer, _side, _position, _faction, _title, _description, _players, _state, _applyType, _current, _parent, _source, false, "", ""];
+				private _childEventData = [_x, _requestingPlayer, _side, _position, _faction, _title, _description, _players, _state, _applyType, _current, _parent, _source, false, "", ""];
 
 				[_logic, "updateTask", _childEventData] call MAINCLASS;
 				[_logic, "updateTaskState", _childEventData] call MAINCLASS;
 			};
 		};
 
-		{
-			[_tasks, _updateChildTask] call CBA_fnc_hashEachPair;
-		} forEach _tasks;
+		_updateChildTask forEach _tasks;
 
     };
     case "TASK_DELETE": {
@@ -350,10 +348,10 @@ switch (_operation) do {
         [_logic, "updateTaskState", _eventData] call MAINCLASS;
 
         private _deleteChildTask = {
-			private _parent = _value select 11;
+			private _parent = _y select 11;
 
 			if (_parent == _taskID) then {
-				_value params [
+				_y params [
 						"",
 						"_requestingPlayer",
 						"_side",
@@ -369,16 +367,14 @@ switch (_operation) do {
 						"_source"
 					];
 
-				private _childEventData = [_key, _requestingPlayer, _side];
+				private _childEventData = [_x, _requestingPlayer, _side];
 
-				[_logic, "unregisterTask", _key] call MAINCLASS;
+				[_logic, "unregisterTask", _x] call MAINCLASS;
 				[_logic, "updateTaskState", _childEventData] call MAINCLASS;
 			};
 		};
 
-		{
-			[_tasks, _deleteChildTask] call CBA_fnc_hashEachPair;
-		} forEach _tasks;
+		_deleteChildTask forEach _tasks;
     };
     case "TASKS_SYNC": {
         private _debug = [_logic, "debug", false] call ALIVE_fnc_hashGet;

@@ -42,19 +42,19 @@ _result = "";
 
 _saveData = {
     private ["_documentID","_response"];
-    _documentID = _missionKey + "-" + _key;
+    _documentID = _missionKey + "-" + _x;
 
     if(ALiVE_SYS_DATA_DEBUG_ON) then {
-        ["SYS_DATA_COUCHDB - SAVE DATA: %1 %2 %3", _missionKey, _key, _value] call ALiVE_fnc_dump;
+        ["SYS_DATA_COUCHDB - SAVE DATA: %1 %2 %3", _missionKey, _x, _y] call ALiVE_fnc_dump;
     };
 
-    _response = [_logic, "write", [_module, _value, _async, _documentID] ] call ALIVE_fnc_Data;
+    _response = [_logic, "write", [_module, _y, _async, _documentID] ] call ALIVE_fnc_Data;
 
     _result = _result + "," + _response;
 };
 
 // For each hash, write to DB
-[_data, _saveData] call CBA_fnc_hashEachPair;
+_saveData forEach _data;
 
 // Create/Overwrite Index ==========================
 
@@ -62,9 +62,9 @@ _saveData = {
 _indexArray = [];
 
 _createIndex = {
-    _indexArray pushback _key;
+    _indexArray pushback _x;
 };
-[_data, _createIndex] call CBA_fnc_hashEachPair;
+_createIndex forEach _data;
 
 // Create the index doc record
 _newIndexDoc = [] call CBA_fnc_hashCreate;

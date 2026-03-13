@@ -285,12 +285,12 @@ switch(_operation) do {
                         // Setup SBIEDs & VBIEDs as they're not yet persisted. Once these are persisted this code can be removed along with the locations hash
                         _locations = [];
                         _locs = {
-                            if (_key == "_id" || _key == "_rev") exitWith {};
-                            _loc = [_logic, "convertLocations", [[_value, "LocationObj"] call ALiVE_fnc_hashGet]] call MAINCLASS;
+                            if (_x == "_id" || _x == "_rev") exitWith {};
+                            _loc = [_logic, "convertLocations", [[_y, "LocationObj"] call ALiVE_fnc_hashGet]] call MAINCLASS;
                             _locations pushBack _loc;
                         };
 
-                        [[GVAR(STORE), "locations"] call ALiVE_fnc_hashGet, _locs] call CBA_fnc_hashEachPair;
+                        _locs forEach [GVAR(STORE), "locations"] call ALiVE_fnc_hashGet;
                         ["ALiVE MIL IED - Setting up new SBIED & VBIED Locations"] call ALiVE_fnc_dump;
                         [_logic, "setupTriggers", [_locations, "regular", true]] call MAINCLASS;
                     };
@@ -584,20 +584,20 @@ switch(_operation) do {
 
             _generateMarkers = {
                 private ["_pos","_twn","_size","_t","_m","_ieds", "_isObj"];
-                if (_key == "_id" || _key == "_rev") exitWith {};
+                if (_x == "_id" || _x == "_rev") exitWith {};
 
-                _isObj = [_logic, "convertString", [_value, "TrgObj"] call ALiVE_fnc_hashGet] call MAINCLASS;
-                _pos = [_value, "TrgPos"] call ALiVE_fnc_hashGet;
+                _isObj = [_logic, "convertString", [_y, "TrgObj"] call ALiVE_fnc_hashGet] call MAINCLASS;
+                _pos = [_y, "TrgPos"] call ALiVE_fnc_hashGet;
                 if (_isObj) then {
-                    _size = [_value, "TrgSize"] call ALiVE_fnc_hashGet;
+                    _size = [_y, "TrgSize"] call ALiVE_fnc_hashGet;
 
                     // Mark Locations
                     _t = format["loc_t%1", random 1000];
-                    _m = [_t, _pos, "Ellipse", [_size+250,_size+250], "TEXT:", _key, "COLOR:", "ColorYellow", "BRUSH:", "Border", "GLOBAL"] call CBA_fnc_createMarker;
+                    _m = [_t, _pos, "Ellipse", [_size+250,_size+250], "TEXT:", _x, "COLOR:", "ColorYellow", "BRUSH:", "Border", "GLOBAL"] call CBA_fnc_createMarker;
                     _markers pushback _m;
 
                     // Mark IEDs
-                    _ieds = [[GVAR(STORE), "IEDs", [] call ALiVE_fnc_hashCreate] call ALiVE_fnc_hashGet, _key, [] call ALiVE_fnc_hashCreate] call ALiVE_fnc_hashGet;
+                    _ieds = [[GVAR(STORE), "IEDs", [] call ALiVE_fnc_hashCreate] call ALiVE_fnc_hashGet, _x, [] call ALiVE_fnc_hashCreate] call ALiVE_fnc_hashGet;
 
                 } else {
                     _twn = (nearestLocations [_pos, ["NameCityCapital","NameCity","NameVillage","Strategic"],200]) select 0;
@@ -631,7 +631,7 @@ switch(_operation) do {
 
             };
 
-            [[GVAR(STORE), "triggers", [] call ALiVE_fnc_hashCreate] call ALiVE_fnc_hashGet, _generateMarkers] call CBA_fnc_hashEachPair;
+            _generateMarkers forEach [GVAR(STORE), "triggers", [] call ALiVE_fnc_hashCreate] call ALiVE_fnc_hashGet;
 
             _logic setVariable ["debugMarkers",_markers];
 
@@ -687,14 +687,14 @@ switch(_operation) do {
         case "restoreTriggers": {
             _restoreTriggers = {
                 private ["_data", "_twn", "_size", "_num", "_trg"];
-                if (_key == "_id" || _key == "_rev") exitWith {};
+                if (_x == "_id" || _x == "_rev") exitWith {};
                 
                 // Get data
-                _type = [_value, "TrgType"] call ALiVE_fnc_hashGet;
-                _pos = [_value, "TrgPos"] call ALiVE_fnc_hashGet;
+                _type = [_y, "TrgType"] call ALiVE_fnc_hashGet;
+                _pos = [_y, "TrgPos"] call ALiVE_fnc_hashGet;
                 _twn = (nearestLocations [_pos, ["NameCityCapital","NameCity","NameVillage","Strategic"],5]) select 0;
-                _size = [_value, "TrgSize"] call ALiVE_fnc_hashGet;
-                _num = [_value, "TrgNum"] call ALiVE_fnc_hashGet;
+                _size = [_y, "TrgSize"] call ALiVE_fnc_hashGet;
+                _num = [_y, "TrgNum"] call ALiVE_fnc_hashGet;
 
                 // Build trigger
                 _trg = createTrigger["EmptyDetector",_pos];
@@ -703,7 +703,7 @@ switch(_operation) do {
 
                 // Restore OPCOM Objectives that aren't in a town
                 if (isNil "_twn") then {
-                    _twn = _key;
+                    _twn = _x;
                 };
 
                 if (_num > 0) then {
@@ -718,7 +718,7 @@ switch(_operation) do {
 
             };
 
-            [_args, _restoreTriggers] call CBA_fnc_hashEachPair;
+            _restoreTriggers forEach _args;
         };
 
         case "state": {
@@ -803,45 +803,45 @@ switch(_operation) do {
 
             _convertLocations = {
                 private ["_loc"];
-                if (_key == "_id" || _key == "_rev") exitWith {};
+                if (_x == "_id" || _x == "_rev") exitWith {};
 
-                _loc = [_logic, "convertString", [_value, "LocationObj"] call ALiVE_fnc_hashGet] call MAINCLASS;
-                [_value, "LocationObj", _loc] call ALiVE_fnc_hashSet;
+                _loc = [_logic, "convertString", [_y, "LocationObj"] call ALiVE_fnc_hashGet] call MAINCLASS;
+                [_y, "LocationObj", _loc] call ALiVE_fnc_hashSet;
             };
 
             _convertTriggers = {
                 private ["_keys"];
-                if (_key == "_id" || _key == "_rev") exitWith {};
+                if (_x == "_id" || _x == "_rev") exitWith {};
 
                 _keys = ["TrgPos", "TrgSize", "TrgNum"];
                 {
                     private ["_converted"];
-                    _converted = [_logic, "convertString", [_value, _x] call ALiVE_fnc_hashGet] call MAINCLASS;
-                    [_value, _x, _converted] call ALiVE_fnc_hashSet;
+                    _converted = [_logic, "convertString", [_y, _x] call ALiVE_fnc_hashGet] call MAINCLASS;
+                    [_y, _x, _converted] call ALiVE_fnc_hashSet;
                 } forEach _keys;
             };
 
             _convertIEDs = {
                 private ["_keys"];
-                if (_key == "_id" || _key == "_rev") exitWith {};
+                if (_x == "_id" || _x == "_rev") exitWith {};
                 
                 _script = {
                     _keys = ["IEDpos", "IEDDud"];
                     {
                         private ["_return"];
-                        _return = [_logic, "convertString", [_value, _x] call ALiVE_fnc_hashGet] call MAINCLASS;
-                        [_value, _x, _return] call ALiVE_fnc_hashSet;
+                        _return = [_logic, "convertString", [_y, _x] call ALiVE_fnc_hashGet] call MAINCLASS;
+                        [_y, _x, _return] call ALiVE_fnc_hashSet;
 
                     } forEach _keys;
                 };
 
                 // Each IED location has a sub-hash per IED
-                [_value, _script] call CBA_fnc_hashEachPair;
+                _script forEach _y;
             };
 
-            [_locations, _convertLocations] call CBA_fnc_hashEachPair;
-            [_triggers, _convertTriggers] call CBA_fnc_hashEachPair;
-            [_ieds, _convertIEDs] call CBA_fnc_hashEachPair;
+            _convertLocations forEach _locations;
+            _convertTriggers forEach _triggers;
+            _convertIEDs forEach _ieds;
         };
 };
 TRACE_1("IED - output",_result);

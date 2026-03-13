@@ -19,8 +19,8 @@ _removeIED = {
 
     private _thirdParty = ADDON getVariable ["thirdParty",false];
 
-    _IEDpos = [_value, "IEDpos", [0,0,0]] call ALiVE_fnc_hashGet;
-    _IEDskin = [_value, "IEDskin", "ALIVE_IEDUrbanSmall_Remote_Ammo"] call ALiVE_fnc_hashGet;
+    _IEDpos = [_y, "IEDpos", [0,0,0]] call ALiVE_fnc_hashGet;
+    _IEDskin = [_y, "IEDskin", "ALIVE_IEDUrbanSmall_Remote_Ammo"] call ALiVE_fnc_hashGet;
 
     // Delete Objects
     _IEDObj = (_IEDpos nearObjects [_IEDskin, 4]) select 0;
@@ -32,7 +32,7 @@ _removeIED = {
         //["IED NOT FOUND at %1 for %2", _IEDpos, _IEDskin] call ALiVE_fnc_dump;
 
         // Remove the IED from the store
-        [_IEDs, _key] call ALiVE_fnc_hashRem;
+        [_IEDs, _x] call ALiVE_fnc_hashRem;
         [[GVAR(STORE), "IEDs"] call ALiVE_fnc_hashGet, _town, _IEDs] call ALiVE_fnc_hashSet;
     };
 
@@ -62,7 +62,7 @@ _removeIED = {
 
 };
 
-[_IEDs, _removeIED] call CBA_fnc_hashEachPair;
+_removeIED forEach _IEDs;
 
 if ([ADDON, "debug"] call MAINCLASS) then {
     ["Removed IEDs at %1 (%2)", _town, _position ] call ALIVE_fnc_dump;

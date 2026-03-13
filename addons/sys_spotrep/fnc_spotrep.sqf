@@ -258,34 +258,34 @@ switch (_operation) do {
             _restorespotreps = {
                 private "_locality";
                 LOG(str _this);
-                _locality = [_value, QGVAR(locality),"SIDE"] call ALIVE_fnc_hashGet;
+                _locality = [_y, QGVAR(locality),"SIDE"] call ALIVE_fnc_hashGet;
                 switch _locality do {
                     case "SIDE": {
-                        if ( str(side (group player)) == [_value, QGVAR(localityValue), ""] call ALiVE_fnc_hashGet) then {
-                            [MOD(SYS_spotrep), "createspotrep", [_key,_value]] call ALIVE_fnc_spotrep;
+                        if ( str(side (group player)) == [_y, QGVAR(localityValue), ""] call ALiVE_fnc_hashGet) then {
+                            [MOD(SYS_spotrep), "createspotrep", [_x,_y]] call ALIVE_fnc_spotrep;
                         };
                     };
                     case "GROUP": {
-                        if (str(group player) == [_value, QGVAR(localityValue),""] call ALiVE_fnc_hashGet) then {
-                            [MOD(SYS_spotrep), "createspotrep", [_key,_value]] call ALIVE_fnc_spotrep;
+                        if (str(group player) == [_y, QGVAR(localityValue),""] call ALiVE_fnc_hashGet) then {
+                            [MOD(SYS_spotrep), "createspotrep", [_x,_y]] call ALIVE_fnc_spotrep;
                         };
                     };
                     case "FACTION": {
-                        [MOD(SYS_spotrep), "createspotrep", [_key,_value,  [_value, QGVAR(localityValue)] call ALiVE_fnc_hashGet]] call ALIVE_fnc_spotrep;
+                        [MOD(SYS_spotrep), "createspotrep", [_x,_y,  [_y, QGVAR(localityValue)] call ALiVE_fnc_hashGet]] call ALIVE_fnc_spotrep;
                     };
                     case "LOCAL": {
-                        if ( (getPlayerUID player) == [_value, QGVAR(player), ""] call ALiVE_fnc_hashGet) then {
-                            [MOD(SYS_spotrep), "createspotrep", [_key,_value]] call ALIVE_fnc_spotrep;
+                        if ( (getPlayerUID player) == [_y, QGVAR(player), ""] call ALiVE_fnc_hashGet) then {
+                            [MOD(SYS_spotrep), "createspotrep", [_x,_y]] call ALIVE_fnc_spotrep;
                         };
                     };
                     case default {
-                        [MOD(SYS_spotrep), "createspotrep", [_key,_value]] call ALIVE_fnc_spotrep;
+                        [MOD(SYS_spotrep), "createspotrep", [_x,_y]] call ALIVE_fnc_spotrep;
                     };
                 };
 
             };
 
-            [_hash, _restorespotreps] call CBA_fnc_hashEachPair;
+            _restorespotreps forEach _hash;
 
             _result = true;
 

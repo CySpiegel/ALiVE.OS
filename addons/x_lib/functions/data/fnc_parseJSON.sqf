@@ -4,13 +4,13 @@ SCRIPT(parseJSON);
 /* ----------------------------------------------------------------------------
 Function: ALIVE_fnc_parseJSON
 Description:
-Converts a JSON formatted string into a CBA HASH array
+Converts a JSON formatted string into a native Arma 3 HashMap
 
 Parameters:
 String - The JSON string
 
 Returns:
-Hash - array of data
+HashMap - parsed data
 
 Examples:
 (begin example)
@@ -71,7 +71,7 @@ JSON_fnc_parse = {
         TRACE_2("Starting at", _pos, _charArray select _pos);
     switch (_type) do {
         case JSON_TYPE_OBJECT: {
-            _tmpHash = [] call CBA_fnc_hashCreate;
+            _tmpHash = createHashMap;
             // TRACE_1("Creating hash", _tmpHash);
         };
         case JSON_TYPE_ARRAY: {
@@ -132,7 +132,7 @@ JSON_fnc_parse = {
                             _done = true;
                         };
                         case JSON_OBJECT_FINISH:{
-                            [_tmpHash, _key, _value] call CBA_fnc_hashSet;
+                            _tmpHash set [_key, _value];
                             // TRACE_1("Finishing hash", _tmpHash);
                             _result = [_tmpHash, _pos];
                             _done = true;
@@ -169,7 +169,7 @@ JSON_fnc_parse = {
                             switch (_type) do {
                                 case JSON_TYPE_OBJECT: {
                                     TRACE_2("setting hash", _key, _value);
-                                    [_tmpHash, _key, _value] call CBA_fnc_hashSet;
+                                    _tmpHash set [_key, _value];
                                     _mode = JSON_MODE_KEY;
                                     _done = true;
                                     _value = "";

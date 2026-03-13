@@ -385,34 +385,34 @@ switch (_operation) do {
             _restoresitreps = {
                 private "_locality";
                 LOG(str _this);
-                _locality = [_value, QGVAR(locality),"SIDE"] call ALIVE_fnc_hashGet;
+                _locality = [_y, QGVAR(locality),"SIDE"] call ALIVE_fnc_hashGet;
                 switch _locality do {
                     case "SIDE": {
-                        if ( str(side (group player)) == [_value, QGVAR(localityValue), ""] call ALiVE_fnc_hashGet) then {
-                            [MOD(SYS_sitrep), "createsitrep", [_key,_value]] call ALIVE_fnc_sitrep;
+                        if ( str(side (group player)) == [_y, QGVAR(localityValue), ""] call ALiVE_fnc_hashGet) then {
+                            [MOD(SYS_sitrep), "createsitrep", [_x,_y]] call ALIVE_fnc_sitrep;
                         };
                     };
                     case "GROUP": {
-                        if (str(group player) == [_value, QGVAR(localityValue),""] call ALiVE_fnc_hashGet) then {
-                            [MOD(SYS_sitrep), "createsitrep", [_key,_value]] call ALIVE_fnc_sitrep;
+                        if (str(group player) == [_y, QGVAR(localityValue),""] call ALiVE_fnc_hashGet) then {
+                            [MOD(SYS_sitrep), "createsitrep", [_x,_y]] call ALIVE_fnc_sitrep;
                         };
                     };
                     case "FACTION": {
-                        [MOD(SYS_sitrep), "createsitrep", [_key,_value,  [_value, QGVAR(localityValue)] call ALiVE_fnc_hashGet]] call ALIVE_fnc_sitrep;
+                        [MOD(SYS_sitrep), "createsitrep", [_x,_y,  [_y, QGVAR(localityValue)] call ALiVE_fnc_hashGet]] call ALIVE_fnc_sitrep;
                     };
                     case "LOCAL": {
-                        if ( (getPlayerUID player) == [_value, QGVAR(player), ""] call ALiVE_fnc_hashGet) then {
-                            [MOD(SYS_sitrep), "createsitrep", [_key,_value]] call ALIVE_fnc_sitrep;
+                        if ( (getPlayerUID player) == [_y, QGVAR(player), ""] call ALiVE_fnc_hashGet) then {
+                            [MOD(SYS_sitrep), "createsitrep", [_x,_y]] call ALIVE_fnc_sitrep;
                         };
                     };
                     case default {
-                        [MOD(SYS_sitrep), "createsitrep", [_key,_value]] call ALIVE_fnc_sitrep;
+                        [MOD(SYS_sitrep), "createsitrep", [_x,_y]] call ALIVE_fnc_sitrep;
                     };
                 };
 
             };
 
-            [_hash, _restoresitreps] call CBA_fnc_hashEachPair;
+            _restoresitreps forEach _hash;
 
             _result = true;
 

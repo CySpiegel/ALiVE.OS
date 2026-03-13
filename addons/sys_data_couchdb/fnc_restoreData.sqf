@@ -72,7 +72,7 @@ ALIVE_fnc_restore = {
     // Address each data type accordingly
     switch(_type) do {
             case "HASH": {
-                    [_value, ALIVE_fnc_restore] call CBA_fnc_hashEachPair;
+                    { _key = _x; _value = _y; call ALIVE_fnc_restore; } forEach _value;
                     _data = _value;
             };
             case "STRING": {
@@ -152,8 +152,8 @@ ALIVE_fnc_restore = {
     [_hash, _key, _data] call ALIVE_fnc_hashSet;
 };
 
-if (typeName _hash == "ARRAY") then {
-    [_hash, ALIVE_fnc_restore] call CBA_fnc_hashEachPair;
+if (typeName _hash == "HASHMAP") then {
+    { _key = _x; _value = _y; call ALIVE_fnc_restore; } forEach _hash;
 };
 
 if(ALiVE_SYS_DATA_DEBUG_ON) then {

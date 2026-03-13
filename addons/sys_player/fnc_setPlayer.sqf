@@ -96,12 +96,12 @@ private ["_gearHash","_addGear"];
 _gearHash = [GVAR(gear_data), getPlayerUID _player, "NONE"] call ALIVE_fnc_hashGet;
 
 _addGear = {
-    [_playerHash, _key, _value] call ALIVE_fnc_hashSet;
-    TRACE_3("SYS_PLAYER SET PLAYER DATA",_player, _key, _value);
+    [_playerHash, _x, _y] call ALIVE_fnc_hashSet;
+    TRACE_3("SYS_PLAYER SET PLAYER DATA",_player, _x, _y);
 };
 
 if ([_gearHash] call ALIVE_fnc_isHash) then {
-    [_gearHash, _addGear] call CBA_fnc_hashEachPair;
+    _addGear forEach _gearHash;
 } else {
     ["No gear found for %1", _player] call ALivE_fnc_dump;
 //    _playerHash call ALIVE_fnc_inspectHash;

@@ -392,34 +392,34 @@ switch (_operation) do {
             _restorepatrolreps = {
                 private "_locality";
                 LOG(str _this);
-                _locality = [_value, QGVAR(locality),"SIDE"] call ALIVE_fnc_hashGet;
+                _locality = [_y, QGVAR(locality),"SIDE"] call ALIVE_fnc_hashGet;
                 switch _locality do {
                     case "SIDE": {
-                        if ( str(side (group player)) == [_value, QGVAR(localityValue), ""] call ALiVE_fnc_hashGet) then {
-                            [MOD(SYS_patrolrep), "createpatrolrep", [_key,_value]] call ALIVE_fnc_patrolrep;
+                        if ( str(side (group player)) == [_y, QGVAR(localityValue), ""] call ALiVE_fnc_hashGet) then {
+                            [MOD(SYS_patrolrep), "createpatrolrep", [_x,_y]] call ALIVE_fnc_patrolrep;
                         };
                     };
                     case "GROUP": {
-                        if (str(group player) == [_value, QGVAR(localityValue),""] call ALiVE_fnc_hashGet) then {
-                            [MOD(SYS_patrolrep), "createpatrolrep", [_key,_value]] call ALIVE_fnc_patrolrep;
+                        if (str(group player) == [_y, QGVAR(localityValue),""] call ALiVE_fnc_hashGet) then {
+                            [MOD(SYS_patrolrep), "createpatrolrep", [_x,_y]] call ALIVE_fnc_patrolrep;
                         };
                     };
                     case "FACTION": {
-                        [MOD(SYS_patrolrep), "createpatrolrep", [_key,_value,  [_value, QGVAR(localityValue)] call ALiVE_fnc_hashGet]] call ALIVE_fnc_patrolrep;
+                        [MOD(SYS_patrolrep), "createpatrolrep", [_x,_y,  [_y, QGVAR(localityValue)] call ALiVE_fnc_hashGet]] call ALIVE_fnc_patrolrep;
                     };
                     case "LOCAL": {
-                        if ( (getPlayerUID player) == [_value, QGVAR(player), ""] call ALiVE_fnc_hashGet) then {
-                            [MOD(SYS_patrolrep), "createpatrolrep", [_key,_value]] call ALIVE_fnc_patrolrep;
+                        if ( (getPlayerUID player) == [_y, QGVAR(player), ""] call ALiVE_fnc_hashGet) then {
+                            [MOD(SYS_patrolrep), "createpatrolrep", [_x,_y]] call ALIVE_fnc_patrolrep;
                         };
                     };
                     case default {
-                        [MOD(SYS_patrolrep), "createpatrolrep", [_key,_value]] call ALIVE_fnc_patrolrep;
+                        [MOD(SYS_patrolrep), "createpatrolrep", [_x,_y]] call ALIVE_fnc_patrolrep;
                     };
                 };
 
             };
 
-            [_hash, _restorepatrolreps] call CBA_fnc_hashEachPair;
+            _restorepatrolreps forEach _hash;
 
             _result = true;
 

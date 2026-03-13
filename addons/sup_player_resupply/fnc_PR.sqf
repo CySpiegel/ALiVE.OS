@@ -626,14 +626,14 @@ switch(_operation) do {
                 {
                     private _tempVehicles = [_x,ALiVE_PR_BLACKLIST,ALiVE_PR_WHITELIST, _civ] call ALIVE_fnc_sortCFGVehiclesByFactionClass;
                     private _mergeHash = {
-                        private _listOfVeh = [_sortedVehicles, _key, []] call ALiVE_fnc_hashGet;
+                        private _hashKey = _x;
+                        private _listOfVeh = [_sortedVehicles, _hashKey, []] call ALiVE_fnc_hashGet;
                         {
-                            private _item = _x;
-                            _listOfVeh pushbackUnique _item;
-                        } foreach _Value;
-                        [_sortedVehicles,_key,_listOfVeh] call ALIVE_fnc_hashSet;
+                            _listOfVeh pushbackUnique _x;
+                        } foreach _y;
+                        [_sortedVehicles,_hashKey,_listOfVeh] call ALIVE_fnc_hashSet;
                     };
-                    [_tempVehicles, _mergeHash] call CBA_fnc_hashEachPair;
+                    _mergeHash forEach _tempVehicles;
                 } foreach ALIVE_PR_FACTIONLIST;
             };
 

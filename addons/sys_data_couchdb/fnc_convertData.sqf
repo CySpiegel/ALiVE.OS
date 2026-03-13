@@ -122,13 +122,13 @@ _convert = {
 private "_convertHash";
 _convertHash = {
     private ["_convertedValue"];
-    if (isNil "_value") then {
-        ["NULL VALUE! For the key %1", _key] call ALiVE_fnc_dump;
+    if (isNil "_y") then {
+        ["NULL VALUE! For the key %1", _x] call ALiVE_fnc_dump;
         _convertedValue = """";
     } else {
-        _convertedValue = [_key, _value] call _convert;
+        _convertedValue = [_x, _y] call _convert;
     };
-    _string = _string + "," + """" +_key + """" + ":" + _convertedValue;
+    _string = _string + "," + """" +_x + """" + ":" + _convertedValue;
 };
 
 // --------------------------------------------------------
@@ -145,7 +145,7 @@ if(isNil "_hash") exitWith {
     "ConvertData <null> type" call ALIVE_fnc_logger;
 };
 
-[_hash, _convertHash] call CBA_fnc_hashEachPair;
+_convertHash forEach _hash;
 
 _result = "{" + _string + "}";
 

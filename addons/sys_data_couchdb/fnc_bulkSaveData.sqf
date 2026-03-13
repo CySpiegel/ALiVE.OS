@@ -54,11 +54,11 @@ TRACE_1("", _response);
 _indexArray = [];
 
 _createIndex = {
-    If (_key != "") then {
-        _indexArray pushback _key;
+    If (_x != "") then {
+        _indexArray pushback _x;
     };
 };
-[_data, _createIndex] call CBA_fnc_hashEachPair;
+_createIndex forEach _data;
 
 // Create the index doc record
 _newIndexDoc = [] call CBA_fnc_hashCreate;

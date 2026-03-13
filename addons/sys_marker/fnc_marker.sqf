@@ -939,34 +939,34 @@ switch (_operation) do {
             _restoreMarkers = {
                 private "_locality";
                 LOG(str _this);
-                _locality = [_value, QGVAR(locality),"SIDE"] call ALIVE_fnc_hashGet;
+                _locality = [_y, QGVAR(locality),"SIDE"] call ALIVE_fnc_hashGet;
                 switch _locality do {
                     case "SIDE": {
-                        if ( str(side (group player)) == [_value, QGVAR(localityValue), ""] call ALiVE_fnc_hashGet) then {
-                            [MOD(SYS_marker), "createMarker", [_key,_value]] call ALIVE_fnc_marker;
+                        if ( str(side (group player)) == [_y, QGVAR(localityValue), ""] call ALiVE_fnc_hashGet) then {
+                            [MOD(SYS_marker), "createMarker", [_x,_y]] call ALIVE_fnc_marker;
                         };
                     };
                     case "GROUP": {
-                        if (str(group player) == [_value, QGVAR(localityValue),""] call ALiVE_fnc_hashGet) then {
-                            [MOD(SYS_marker), "createMarker", [_key,_value]] call ALIVE_fnc_marker;
+                        if (str(group player) == [_y, QGVAR(localityValue),""] call ALiVE_fnc_hashGet) then {
+                            [MOD(SYS_marker), "createMarker", [_x,_y]] call ALIVE_fnc_marker;
                         };
                     };
                     case "FACTION": {
-                        [MOD(SYS_marker), "createMarker", [_key,_value,  [_value, QGVAR(localityValue)] call ALiVE_fnc_hashGet]] call ALIVE_fnc_marker;
+                        [MOD(SYS_marker), "createMarker", [_x,_y,  [_y, QGVAR(localityValue)] call ALiVE_fnc_hashGet]] call ALIVE_fnc_marker;
                     };
                     case "LOCAL": {
-                        if ( (getPlayerUID player) == [_value, QGVAR(player), ""] call ALiVE_fnc_hashGet) then {
-                            [MOD(SYS_marker), "createMarker", [_key,_value]] call ALIVE_fnc_marker;
+                        if ( (getPlayerUID player) == [_y, QGVAR(player), ""] call ALiVE_fnc_hashGet) then {
+                            [MOD(SYS_marker), "createMarker", [_x,_y]] call ALIVE_fnc_marker;
                         };
                     };
                     case default {
-                        [MOD(SYS_marker), "createMarker", [_key,_value]] call ALIVE_fnc_marker;
+                        [MOD(SYS_marker), "createMarker", [_x,_y]] call ALIVE_fnc_marker;
                     };
                 };
 
             };
 
-            [_hash, _restoreMarkers] call CBA_fnc_hashEachPair;
+            _restoreMarkers forEach _hash;
 
             _result = true;
 

@@ -97,7 +97,7 @@ if (_name == "__SERVER__") then {
                             ["SYS DATA - DICTIONARY HASH: %1",[str(GVAR(tempHash))] call CBA_fnc_strLen] call ALiVE_fnc_dump;
                         };
 
-                        [GVAR(tempHash), _key, _value] call CBA_fnc_hashSet;
+                        [GVAR(tempHash), _x, _y] call CBA_fnc_hashSet;
                     } else {
                         private ["_dictionaryName"];
                         if (GVAR(hashCount) == 0) then {
@@ -115,13 +115,13 @@ if (_name == "__SERVER__") then {
                         };
 
                         GVAR(tempHash) = [] call CBA_fnc_hashCreate;
-                        [GVAR(tempHash), _key, _value] call CBA_fnc_hashSet;
+                        [GVAR(tempHash), _x, _y] call CBA_fnc_hashSet;
                         GVAR(hashCount) = GVAR(hashCount) + 1;
                     };
 
             };
 
-            [ALIVE_DataDictionary, _saveHash] call CBA_fnc_hashEachPair;
+            _saveHash forEach ALIVE_DataDictionary;
 
             // Save the final dictionary entry
 

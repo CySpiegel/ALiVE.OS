@@ -251,10 +251,10 @@ if (isDedicated || (isServer && _pns)) then {
             while {_dictionaryName = format["dictionary_%1_%2_%3", GVAR(GROUP_ID), missionName, _i]; _newresponse = [GVAR(datahandler), "read", ["sys_data", [], _dictionaryName]] call ALIVE_fnc_Data; typeName _newresponse != "STRING"} do {
 
                 _addResponse = {
-                    [ALIVE_DataDictionary, _key, _value] call CBA_fnc_hashSet;
+                    [ALIVE_DataDictionary, _x, _y] call CBA_fnc_hashSet;
                 };
 
-                [_newresponse, _addResponse] call CBA_fnc_hashEachPair;
+                _addResponse forEach _newresponse;
                 GVAR(DictionaryRevs) pushback ([_newresponse, "_rev"] call CBA_fnc_hashGet);
                 _i = _i + 1;
             };

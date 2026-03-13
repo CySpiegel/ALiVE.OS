@@ -82,21 +82,21 @@ private "_spotreps";
 _spotreps = {
     private ["_spotControl"];
     _spotControl = _display displayCtrl SPOT_LIST;
-    _spotControl lbAdd _key;
+    _spotControl lbAdd _x;
 };
 
 
-[[MOD(SYS_spotrep), "state"] call ALIVE_fnc_spotrep, _spotreps] call CBA_fnc_hashEachPair;
+_spotreps forEach [MOD(SYS_spotrep), "state"] call ALIVE_fnc_spotrep;
 
 // SITREPS
 private "_sitreps";
 _sitreps = {
     private ["_sitControl"];
     _sitControl = _display displayCtrl SIT_LIST;
-    _sitControl lbAdd _key;
+    _sitControl lbAdd _x;
 };
 
-[[MOD(SYS_sitrep), "state"] call ALIVE_fnc_sitrep, _sitreps] call CBA_fnc_hashEachPair;
+_sitreps forEach [MOD(SYS_sitrep), "state"] call ALIVE_fnc_sitrep;
 
 
 // Eyes Only

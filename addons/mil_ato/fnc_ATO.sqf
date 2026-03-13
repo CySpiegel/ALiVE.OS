@@ -205,20 +205,20 @@ ALiVE_fnc_getNearestCatapult = {
 
             private _addHash = {
                 private _partObject = nearestObjects [_pos,[_part],400] select 0;
-                private _partMemPoint = [_value, "memoryPoint"] call ALiVE_fnc_hashGet;
+                private _partMemPoint = [_y, "memoryPoint"] call ALiVE_fnc_hashGet;
                 private _partOffset = _partObject selectionPosition _partMemPoint;
                 private _position = _partObject modelToWorld _partOffset;
 
                 // Check to see if object is suitable for Carrier catapults
                 if !(_partMemPoint == "pos_catapult_04" || _partMemPoint == "pos_catapult_01") then { // Planes have tendency to crash when launching from outside catapults
-                    _catapultsPos pushback [_key, _position];
-                    [_value, "part", _partObject] call ALiVE_fnc_hashSet;
-                    [_value, "position", _position] call ALiVE_fnc_hashSet;
-                    [_catapults, _key, _value] call ALiVE_fnc_hashSet;
+                    _catapultsPos pushback [_x, _position];
+                    [_y, "part", _partObject] call ALiVE_fnc_hashSet;
+                    [_y, "position", _position] call ALiVE_fnc_hashSet;
+                    [_catapults, _x, _y] call ALiVE_fnc_hashSet;
                 };
             };
 
-            [_tmp, _addHash] call CBA_fnc_hashEachPair;
+            _addHash forEach _tmp;
 
         };
     } forEach _parts;

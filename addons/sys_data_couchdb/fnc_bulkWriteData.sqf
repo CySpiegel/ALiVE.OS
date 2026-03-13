@@ -103,17 +103,17 @@ TRACE_1("",_bulkstart);
 _parse = {
     private "_json";
     // create the doc ID
-    [_value, "_id", _uid + "-" + _key] call ALIVE_fnc_hashSet;
+    [_y, "_id", _uid + "-" + _x] call ALIVE_fnc_hashSet;
 
     // convert hash to JSON string
-    _json = [_logic, "convert", [_value]] call ALIVE_fnc_Data;
+    _json = [_logic, "convert", [_y]] call ALIVE_fnc_Data;
     TRACE_1("",_json);
 
     _docs = _docs + _json + ",";
 };
 
 // For each hash create a JSON string
-[_data, _parse] call CBA_fnc_hashEachPair;
+_parse forEach _data;
 
 TRACE_1("",_bulkend);
 

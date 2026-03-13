@@ -137,11 +137,11 @@ class FSM
        "" \n
        "_profiles = [_pos, 500, [_side,""entity""]] call ALIVE_fnc_getNearProfiles;" \n
        "{" \n
-       "    if (typeName (_x select 2 select 4) == ""STRING"") then {" \n
-       "            _entities set [count _entities,_x select 2 select 4];" \n
+       "    if (typeName (_x get ""profileID"") == ""STRING"") then {" \n
+       "            _entities set [count _entities,_x get ""profileID""];" \n
        "            " \n
-       "            //player sidechat format[""Entities: %1, count total %2 val %3"",_entities,count _entities,(_x select 2 select 4)];" \n
-       "           //[""Entities: %1, count total %2 val %3"",_entities,count _entities,(_x select 2 select 4)] call ALiVE_fnc_dump;" \n
+       "            //player sidechat format[""Entities: %1, count total %2 val %3"",_entities,count _entities,(_x get ""profileID"")];" \n
+       "           //[""Entities: %1, count total %2 val %3"",_entities,count _entities,(_x get ""profileID"")] call ALiVE_fnc_dump;" \n
        "        };" \n
        "        //sleep 0.03;" \n
        "} foreach _profiles;" \n

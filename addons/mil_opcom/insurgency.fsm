@@ -152,7 +152,7 @@ class FSM
                          "// Get civilian factions from Amb Civs" \n
                          "If (!isnil ""ALiVE_Agenthandler"") then {" \n
                          "    _agents = [ALiVE_Agenthandler,""agents"",["""",[],[],""""]] call ALiVE_fnc_HashGet;" \n
-                         "    if (count (_agents select 2) > 0) exitwith {_civFactions = _civFactions + [[(_agents select 2 select 0),""faction"",""CIV_F""] call ALiVE_fnc_HashGet]};" \n
+                         "    if (count _agents > 0) exitwith {_civFactions = _civFactions + [[(values _agents) select 0,""faction"",""CIV_F""] call ALiVE_fnc_HashGet]};" \n
                          "};" \n
                          "" \n
                          "// Get AgentsData" \n

@@ -39,10 +39,10 @@ private ["_result"];
 
 TRACE_1("taskHandlerClient - input",_this);
 
-if !(_this isEqualType []) exitWith {};
+if !(_this isEqualType [] || _this isEqualType createHashMap) exitWith {};
 
 params [
-    ["_logic", [], [[]]],
+    ["_logic", [], [[], createHashMap]],
     ["_operation", "", [""]],
     ["_args", objNull, [objNull,[],"",0,true,false,createHashMap]]
 ];

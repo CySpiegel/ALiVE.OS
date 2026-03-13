@@ -1221,7 +1221,7 @@ switch(_operation) do {
             if (_isEnemyNear && !_enemyTerritory) then {
                 private _enemySides = [_logic, "enemySides"] call MAINCLASS;
                 private _enemySide = _enemySides select 0;
-                _enemyFaction = (([_destination,3000,[_enemySide,"entity"]] call ALIVE_fnc_getNearProfiles) select 0) select 2 select 29;
+                _enemyFaction = (([_destination,3000,[_enemySide,"entity"]] call ALIVE_fnc_getNearProfiles) select 0) get "faction";
             };
 
             private _requestID = format["%1_%2",_faction,floor(time)];

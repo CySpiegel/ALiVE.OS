@@ -52,10 +52,10 @@ class FSM
        "" \n
        "_destroy = false;" \n
        "" \n
-       "_profileID = _profile select 2 select 4;" \n
-       "_leader = _profile select 2 select 10;" \n
-       "_group = _profile select 2 select 13;" \n
-       "_units = _profile select 2 select 21;" \n
+       "_profileID = _profile get ""profileID"";" \n
+       "_leader = _profile get ""leader"";" \n
+       "_group = _profile get ""group"";" \n
+       "_units = _profile get ""units"";" \n
        "" \n
        "_testWait = 5;" \n
        "_iteration = 0;" \n

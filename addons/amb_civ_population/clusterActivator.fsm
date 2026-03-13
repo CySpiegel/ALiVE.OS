@@ -348,7 +348,7 @@ class FSM
        "_timeout = 0;" \n
        "" \n
        "if!(isnil ""_cluster"") then {" \n
-       "    _clusterID = _cluster select 2 select 1;" \n
+       "    _clusterID = _cluster get ""clusterID"";" \n
        "" \n
        "    // DEBUG -------------------------------------------------------------------------------------" \n
        "    " \n
@@ -519,9 +519,9 @@ class FSM
        "" \n
        "    if!(isnil ""_cluster"") then {" \n
        "" \n
-       "        _position = _cluster select 2 select 2;" \n
-       "        _size = _cluster select 2 select 3;" \n
-       "	 private _clusterID = _cluster select 2 select 1;" \n
+       "        _position = _cluster get ""center"";" \n
+       "        _size = _cluster get ""size"";" \n
+       "	 private _clusterID = _cluster get ""clusterID"";" \n
        "" \n
        "        if ([_position, (_spawnDistance + _size), _spawnTypeJetRadius, _spawnTypeHeliRadius] call ALiVE_fnc_anyPlayersInRangeIncludeAir) then {" \n
        "            _toSpawn set [count _toSpawn, _cluster];" \n
@@ -615,8 +615,8 @@ class FSM
        "" \n
        "    if!(isnil ""_agent"") then {" \n
        "" \n
-       "       private _position = _agent select 2 select 2;" \n
-       "       private _agentID = _agent select 2 select 3;  " \n
+       "       private _position = _agent get ""position"";" \n
+       "       private _agentID = _agent get ""agentID"";  " \n
        "" \n
        "	/*" \n
        "	if(_debug) then {" \n
@@ -653,7 +653,7 @@ class FSM
        "	// order agents by distance with smallest distance first" \n
        "	private _sortCode = {" \n
        "		private _value = 9999;" \n
-       "		private _pos = _this select 2 select 2;" \n
+       "		private _pos = _this get ""position"";" \n
        "		{" \n
        "			_value = _value min (_x distance _pos);" \n
        "		} foreach (allPlayers + allCurators);" \n
@@ -726,8 +726,8 @@ class FSM
        "" \n
        " if!(isnil ""_agent"") then {" \n
        "" \n
-       "        _agentActive = _agent select 2 select 1;" \n
-       "        _type = _agent select 2 select 4;" \n
+       "        _agentActive = _agent get ""active"";" \n
+       "        _type = _agent get ""type"";" \n
        "" \n
        "        if!(_agentActive) then {" \n
        "" \n
@@ -793,7 +793,7 @@ class FSM
        "" \n
        "    if!(isnil ""_agent"") then {" \n
        "        " \n
-       "        _unit = _agent select 2 select 5;" \n
+       "        _unit = _agent get ""unit"";" \n
        "        _position = getposATL _unit;" \n
        "" \n
        "        if !([_position, (_spawnDistance), _spawnTypeJetRadius, _spawnTypeHeliRadius] call ALiVE_fnc_anyPlayersInRangeIncludeAir) then {" \n
@@ -884,8 +884,8 @@ class FSM
        "_agent = _toDespawn select _despawnCount;" \n
        "" \n
        "if!(isnil ""_agent"") then {" \n
-       "    _agentID = _agent select 2 select 3;" \n
-       "    _type = _agent select 2 select 4;" \n
+       "    _agentID = _agent get ""agentID"";" \n
+       "    _type = _agent get ""type"";" \n
        "" \n
        "    if(_type == ""agent"") then {" \n
        "        [_agent, ""despawn""] call ALIVE_fnc_civilianAgent;    " \n
@@ -1004,9 +1004,9 @@ class FSM
        "" \n
        "    if!(isnil ""_cluster"") then {" \n
        "        " \n
-       "        _position = _cluster select 2 select 2;" \n
-       "        _size = _cluster select 2 select 3;" \n
-       "	 private _clusterID = _cluster select 2 select 1;" \n
+       "        _position = _cluster get ""center"";" \n
+       "        _size = _cluster get ""size"";" \n
+       "	 private _clusterID = _cluster get ""clusterID"";" \n
        "" \n
        "        if !([_position, (_spawnDistance + (_size * 1.1)), _spawnTypeJetRadius, _spawnTypeHeliRadius] call ALiVE_fnc_anyPlayersInRangeIncludeAir) then {" \n
        "            if ([_position, _spawnDistance] call ALiVE_fnc_anyAutonomousInRange == 0) then {" \n
@@ -1101,7 +1101,7 @@ class FSM
        "_cluster = _toDespawn select _despawnCount;" \n
        "" \n
        "if!(isnil ""_cluster"") then {" \n
-       "    _clusterID = _cluster select 2 select 1;" \n
+       "    _clusterID = _cluster get ""clusterID"";" \n
        "" \n
        "    // DEBUG -------------------------------------------------------------------------------------" \n
        "    " \n
@@ -1214,7 +1214,7 @@ class FSM
        "  {" \n
        "	private _cluster = _x;" \n
        "	if!(isnil ""_cluster"") then {" \n
-       "		private _clusterID = _x select 2 select 1;" \n
+       "		private _clusterID = _x get ""clusterID"";" \n
        "		private _clusterAgents = [ALIVE_agentHandler, ""getAgentsByCluster"", _clusterID] call ALIVE_fnc_agentHandler;   " \n
        "		if!(isNil ""_clusterAgents"") then {" \n
        "       		 if(count (_clusterAgents select 1) > 0) then {" \n
@@ -1341,8 +1341,8 @@ class FSM
        "" \n
        "    if!(isnil ""_agent"") then {" \n
        "" \n
-       "       private _position = _agent select 2 select 2;" \n
-       "       private _agentID = _agent select 2 select 3;  " \n
+       "       private _position = _agent get ""position"";" \n
+       "       private _agentID = _agent get ""agentID"";  " \n
        "" \n
        "	/*" \n
        "	if(_debug) then {" \n
@@ -1379,7 +1379,7 @@ class FSM
        "	// order agents by distance with smallest distance first" \n
        "	private _sortCode = {" \n
        "		private _value = 9999;" \n
-       "		private _pos = _this select 2 select 2;" \n
+       "		private _pos = _this get ""position"";" \n
        "		{" \n
        "			_value = _value min (_x distance _pos);" \n
        "		} foreach (allPlayers + allCurators);" \n
@@ -1462,8 +1462,8 @@ class FSM
        "" \n
        " if!(isnil ""_agent"") then {" \n
        "" \n
-       "        _agentActive = _agent select 2 select 1;" \n
-       "        _type = _agent select 2 select 4;" \n
+       "        _agentActive = _agent get ""active"";" \n
+       "        _type = _agent get ""type"";" \n
        "" \n
        "        if!(_agentActive) then {" \n
        "" \n
@@ -1536,7 +1536,7 @@ class FSM
        "// Sort all by distance" \n
        "	private _sortCode = {" \n
        "		private _value = 9999;" \n
-       "		private _pos = _this select 2 select 2;" \n
+       "		private _pos = _this get ""position"";" \n
        "		{" \n
        "			_value = _value min (_x distance _pos);" \n
        "		} foreach (allPlayers + allCurators);" \n
@@ -1546,8 +1546,8 @@ class FSM
        "" \n
        "// For each agent not within the active limit, add to the despawn array" \n
        "	for ""_i"" from (count _agentsToSpawn -1) to (_activeLimiter) step -1 do {" \n
-       "		// [""Cluster activator actives to check for despawn: %1,: %2"", _i, _agentsToSpawn select _i select 2 select 3] call ALiVE_fnc_dump;" \n
-       "		if ((_agentsToSpawn select _i select 2 select 3) in _agentsActive) then {" \n
+       "		// [""Cluster activator actives to check for despawn: %1,: %2"", _i, (_agentsToSpawn select _i) get ""agentID""] call ALiVE_fnc_dump;" \n
+       "		if (((_agentsToSpawn select _i) get ""agentID"") in _agentsActive) then {" \n
        "			_toDespawn pushback (_agentsToSpawn select _i);" \n
        "		};" \n
        "	};" \n
@@ -1557,7 +1557,7 @@ class FSM
        "" \n
        "// Count new spawns" \n
        "	{" \n
-       "		if !((_x select 2 select 3) in _agentsActive) then {" \n
+       "		if !((_x get ""agentID"") in _agentsActive) then {" \n
        "			_countNewSpawn = _countNewSpawn + 1;" \n
        "		}; " \n
        "	} foreach _agentsToSpawn;" \n
@@ -1613,8 +1613,8 @@ class FSM
        "	_agent = _toDespawn select _despawnCount;" \n
        "" \n
        "	if!(isnil ""_agent"") then {" \n
-       "    		_agentID = _agent select 2 select 3;" \n
-       "   	 	_type = _agent select 2 select 4;" \n
+       "    		_agentID = _agent get ""agentID"";" \n
+       "   	 	_type = _agent get ""type"";" \n
        "" \n
        "   		 if(_type == ""agent"") then {" \n
        "   	    		[_agent, ""despawn""] call ALIVE_fnc_civilianAgent;    " \n

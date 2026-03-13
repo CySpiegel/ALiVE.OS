@@ -824,6 +824,7 @@ if (!_simAttacks) then {
                                                 // spread damage randomly over hit points
 
                                                 private _hitPointCount = count _profileToAttackHealth;
+                                                if (_hitPointCount == 0) exitWith {};
                                                 private _dmgPerHitPointEven = _damageToInflict / _hitPointCount;
 
                                                 private _randomDamageMin = _dmgPerHitPointEven / 2;

@@ -335,7 +335,7 @@ class FSM
                          "                if !(_objectiveID in _OPCOM_SKIP_OBJECTIVES) then {" \n
                          "                    private [""_state""];" \n
                          "" \n
-                         "                    _state = _x select 2 select 5;" \n
+                         "                    _state = _x get ""opcom_state"";" \n
                          "" \n
                          "                    switch (_state) do {" \n
                          "                        case (""unassigned"") : {_un pushback _x};" \n
@@ -1300,7 +1300,7 @@ class FSM
                          "private _objectives = [_OPCOM_HANDLER,""objectives"",[]] call ALiVE_fnc_HashGet;" \n
                          "" \n
                          "// Passed Target is an objective" \n
-                         "if ({_target == (_x select 2 select 0)} count _objectives > 0) then {" \n
+                         "if ({_target == (_x get ""objectiveID"")} count _objectives > 0) then {" \n
                          "" \n
                          "	private _objective = [_OPCOM_HANDLER,""getobjectivebyid"",_target] call ALiVE_fnc_OPCOM;" \n
                          "	private _center = [_objective,""center""] call ALiVE_fnc_HashGet;" \n
@@ -1418,7 +1418,7 @@ class FSM
                          "private _objectives = [_OPCOM_HANDLER,""objectives"",[]] call ALiVE_fnc_HashGet;" \n
                          "" \n
                          "// Passed Target is an objective" \n
-                         "if ({_target == (_x select 2 select 0)} count _objectives > 0) then {" \n
+                         "if ({_target == (_x get ""objectiveID"")} count _objectives > 0) then {" \n
                          "" \n
                          "	private _objective = [_OPCOM_HANDLER,""getobjectivebyid"",_target] call ALiVE_fnc_OPCOM;" \n
                          "	private _center = [_objective,""center""] call ALiVE_fnc_HashGet;" \n
@@ -1513,7 +1513,7 @@ class FSM
                          "private _objectives = [_OPCOM_HANDLER,""objectives"",[]] call ALiVE_fnc_HashGet;" \n
                          "" \n
                          "// Passed Target is an objective" \n
-                         "if ({_target == (_x select 2 select 0)} count _objectives > 0) then {" \n
+                         "if ({_target == (_x get ""objectiveID"")} count _objectives > 0) then {" \n
                          "" \n
                          "	private _objective = [_OPCOM_HANDLER,""getobjectivebyid"",_target] call ALiVE_fnc_OPCOM;" \n
                          "	private _center = [_objective,""center""] call ALiVE_fnc_HashGet;" \n

@@ -437,13 +437,13 @@ class FSM
        "_activeAgents = [ALIVE_agentHandler, ""getActive""] call ALIVE_fnc_agentHandler;" \n
        "_activeClusters = [ALIVE_clusterHandler, ""getActive""] call ALIVE_fnc_clusterHandler;" \n
        "_inactiveClusters = [ALIVE_clusterHandler, ""getInActive""] call ALIVE_fnc_clusterHandler;" \n
-       "_countActive = count (_activeAgents select 1);" \n
-       "_countClustersActive = count (_activeClusters select 1);" \n
-       "_countInactive = count (_inactiveClusters select 1);" \n
+       "_countActive = count _activeAgents;" \n
+       "_countClustersActive = count _activeClusters;" \n
+       "_countInactive = count _inactiveClusters;" \n
        "" \n
-       "_activeAgents = _activeAgents select 2;" \n
-       "_activeClusters = _activeClusters select 2;" \n
-       "_inactiveClusters = _inactiveClusters select 2;" \n
+       "_activeAgents = values _activeAgents;" \n
+       "_activeClusters = values _activeClusters;" \n
+       "_inactiveClusters = values _inactiveClusters;" \n
        "" \n
        "_countAgentsActive = count _agentsActive;" \n
        "" \n
@@ -890,12 +890,12 @@ class FSM
     {
       name = "CHECK_1";
       init = /*%FSM<STATEINIT""">*/"_activeClusters = [ALIVE_clusterHandler, ""getActive""] call ALIVE_fnc_clusterHandler;" \n
-       "_countClustersActive = count (_activeClusters select 1);" \n
-       "_activeClusters = _activeClusters select 2;" \n
+       "_countClustersActive = count _activeClusters;" \n
+       "_activeClusters = values _activeClusters;" \n
        "" \n
        "_inactiveClusters = [ALIVE_clusterHandler, ""getInActive""] call ALIVE_fnc_clusterHandler;" \n
-       "_countInactive = count (_inactiveClusters select 1);" \n
-       "_inactiveClusters = _inactiveClusters select 2;" \n
+       "_countInactive = count _inactiveClusters;" \n
+       "_inactiveClusters = values _inactiveClusters;" \n
        "" \n
        "_analysisCount = 0;" \n
        "_analysisComplete = false;" \n
@@ -1108,8 +1108,8 @@ class FSM
     {
       name = "CHECK_2";
       init = /*%FSM<STATEINIT""">*/"_inactiveClusters = [ALIVE_clusterHandler, ""getInActive""] call ALIVE_fnc_clusterHandler;" \n
-       "_countInactive = count (_inactiveClusters select 1);" \n
-       "_inactiveClusters = _inactiveClusters select 2;" \n
+       "_countInactive = count _inactiveClusters;" \n
+       "_inactiveClusters = values _inactiveClusters;" \n
        "" \n
        "_analysisCount = 0;" \n
        "_analysisComplete = false;" \n

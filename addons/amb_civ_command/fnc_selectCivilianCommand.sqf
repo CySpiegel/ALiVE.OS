@@ -81,6 +81,7 @@ if(count ALIVE_civCommands > 0) then {
     // check global posture adjust command probability accordingly
 
     private _agentCluster = [ALIVE_clusterHandler, "getCluster", _agentData get "homeCluster"] call ALIVE_fnc_clusterHandler;
+    if (isNil "_agentCluster") exitWith {};
     private _clusterHostilityLevel = [_agentCluster, "posture", 0] call ALIVE_fnc_hashGet;
     [_agentData, "posture", _clusterHostilityLevel] call ALIVE_fnc_hashSet;
     _agent setVariable ["posture", _clusterHostilityLevel];

@@ -297,7 +297,7 @@ class FSM
                          "_entitiesBySide = [_sectorData, ""entitiesBySide"",["""",[],[],""""]] call ALIVE_fnc_hashGet;" \n
                          "" \n
                          "// Get amb civilian clusterdata" \n
-                         "if (""clustersCiv"" in (_sectorData select 1)) then {" \n
+                         "if (""clustersCiv"" in _sectorData) then {" \n
                          "" \n
                          "    if (isnil ""ALIVE_agentHandler"") exitwith {};" \n
                          "" \n
@@ -317,7 +317,7 @@ class FSM
                          "    } forEach _settlementClusters;" \n
                          "" \n
                          "    _settlementClusters = [_settlementClusters,[_center],{_Input0 distance (_x select 0)},""ASCEND""] call ALiVE_fnc_SortBy;" \n
-                         "    _agents =  ([_agentClusterData,_settlementClusters select 0 select 1,["""",[],[],""""]] call ALiVE_fnc_HashGet) select 1;" \n
+                         "    _agents =  keys ([_agentClusterData,_settlementClusters select 0 select 1,["""",[],[],""""]] call ALiVE_fnc_HashGet);" \n
                          "" \n
                          "    [_objective,""agents"",_agents] call ALiVE_fnc_HashSet;" \n
                          "};" \n
@@ -1539,7 +1539,7 @@ class FSM
                          "    " \n
                          "                    [_profile,_vehicleProfile] call ALIVE_fnc_removeProfileVehicleAssignment;" \n
                          "                    [ALiVE_ProfileHandler,""unregisterProfile"",_vehicleProfile] call ALiVE_fnc_ProfileHandler;" \n
-                         "                } foreach (_assignments select 1)" \n
+                         "                } foreach (keys _assignments)" \n
                          "            };" \n
                          "    " \n
                          "            if (_active) then {" \n

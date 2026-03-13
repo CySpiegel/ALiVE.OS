@@ -649,7 +649,7 @@ class FSM
                          "		if (toLower(typeOf _building) find _x != -1) then {" \n
                          "			_result = [true, _x];" \n
                          "		};" \n
-                         "	} foreach (ALiVE_CivPop_customBuildings select 1);" \n
+                         "	} foreach (keys ALiVE_CivPop_customBuildings);" \n
                          "	_result" \n
                          "};" \n
                          "" \n
@@ -910,7 +910,7 @@ class FSM
                          "" \n
                          "//_activeClusters call ALiVE_fnc_inspectHash;" \n
                          "" \n
-                         "private _countClustersActive = count (_activeClusters select 1);" \n
+                         "private _countClustersActive = count _activeClusters;" \n
                          "private _countActiveBuildings = count _activeBuildings;" \n
                          "private _countActive = count _activeAgents;" \n
                          "" \n

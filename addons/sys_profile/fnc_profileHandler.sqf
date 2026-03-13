@@ -77,10 +77,11 @@ private ["_result"];
 
 TRACE_1("profileHandler - input",_this);
 
-private _input = if (_this isEqualType []) then {_this} else {[_this, "", objNull]};
-private _logic = _input param [0, objNull];
-private _operation = _input param [1, ""];
-private _args = _input param [2, objNull];
+params [
+    ["_logic", objNull, [objNull,[],createHashMap]],
+    ["_operation", "", [""]],
+    ["_args", objNull, [objNull,[],"",0,true,false]]
+];
 //_result = true;
 
 #define MTEMPLATE "ALiVE_PROFILEHANDLER_%1"

@@ -66,7 +66,7 @@ if(isNil "ALIVE_clustersMil" && isNil "ALIVE_loadedMilClusters") then {
             _clusterID = [_cluster, "clusterID"] call ALIVE_fnc_hashGet;
             _consolidated pushback [_clusterCenter,_clusterID];
         };
-    } forEach (ALIVE_clustersMil select 2);
+    } forEach (values ALIVE_clustersMil);
 
     {
         _cluster = _x;
@@ -76,7 +76,7 @@ if(isNil "ALIVE_clustersMil" && isNil "ALIVE_loadedMilClusters") then {
             _clusterID = [_cluster, "clusterID"] call ALIVE_fnc_hashGet;
             _air pushback [_clusterCenter,_clusterID];
         };
-    } forEach (ALIVE_clustersMilAir select 2);
+    } forEach (values ALIVE_clustersMilAir);
 
     {
         _cluster = _x;
@@ -86,7 +86,7 @@ if(isNil "ALIVE_clustersMil" && isNil "ALIVE_loadedMilClusters") then {
             _clusterID = [_cluster, "clusterID"] call ALIVE_fnc_hashGet;
             _heli pushback [_clusterCenter,_clusterID];
         };
-    } forEach (ALIVE_clustersMilHeli select 2);
+    } forEach (values ALIVE_clustersMilHeli);
 
     _clusters = [] call ALIVE_fnc_hashCreate;
     [_clusters, "consolidated", _consolidated] call ALIVE_fnc_hashSet;

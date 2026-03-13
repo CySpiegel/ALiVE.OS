@@ -1518,15 +1518,15 @@ switch(_operation) do {
             // Establish base of operations for ATO
             // Find plane related clusters on map
             private _airspace = [_logic, "airspace"] call MAINCLASS;
-            private _airClusters = [(ALIVE_clustersMilAir select 2), _airspace] call ALIVE_fnc_clustersInsideMarker;
+            private _airClusters = [(values ALIVE_clustersMilAir), _airspace] call ALIVE_fnc_clustersInsideMarker;
 
             // If no runways etc then look for helipads
             if (count _airClusters == 0) then {
-                _airClusters = [(ALIVE_clustersMilHeli select 2), _airspace] call ALIVE_fnc_clustersInsideMarker;
+                _airClusters = [(values ALIVE_clustersMilHeli), _airspace] call ALIVE_fnc_clustersInsideMarker;
             };
 
             if (count _airClusters == 0) then {
-                 _airClusters = [(ALIVE_clustersMil select 2), _airspace] call ALIVE_fnc_clustersInsideMarker;
+                 _airClusters = [(values ALIVE_clustersMil), _airspace] call ALIVE_fnc_clustersInsideMarker;
             };
 
             if (count _airClusters == 0) exitWith {

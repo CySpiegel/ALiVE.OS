@@ -457,7 +457,7 @@ switch(_operation) do {
 
                 private ["_HQClusters","_landClusters","_airClusters","_heliClusters","_vehicleClusters"];
 
-                _clusters = ALIVE_clustersMil select 2;
+                _clusters = values ALIVE_clustersMil;
 
                 _HQClusters = DEFAULT_OBJECTIVES_HQ;
                 _airClusters = DEFAULT_OBJECTIVES_AIR;
@@ -508,10 +508,10 @@ switch(_operation) do {
 
                         } foreach _sectors;
                     } else {
-                        waituntil {typeName ALIVE_clustersMilLand == "ARRAY"};
+                        waituntil {ALIVE_clustersMilLand isEqualType createHashMap};
                     };
 
-                    _landClusters = ALIVE_clustersMilLand select 2;
+                    _landClusters = values ALIVE_clustersMilLand;
                     _landClusters = [_landClusters, _taor] call ALIVE_fnc_clustersInsideMarker;
                     _landClusters = [_landClusters, _blacklist] call ALIVE_fnc_clustersOutsideMarker;
                 };
@@ -534,7 +534,7 @@ switch(_operation) do {
 
                 //Move on to special objectives
                 if !(isnil "ALIVE_clustersMilHQ") then {
-                    _HQClusters = ALIVE_clustersMilHQ select 2;
+                    _HQClusters = values ALIVE_clustersMilHQ;
                     _HQClusters = [_HQClusters,_sizeFilter,_priorityFilter] call ALIVE_fnc_copyClusters;
                     _HQClusters = [_HQClusters, _taor] call ALIVE_fnc_clustersInsideMarker;
                     _HQClusters = [_HQClusters, _blacklist] call ALIVE_fnc_clustersOutsideMarker;
@@ -546,7 +546,7 @@ switch(_operation) do {
                 };
 
                 if !(isnil "ALIVE_clustersMilAir") then {
-                    _airClusters = ALIVE_clustersMilAir select 2;
+                    _airClusters = values ALIVE_clustersMilAir;
                     _airClusters = [_airClusters,_sizeFilter,_priorityFilter] call ALIVE_fnc_copyClusters;
                     _airClusters = [_airClusters, _taor] call ALIVE_fnc_clustersInsideMarker;
                     _airClusters = [_airClusters, _blacklist] call ALIVE_fnc_clustersOutsideMarker;
@@ -558,7 +558,7 @@ switch(_operation) do {
                 };
 
                 if !(isnil "ALIVE_clustersMilHeli") then {
-                    _heliClusters = ALIVE_clustersMilHeli select 2;
+                    _heliClusters = values ALIVE_clustersMilHeli;
                     _heliClusters = [_heliClusters,_sizeFilter,_priorityFilter] call ALIVE_fnc_copyClusters;
                     _heliClusters = [_heliClusters, _taor] call ALIVE_fnc_clustersInsideMarker;
                     _heliClusters = [_heliClusters, _blacklist] call ALIVE_fnc_clustersOutsideMarker;

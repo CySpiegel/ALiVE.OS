@@ -415,7 +415,7 @@ switch(_operation) do {
 
                 switch(_clusterType) do {
                     case "All": {
-                        _clusters = ALIVE_clustersCiv select 2;
+                        _clusters = values ALIVE_clustersCiv;
                         _clusters = [_clusters,_sizeFilter,_priorityFilter] call ALIVE_fnc_copyClusters;
                         _clusters = [_clusters, _taor] call ALIVE_fnc_clustersInsideMarker;
                         _clusters = [_clusters, _blacklist] call ALIVE_fnc_clustersOutsideMarker;
@@ -429,7 +429,7 @@ switch(_operation) do {
                             if(_sizeFilter == 160) then {
                                 _sizeFilter = 0;
                             };
-                            _clusters = ALIVE_clustersCivHQ select 2;
+                            _clusters = values ALIVE_clustersCivHQ;
                             _clusters = [_clusters,_sizeFilter,_priorityFilter] call ALIVE_fnc_copyClusters;
                             _clusters = [_clusters, _taor] call ALIVE_fnc_clustersInsideMarker;
                             _clusters = [_clusters, _blacklist] call ALIVE_fnc_clustersOutsideMarker;
@@ -444,7 +444,7 @@ switch(_operation) do {
                             if(_sizeFilter == 160) then {
                                 _sizeFilter = 0;
                             };
-                            _clusters = ALIVE_clustersCivPower select 2;
+                            _clusters = values ALIVE_clustersCivPower;
                             _clusters = [_clusters,_sizeFilter,_priorityFilter] call ALIVE_fnc_copyClusters;
                             _clusters = [_clusters, _taor] call ALIVE_fnc_clustersInsideMarker;
                             _clusters = [_clusters, _blacklist] call ALIVE_fnc_clustersOutsideMarker;
@@ -459,7 +459,7 @@ switch(_operation) do {
                             if(_sizeFilter == 160) then {
                                 _sizeFilter = 0;
                             };
-                            _clusters = ALIVE_clustersCivComms select 2;
+                            _clusters = values ALIVE_clustersCivComms;
                             _clusters = [_clusters,_sizeFilter,_priorityFilter] call ALIVE_fnc_copyClusters;
                             _clusters = [_clusters, _taor] call ALIVE_fnc_clustersInsideMarker;
                             _clusters = [_clusters, _blacklist] call ALIVE_fnc_clustersOutsideMarker;
@@ -475,7 +475,7 @@ switch(_operation) do {
                             _sizeFilter = 0;
                         };
                         if !(isnil "ALIVE_clustersCivMarine") then {
-                            _clusters = ALIVE_clustersCivMarine select 2;
+                            _clusters = values ALIVE_clustersCivMarine;
                             _clusters = [_clusters,_sizeFilter,_priorityFilter] call ALIVE_fnc_copyClusters;
                             _clusters = [_clusters, _taor] call ALIVE_fnc_clustersInsideMarker;
                             _clusters = [_clusters, _blacklist] call ALIVE_fnc_clustersOutsideMarker;
@@ -490,7 +490,7 @@ switch(_operation) do {
                             _sizeFilter = 0;
                         };
                         if !(isnil "ALIVE_clustersCivRail") then {
-                            _clusters = ALIVE_clustersCivRail select 2;
+                            _clusters = values ALIVE_clustersCivRail;
                             _clusters = [_clusters,_sizeFilter,_priorityFilter] call ALIVE_fnc_copyClusters;
                             _clusters = [_clusters, _taor] call ALIVE_fnc_clustersInsideMarker;
                             _clusters = [_clusters, _blacklist] call ALIVE_fnc_clustersOutsideMarker;
@@ -505,7 +505,7 @@ switch(_operation) do {
                             _sizeFilter = 0;
                         };
                         if !(isnil "ALIVE_clustersCivFuel") then {
-                            _clusters = ALIVE_clustersCivFuel select 2;
+                            _clusters = values ALIVE_clustersCivFuel;
                             _clusters = [_clusters,_sizeFilter,_priorityFilter] call ALIVE_fnc_copyClusters;
                             _clusters = [_clusters, _taor] call ALIVE_fnc_clustersInsideMarker;
                             _clusters = [_clusters, _blacklist] call ALIVE_fnc_clustersOutsideMarker;
@@ -520,7 +520,7 @@ switch(_operation) do {
                             _sizeFilter = 0;
                         };
                         if !(isnil "ALIVE_clustersCivConstruction") then {
-                            _clusters = ALIVE_clustersCivConstruction select 2;
+                            _clusters = values ALIVE_clustersCivConstruction;
                             _clusters = [_clusters,_sizeFilter,_priorityFilter] call ALIVE_fnc_copyClusters;
                             _clusters = [_clusters, _taor] call ALIVE_fnc_clustersInsideMarker;
                             _clusters = [_clusters, _blacklist] call ALIVE_fnc_clustersOutsideMarker;
@@ -532,7 +532,7 @@ switch(_operation) do {
                     };
                     case "Settlement": {
                         if !(isnil "ALIVE_clustersCivSettlement") then {
-                             _clusters = ALIVE_clustersCivSettlement select 2;
+                             _clusters = values ALIVE_clustersCivSettlement;
                              _clusters = [_clusters,_sizeFilter,_priorityFilter] call ALIVE_fnc_copyClusters;
                              _clusters = [_clusters, _taor] call ALIVE_fnc_clustersInsideMarker;
                              _clusters = [_clusters, _blacklist] call ALIVE_fnc_clustersOutsideMarker;
@@ -548,7 +548,7 @@ switch(_operation) do {
                 if (_placeSeaPatrols > 0) then {
 
                     if !(isnil "ALIVE_clustersCivMarine") then {
-                        private _marineClusters = ALIVE_clustersCivMarine select 2;
+                        private _marineClusters = values ALIVE_clustersCivMarine;
 
                         //["CP [%1] - Marine Clusters Count: %2",_faction, count _marineClusters] call ALiVE_fnc_dump;
 

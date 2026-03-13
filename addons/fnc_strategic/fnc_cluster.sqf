@@ -45,10 +45,11 @@ nil
 
 private ["_createMarkers","_deleteMarkers","_nodes","_center","_result"];
 
-private _input = if (_this isEqualType []) then {_this} else {[_this, "", objNull]};
-private _logic = _input param [0, objNull];
-private _operation = _input param [1, ""];
-private _args = _input param [2, objNull];
+params [
+    ["_logic", objNull, [objNull,[],createHashMap]],
+    ["_operation", "", [""]],
+    ["_args", objNull, [objNull,[],"",0,true,false,createHashMap]]
+];
 
 TRACE_2("cluster - input",_operation,_args);
 
@@ -165,7 +166,7 @@ switch(_operation) do {
     case "state": {
         private["_state","_data","_nodes","_objID"];
 
-        if(typeName _args != "ARRAY") then {
+        if !(_args isEqualType createHashMap) then {
             _state = [] call ALIVE_fnc_hashCreate;
             // Save state
 
@@ -229,7 +230,7 @@ switch(_operation) do {
         };
     };
     case "nodes": {
-        if(typeName _args == "ARRAY") then {
+        if(_args isEqualType []) then {
             [_logic, "nodes", _args] call ALIVE_fnc_hashSet;
         };
 

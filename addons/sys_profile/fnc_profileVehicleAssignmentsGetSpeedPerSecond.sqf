@@ -30,7 +30,7 @@ private ["_assignments","_profile","_result","_vehiclesInCommandOf","_manSpeedAr
 _assignments = _this select 0;
 _profile = _this select 1;
 
-_vehiclesInCommandOf = _profile get "entitiesInCommandOf"; //[_profile,"vehiclesInCommandOf"] call ALIVE_fnc_hashGet;
+_vehiclesInCommandOf = _profile get "vehiclesInCommandOf"; //[_profile,"vehiclesInCommandOf"] call ALIVE_fnc_hashGet;
 _manSpeedArray = "Man" call ALIVE_fnc_vehicleGetSpeedPerSecond;
 _countAssignedUnits = _assignments call ALIVE_fnc_profileVehicleAssignmentsGetCount;
 _unitCount = [_profile,"unitCount"] call ALIVE_fnc_profileEntity;

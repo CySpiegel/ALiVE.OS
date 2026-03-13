@@ -72,7 +72,7 @@ ARJay
             private _faction = [_x,"faction"] call ALiVE_fnc_HashGet;
 
             _presentFactions pushBackUnique _faction;
-        } foreach (_profiles select 2);
+        } foreach (values _profiles);
 
         {
             private _faction = faction (leader _x);

@@ -70,7 +70,7 @@ switch (_state) do {
                     _activeVehicles pushback _x;
                 };
             };
-        } forEach (_activeAgents select 2);
+        } forEach (values _activeAgents);
 
         if(count _activeVehicles > 0) then {
 

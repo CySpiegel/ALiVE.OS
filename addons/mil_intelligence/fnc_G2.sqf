@@ -295,7 +295,7 @@ switch(_operation) do {
             };
 
             // calculate group size
-            private _vehiclesInCommandOf = _profile get "entitiesInCommandOf";
+            private _vehiclesInCommandOf = _profile get "vehiclesInCommandOf";
             if (_vehiclesInCommandOf isequalto []) then {
                 private _units = _profile get "units";
                 _groupSize = count _units;

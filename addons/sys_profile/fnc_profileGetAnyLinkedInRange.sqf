@@ -41,7 +41,7 @@ _profiles = [_profile] call ALIVE_fnc_vehicleAssignmentsGetLinkedProfiles;
         _result = _result + 1;
         breakTo "MAIN";
     };
-} forEach (_profiles select 2);
+} forEach (values _profiles);
 //[] call ALIVE_fnc_timer;
 
 _result

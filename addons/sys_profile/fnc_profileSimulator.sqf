@@ -105,8 +105,8 @@ if (!_simAttacks) then {
                     private _isPlayer = _profile get "isPlayer";
 
                     // determine if entity occupies a vehicle
-                    private _vehiclesInCommandOf = _profile get "entitiesInCommandOf";
-                    private _vehiclesInCargoOf = _profile get "entitiesInCargoOf";
+                    private _vehiclesInCommandOf = _profile get "vehiclesInCommandOf";
+                    private _vehiclesInCargoOf = _profile get "vehiclesInCargoOf";
 
                     private _vehicleCommander = false;
                     private _isAir = false;

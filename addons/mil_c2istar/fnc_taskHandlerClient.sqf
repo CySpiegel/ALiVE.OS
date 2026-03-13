@@ -39,6 +39,8 @@ private ["_result"];
 
 TRACE_1("taskHandlerClient - input",_this);
 
+if !(_this isEqualType []) exitWith {};
+
 params [
     ["_logic", [], [[]]],
     ["_operation", "", [""]],

@@ -793,7 +793,7 @@ switch (_operation) do {
                             _despawnPrevented = true;
                         };
                     }
-                } forEach (_linked select 2);
+                } forEach (values _linked);
             };
 
             if (!_despawnPrevented) then {

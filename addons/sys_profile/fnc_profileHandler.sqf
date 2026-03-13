@@ -77,10 +77,12 @@ private ["_result"];
 
 TRACE_1("profileHandler - input",_this);
 
+if !(_this isEqualType []) exitWith {};
+
 params [
     ["_logic", objNull, [objNull,[],createHashMap]],
     ["_operation", "", [""]],
-    ["_args", objNull, [objNull,[],"",0,true,false]]
+    ["_args", objNull, [objNull,[],"",0,true,false,createHashMap]]
 ];
 //_result = true;
 
@@ -310,7 +312,7 @@ switch(_operation) do {
     };
 
     case "registerProfile": {
-        if (_args isEqualType []) then {
+        if (_args isEqualType [] || _args isEqualType createHashMap) then {
             private _profile = _args;
 
             private _profiles = [_logic,"profiles"] call ALIVE_fnc_hashGet;
@@ -493,7 +495,7 @@ switch(_operation) do {
     case "unregisterProfile": {
         if (_args isEqualType "") then {_args = [_logic,"getProfile", _args] call MAINCLASS};
 
-        if (_args isEqualType []) then {
+        if (_args isEqualType [] || _args isEqualType createHashMap) then {
             private _profile = _args;
 
             private _profiles = [_logic,"profiles"] call ALIVE_fnc_hashGet;
@@ -1272,7 +1274,7 @@ switch(_operation) do {
         private["_profiles","_profile","_profileType","_vehicleAssignmentKeys","_vehicleAssignmentValues","_key","_value","_assignments","_assignment","_rebuiltHash",
         "_position","_entities","_vehicles","_total","_index","_damages","_damage","_ranks","_importRanks","_side","_ranksMap","_unitClasses","_side","_profileEntity","_profileVehicle","_boat"];
 
-        if(typeName _args == "ARRAY") then {
+        if(typeName _args == "ARRAY" || typeName _args == "HASHMAP") then {
 
             if(ALiVE_SYS_DATA_DEBUG_ON) then {
                 ["SYS PROFILE - IMPORT PROFILE DATA..."] call ALiVE_fnc_dump;

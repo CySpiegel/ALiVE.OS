@@ -2870,7 +2870,7 @@ switch(_operation) do {
 
                                 _faction = _profile get "faction";
                                 _position = _profile get "position";
-                                _vehiclesInCommandOf = _profile get "entitiesInCommandOf";
+                                _vehiclesInCommandOf = _profile get "vehiclesInCommandOf";
 
                                 _profile call ALIVE_fnc_inspectHash;
 

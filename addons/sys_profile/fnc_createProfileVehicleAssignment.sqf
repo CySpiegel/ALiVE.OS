@@ -52,8 +52,8 @@ if (_profileVehicle isEqualType objNull) then {
     };
 };
 
-if (isnil "_profileVehicle" || { !(_profileVehicle isEqualType []) }) exitwith {};
-if (isnil "_profileEntity" || { !(_profileEntity isEqualType []) }) exitwith {};
+if (isnil "_profileVehicle" || { !(_profileVehicle isEqualType []) && !(_profileVehicle isEqualType createHashMap) }) exitwith {};
+if (isnil "_profileEntity" || { !(_profileEntity isEqualType []) && !(_profileEntity isEqualType createHashMap) }) exitwith {};
 
 private _entityID = _profileEntity get "profileID"; //[_profileEntity, "profileID"] call ALIVE_fnc_hashGet;
 private _unitIndexes = [_profileEntity, "unitIndexes"] call ALIVE_fnc_profileEntity;

@@ -1125,7 +1125,7 @@ switch(_operation) do {
                             //by distance
                             case ("distance") : {
                                 _objectives = [_objectives,[_logic],{
-                                    _final = ([_Input0, "position"] call ALIVE_fnc_HashGet) distance (_x get "active");
+                                    _final = ([_Input0, "position"] call ALIVE_fnc_HashGet) distance (_x get "center");
 
                                     //["OPCOM Priority calculated %1",_final] call ALiVE_fnc_dumpR;
 
@@ -1140,11 +1140,11 @@ switch(_operation) do {
                             //by size and height
                             case ("strategic") : {
                                 _objectives = [_objectives,[_logic],{
-                                    _height = (ATLtoASL [(_x get "active") select 0,(_x get "active") select 1,0]) select 2;
-                                    _value1 = (_x get "position");
-                                    _value2 = (_x get "profileID");
+                                    _height = (ATLtoASL [(_x get "center") select 0,(_x get "center") select 1,0]) select 2;
+                                    _value1 = (_x get "size");
+                                    _value2 = (_x get "priority");
                                     _value3 = (_height/2);
-                                    _value4 = ((([_Input0, "position"] call ALIVE_fnc_HashGet) distance (_x get "active"))/10);
+                                    _value4 = ((([_Input0, "position"] call ALIVE_fnc_HashGet) distance (_x get "center"))/10);
 
                                     _final = (_value1 + _value2 + _value3) - _value4;
 
@@ -1162,8 +1162,8 @@ switch(_operation) do {
                                 _objectivesCiv = +_objectives;
                                 _objectivesMil = +_objectives;
 
-                                _objectivesFilteredCiv = [_objectivesCiv,[_logic],{(([_Input0, "position"] call ALIVE_fnc_HashGet) distance (_x get "active"))*(1-(random 0.20))},"ASCEND",{(_x get "side") == "CIV"}] call ALiVE_fnc_SortBy;
-                                _objectivesFilteredMil = [_objectivesMil,[_logic],{(([_Input0, "position"] call ALIVE_fnc_HashGet) distance (_x get "active"))*(1-(random 0.20))},"ASCEND",{(_x get "side") == "MIL"}] call ALiVE_fnc_SortBy;
+                                _objectivesFilteredCiv = [_objectivesCiv,[_logic],{(([_Input0, "position"] call ALIVE_fnc_HashGet) distance (_x get "center"))*(1-(random 0.20))},"ASCEND",{(_x get "objectiveType") == "CIV"}] call ALiVE_fnc_SortBy;
+                                _objectivesFilteredMil = [_objectivesMil,[_logic],{(([_Input0, "position"] call ALIVE_fnc_HashGet) distance (_x get "center"))*(1-(random 0.20))},"ASCEND",{(_x get "objectiveType") == "MIL"}] call ALiVE_fnc_SortBy;
 
                                 _objectives = _objectivesFilteredCiv + _objectivesFilteredMil;
 
@@ -1426,7 +1426,7 @@ switch(_operation) do {
 	                    // Get civilian factions from Amb Civs
 	                    If (!isnil "ALiVE_Agenthandler") then {
 	                        _AllAgents = [ALiVE_Agenthandler,"agents",createHashMap] call ALiVE_fnc_HashGet;
-	                        if (count _AllAgents > 0) exitwith {_civFactions = _civFactions + [[(_AllAgents get "debug"),"faction","CIV_F"] call ALiVE_fnc_HashGet]};
+	                        if (count _AllAgents > 0) exitwith {_civFactions = _civFactions + [[(values _AllAgents) select 0,"faction","CIV_F"] call ALiVE_fnc_HashGet]};
 	                    };
 
 	                    [time,_center,_id,_size,selectRandom _factions,[_objective,"suicide",[]] call ALiVE_fnc_HashGet,_sidesEnemy,_agents,_civFactions] spawn ALiVE_fnc_INS_suicide;

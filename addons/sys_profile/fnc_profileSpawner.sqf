@@ -235,7 +235,7 @@ if (!(_profilesToSpawnQueue isEqualTo []) && {time - _lastProfileSpawnedTime > A
                     if (!isnil "_vehicleProfile") then {
                         [MOD(profileHandler),"unregisterProfile", _vehicleProfile] call ALiVE_fnc_profileHandler;
                     };
-                } foreach (_profile get "entitiesInCommandOf"); // "vehiclesInCommandOf"
+                } foreach (_profile get "vehiclesInCommandOf"); // "vehiclesInCommandOf"
 
                 [MOD(profileHandler),"unregisterProfile", _profile] call ALiVE_fnc_profileHandler;
             };

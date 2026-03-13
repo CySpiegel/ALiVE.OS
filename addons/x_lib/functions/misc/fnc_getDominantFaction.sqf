@@ -40,7 +40,7 @@ _facs = [];
     if (((_x get "type") == "entity") && {!(_x get "active")} && {!(_x get "isPlayer")} && {(_x get "position") distance _pos < _radius}) then {
         _facs pushback (_x get "faction");
     };
-} foreach (_profiles select 2);
+} foreach (values _profiles);
 
 {
     if ((_pos distance (getposATL (leader _x)) < _radius) && {{isPlayer _x} count (units _x) < 1}) then {

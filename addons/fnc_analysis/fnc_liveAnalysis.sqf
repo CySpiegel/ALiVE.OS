@@ -276,7 +276,7 @@ switch(_operation) do {
                                 };
                             };
 
-                        } forEach (_analysisJobs select 2);
+                        } forEach (values _analysisJobs);
 
                     };
 

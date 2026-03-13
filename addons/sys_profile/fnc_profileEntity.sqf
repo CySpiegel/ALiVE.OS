@@ -1236,7 +1236,7 @@ switch(_operation) do {
                             _despawnPrevented = true;
                         };
                     }
-                } forEach (_linked select 2);
+                } forEach (values _linked);
             // check if entity-profile itself has despawn prevented
             } else {
                 private _spawnType = [_logic, "spawnType",[]] call ALIVE_fnc_HashGet;

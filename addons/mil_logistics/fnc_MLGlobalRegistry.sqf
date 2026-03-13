@@ -154,8 +154,7 @@ switch(_operation) do {
         };
 
         _modules = [_logic, "modules"] call ALIVE_fnc_hashGet;
-        _moduleIndex = _modules select 1;
-        if(_moduleID in _moduleIndex) then {
+        if(_moduleID in _modules) then {
             _module = [_modules, _moduleID] call ALIVE_fnc_hashGet;
         }else{
             _module = nil;
@@ -192,8 +191,7 @@ switch(_operation) do {
         if(typeName _args == "STRING") then {
             _moduleID = _args;
             _modules = [_logic, "modules"] call ALIVE_fnc_hashGet;
-            _moduleIndex = _modules select 1;
-            if(_moduleID in _moduleIndex) then {
+            if(_moduleID in _modules) then {
                 _result = [_modules, _moduleID] call ALIVE_fnc_hashGet;
             }else{
                 _result = nil;

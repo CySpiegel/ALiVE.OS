@@ -541,7 +541,7 @@ switch(_operation) do {
 
                 private _faction = _profile get "faction";                 // faction
                 private _position = _profile get "position";                 // position
-                private _vehiclesInCommandOf = _profile get "entitiesInCommandOf";      // vehiclesInCommandOf
+                private _vehiclesInCommandOf = _profile get "vehiclesInCommandOf";      // vehiclesInCommandOf
 
                 if (count _vehiclesInCommandOf == 0) then {
 
@@ -600,7 +600,7 @@ switch(_operation) do {
 
                 private _faction = _profile get "faction";
                 private _position = _profile get "position";
-                private _vehiclesInCommandOf = _profile get "entitiesInCommandOf";
+                private _vehiclesInCommandOf = _profile get "vehiclesInCommandOf";
 
                 _position = _position getPos [50, random 360];
 

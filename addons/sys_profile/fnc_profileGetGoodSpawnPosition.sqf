@@ -68,8 +68,8 @@ _direction = random 360;
 switch(_type) do {
 
     case "entity": {
-        _vehiclesInCommandOf = _profile get "entitiesInCommandOf"; //[_profile,"vehiclesInCommandOf",[]] call ALIVE_fnc_hashSet;
-        _vehiclesInCargoOf = _profile get "entitiesInCargoOf"; //[_profile,"vehiclesInCargoOf",[]] call ALIVE_fnc_hashSet;
+        _vehiclesInCommandOf = _profile get "vehiclesInCommandOf"; //[_profile,"vehiclesInCommandOf",[]] call ALIVE_fnc_hashSet;
+        _vehiclesInCargoOf = _profile get "vehiclesInCargoOf"; //[_profile,"vehiclesInCargoOf",[]] call ALIVE_fnc_hashSet;
         _unitClasses = _profile get "unitClasses"; //[_profile,"unitClasses"] call ALIVE_fnc_hashGet;
         _despawnPosition = _profile get "despawnPosition"; //[_profile,"despawnPosition"] call ALIVE_fnc_hashGet;
         _hasSimulated = _profile get "hasSimulated"; //[_profile,"hasSimulated"] call ALIVE_fnc_hashGet;

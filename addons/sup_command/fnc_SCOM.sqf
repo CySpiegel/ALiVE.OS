@@ -83,6 +83,8 @@ private ["_result"];
 
 TRACE_1("SCOM - input",_this);
 
+if !(_this isEqualType []) exitWith {};
+
 params [
     ["_logic", objNull, [objNull]],
     ["_operation", "", [""]],

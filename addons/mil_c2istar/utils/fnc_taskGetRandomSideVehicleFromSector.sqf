@@ -55,7 +55,7 @@ if(count _taskSector > 0) then {
 
                     if!(isNil "_commandProfile") then {
 
-                        _vehiclesInCommandOf = _commandProfile get "entitiesInCommandOf";
+                        _vehiclesInCommandOf = _commandProfile get "vehiclesInCommandOf";
 
                         _targetVehicles = _vehiclesInCommandOf;
 

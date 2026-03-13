@@ -30,8 +30,8 @@ if (_profileType == "entity") then {
 
     // check if entity is using vehicles
 
-    private _vehiclesInCommandOf = _profile get "entitiesInCommandOf";
-    private _vehiclesInCargoOf = _profile get "entitiesInCargoOf";
+    private _vehiclesInCommandOf = _profile get "vehiclesInCommandOf";
+    private _vehiclesInCargoOf = _profile get "vehiclesInCargoOf";
 
     if (count _vehiclesInCommandOf > 0) then {
         private _vehicle = [ALiVE_profileHandler,"getProfile", _vehiclesInCommandOf select 0] call ALiVE_fnc_profileHandler;

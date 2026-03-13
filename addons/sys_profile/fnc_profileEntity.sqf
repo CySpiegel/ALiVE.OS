@@ -1228,7 +1228,7 @@ switch(_operation) do {
             //_linked call ALIVE_fnc_inspectHash;
 
             // check if any linked profiles have despawn prevented
-            if (count (_linked select 1) > 1) then {
+            if (count _linked > 1) then {
                 {
                     private _spawnType = [_x,"spawnType",[]] call ALIVE_fnc_hashGet;
                     if (count _spawnType > 0) then {

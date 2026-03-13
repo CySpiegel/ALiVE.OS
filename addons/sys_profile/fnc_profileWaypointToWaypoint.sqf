@@ -30,7 +30,7 @@ params ["_profileWaypoint","_group",["_setCurrent", false]];
 
 private _pathfindingEnabled = [MOD(profileSystem),"pathfinding"] call ALiVE_fnc_hashGet;
 
-if (isnil "_profileWaypoint" || {!(_profileWaypoint isequaltype [])}) exitwith {
+if (isnil "_profileWaypoint" || {!(_profileWaypoint isequaltype []) && !(_profileWaypoint isequaltype createHashMap)}) exitwith {
     ["- ALiVE_fnc_ProfileWaypointToWaypoint retrieved wrong input: %1!",_this] call ALiVE_fnc_dump;
 };
 

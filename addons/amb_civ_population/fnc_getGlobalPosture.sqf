@@ -42,4 +42,4 @@ private _activeClusters = [ALIVE_clusterHandler, "getActive"] call ALIVE_fnc_clu
         [_cluster, "posture", 0] call ALIVE_fnc_hashSet;
     };
 
-} forEach (_activeClusters select 2);
+} forEach (values _activeClusters);

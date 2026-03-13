@@ -287,10 +287,10 @@ switch (_operation) do {
 
 		if (_civID != "") then {
 			_civProfile = [ALIVE_agentHandler, "getAgent", _civID] call ALIVE_fnc_agentHandler;
-			_clusterID = (_civProfile select 2) select 9;
+			_clusterID = _civProfile get "homeCluster";
 			_cluster = [ALIVE_clusterHandler, "getCluster", _clusterID] call ALIVE_fnc_clusterHandler;
-			_homePos = (_civProfile select 2) select 10;
-			_individualHostility = (_civProfile select 2) select 12;
+			_homePos = _civProfile get "homePosition";
+			_individualHostility = _civProfile get "posture";
 			_townHostility = [_cluster, "posture"] call ALIVE_fnc_hashGet;	//_townHostility = (_cluster select 2) select 9; (Different)
 
 			if (!isNil {[_civProfile,"ALiVE_PersistentName"] call ALiVE_fnc_hashGet}) then {
@@ -338,7 +338,7 @@ switch (_operation) do {
 						_unit = [_agentProfile,"unit"] call ALIVE_fnc_hashGet;
 
 						if (name _civ != name _unit) then {
-							_homePos = (_agentProfile select 2) select 10;
+							_homePos = _agentProfile get "homePosition";
 							_hostileCivInfo pushBack [_unit,_homePos,_activeCommands];
 						};
 					};
@@ -434,7 +434,7 @@ switch (_operation) do {
 			[_cluster, "posture", (_clusterHostility + _townHostilityValue)] call ALIVE_fnc_hashSet;
 
 			//-- Set individual hostility
-			_hostility = (_civProfile select 2) select 12;
+			_hostility = _civProfile get "posture";
 			_hostility = _hostility + _value;
 			[_civProfile, "posture", _hostility] call ALiVE_fnc_hashSet;
 		};

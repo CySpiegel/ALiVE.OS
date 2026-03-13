@@ -324,7 +324,7 @@ switch (_operation) do {
                     _markerPos = getmarkerPos _marker;
                 };
 
-            } foreach (GVAR(STORE) select 1);
+            } foreach (keys GVAR(STORE));
 
             // See if position is inside nearest marker
             _scale = ctrlMapScale ((findDisplay 12) displayCtrl 51);

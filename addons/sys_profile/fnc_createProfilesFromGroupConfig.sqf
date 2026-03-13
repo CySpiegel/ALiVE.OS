@@ -47,7 +47,7 @@ private _groupProfiles = [];
 
 // Check to see if faction has a mapping
 if(!isNil "ALIVE_factionCustomMappings") then {
-    if(_prefix in (ALIVE_factionCustomMappings select 1)) then {
+    if(_prefix in ALIVE_factionCustomMappings) then {
         private _customMappings = [ALIVE_factionCustomMappings, _prefix] call ALIVE_fnc_hashGet;
         _prefix = [_customMappings, "GroupFactionName"] call ALIVE_fnc_hashGet;
     };
@@ -81,7 +81,7 @@ if(count _config > 0) then {
     */
 
     if(!isNil "ALIVE_factionCustomMappings") then {
-        if(_groupFaction in (ALIVE_factionCustomMappings select 1)) then {
+        if(_groupFaction in ALIVE_factionCustomMappings) then {
             _customMappings = [ALIVE_factionCustomMappings, _groupFaction] call ALIVE_fnc_hashGet;
             _side = [_customMappings, "Side"] call ALIVE_fnc_hashGet;
             _groupFaction = [_customMappings, "FactionName"] call ALIVE_fnc_hashGet;

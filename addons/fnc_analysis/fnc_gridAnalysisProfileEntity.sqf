@@ -116,7 +116,7 @@ _profiles = [ALIVE_profileHandler, "profiles"] call ALIVE_fnc_hashGet;
         };
     };
 
-} forEach (_profiles select 2);
+} forEach (values _profiles);
 
 //[] call ALIVE_fnc_timer;
 

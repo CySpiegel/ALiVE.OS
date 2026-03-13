@@ -40,7 +40,7 @@ params [
 _customGroup = false;
 
 if(!isNil "ALIVE_factionCustomMappings") then {
-    if(_faction in (ALIVE_factionCustomMappings select 1)) then {
+    if(_faction in ALIVE_factionCustomMappings) then {
         _customMappings = [ALIVE_factionCustomMappings, _faction] call ALIVE_fnc_hashGet;
         // _customMappings call ALIVE_fnc_inspectHash;
         _side = [_customMappings, "GroupSideName"] call ALIVE_fnc_hashGet;

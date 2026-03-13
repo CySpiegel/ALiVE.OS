@@ -801,7 +801,7 @@ switch(_operation) do {
 
                 _response = [];
 
-                if((count (_eventQueue select 2)) > 0) then {
+                if((count (values _eventQueue)) > 0) then {
 
                     {
                         _playerRequested = [_x, "playerRequested"] call ALIVE_fnc_hashGet;
@@ -845,7 +845,7 @@ switch(_operation) do {
                             };
                         };
 
-                    } forEach (_eventQueue select 2);
+                    } forEach (values _eventQueue);
 
                 };
 
@@ -966,7 +966,7 @@ switch(_operation) do {
 
                 _response = [];
 
-                if((count (_eventQueue select 2)) > 0) then {
+                if((count (values _eventQueue)) > 0) then {
 
                     {
                         _playerRequested = [_x, "playerRequested"] call ALIVE_fnc_hashGet;
@@ -1148,7 +1148,7 @@ switch(_operation) do {
                             };
                         };
 
-                    } forEach (_eventQueue select 2);
+                    } forEach (values _eventQueue);
 
                 };
             };
@@ -1726,12 +1726,12 @@ switch(_operation) do {
                         // randomly pick between marine and mil location for start position
                         if(random 1 > 0.5) then {
 
-                            if(count(ALIVE_clustersCivMarine select 2) > 0) then {
+                            if(count(values ALIVE_clustersCivMarine) > 0) then {
 
                                 // there are marine objectives available
 
                                 // pick a primary one
-                                _primaryReinforcementObjective = selectRandom (ALIVE_clustersCivMarine select 2);
+                                _primaryReinforcementObjective = selectRandom (values ALIVE_clustersCivMarine);
 
                                 _reinforcementType = "MARINE";
 
@@ -1740,9 +1740,9 @@ switch(_operation) do {
                                 // no marine objectives available
                                 // pick a low priority location for airdrops
 
-                                if(count(ALIVE_clustersMil select 2) > 0) then {
+                                if(count(values ALIVE_clustersMil) > 0) then {
 
-                                    _sortedClusters = [ALIVE_clustersMil select 2,[],{([_x, "priority"] call ALIVE_fnc_hashGet)},"DESCEND"] call ALiVE_fnc_SortBy;
+                                    _sortedClusters = [values ALIVE_clustersMil,[],{([_x, "priority"] call ALIVE_fnc_hashGet)},"DESCEND"] call ALiVE_fnc_SortBy;
 
                                     // get the highest priority objective
                                     _primaryReinforcementObjective = _sortedClusters select ((count _sortedClusters)-1);
@@ -1757,9 +1757,9 @@ switch(_operation) do {
 
                             // pick a low priority location for airdrops
 
-                            if(count(ALIVE_clustersMil select 2) > 0) then {
+                            if(count(values ALIVE_clustersMil) > 0) then {
 
-                                _sortedClusters = [ALIVE_clustersMil select 2,[],{([_x, "priority"] call ALIVE_fnc_hashGet)},"DESCEND"] call ALiVE_fnc_SortBy;
+                                _sortedClusters = [values ALIVE_clustersMil,[],{([_x, "priority"] call ALIVE_fnc_hashGet)},"DESCEND"] call ALiVE_fnc_SortBy;
 
                                 // get the highest priority objective
                                 _primaryReinforcementObjective = _sortedClusters select ((count _sortedClusters)-1);
@@ -1841,11 +1841,11 @@ switch(_operation) do {
                                 // and manage each event
                                 _eventQueue = [_logic, "eventQueue"] call MAINCLASS;
 
-                                if((count (_eventQueue select 2)) > 0) then {
+                                if((count (values _eventQueue)) > 0) then {
 
                                     {
                                         [_logic,"monitorEvent",[_x, _reinforcementAnalysis]] call MAINCLASS;
-                                    } forEach (_eventQueue select 2);
+                                    } forEach (values _eventQueue);
 
                                 };
 
@@ -3592,7 +3592,7 @@ switch(_operation) do {
                 private _payloadProfiles = [];
 
                 if (_playerRequested) then {
-                    _payloadProfiles append ((_playerRequestProfiles select 2) select 7)
+                    _payloadProfiles append (_playerRequestProfiles get "payloadGroups")
                 };
 
                 _payloadProfiles append ([_eventCargoProfiles, "payloadGroups"] call ALIVE_fnc_hashGet);
@@ -3606,8 +3606,8 @@ switch(_operation) do {
                             if !(isNil "_vehicleProfile") then {
                                 _vehicleProfile call ALIVE_fnc_inspectHash; // TODO(marcel): Wrap in debug
 
-                                private _active = (_vehicleProfile select 2) select 1;
-                                private _vehicle = (_vehicleProfile select 2) select 10;
+                                private _active = _vehicleProfile get "active";
+                                private _vehicle = _vehicleProfile get "vehicle";
                                 private _noCargo = count (_vehicle getvariable ["ALiVE_SYS_LOGISTICS_CARGO", []]) == 0;
                                 private _slingLoading = [_vehicleProfile, "slingloading", false] call ALiVE_fnc_hashGet;
 
@@ -4302,7 +4302,7 @@ switch(_operation) do {
                                     // RHS hacky stuff :(
                                     if !(_itemCategory in ["Infantry", "Support", "SpecOps", "Naval", "Armored", "Mechanized", "Motorized", "Air"]) then {
                                         if(!isNil "ALIVE_factionCustomMappings") then {
-                                            if(_groupfaction in (ALIVE_factionCustomMappings select 1)) then {
+                                            if(_groupfaction in ALIVE_factionCustomMappings) then {
                                                 private _customMappings = [ALIVE_factionCustomMappings, _groupfaction] call ALIVE_fnc_hashGet;
                                                 _groupfaction = [_customMappings, "GroupFactionName"] call ALIVE_fnc_hashGet;
                                             };

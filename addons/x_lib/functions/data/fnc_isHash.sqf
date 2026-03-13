@@ -27,5 +27,3 @@ CBA
 private _value = _this select 0;
 
 _value isEqualType createHashMap
-
-_result;

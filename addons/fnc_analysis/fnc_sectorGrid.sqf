@@ -87,7 +87,7 @@ private "_result";
 TRACE_1("sectorGrid - input",_this);
 
 params [
-    ["_logic", objNull, [objNull,[]]],
+    ["_logic", objNull, [objNull,[],createHashMap]],
     ["_operation", "", [""]],
     ["_args", objNull, [objNull,[],"",0,true,false]]
 ];

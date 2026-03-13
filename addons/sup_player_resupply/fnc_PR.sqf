@@ -2032,7 +2032,7 @@ switch(_operation) do {
                                     private _groupfaction = _faction;
 
                                     if(!isNil "ALIVE_factionCustomMappings") then {
-                                        if(_groupfaction in (ALIVE_factionCustomMappings select 1)) then {
+                                        if(_groupfaction in ALIVE_factionCustomMappings) then {
                                             private _customMappings = [ALIVE_factionCustomMappings, _groupfaction] call ALIVE_fnc_hashGet;
                                             _groupfaction = [_customMappings, "GroupFactionName"] call ALIVE_fnc_hashGet;
                                         };

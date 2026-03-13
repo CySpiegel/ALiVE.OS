@@ -75,7 +75,7 @@ ASSERT_TRUE(typeName _raw_objects == "ARRAY", _err);
 
 _object_hash = [_raw_objects] call ALIVE_fnc_hashCreate;
 ASSERT_DEFINED("_object_hash",_err);
-ASSERT_TRUE(typeName _object_hash == "ARRAY", "_object_hash invalid");
+ASSERT_TRUE(typeName _object_hash == "HASHMAP", "_object_hash invalid");
 
 _expanded = [];
 {

@@ -39,7 +39,7 @@ ASSERT_TRUE(typeName _result == "SCALAR",_err);
 
 // if there are manual set map bounds in static data load those instead.
 if!(isNil "ALIVE_mapBounds") then {
-    if(worldName in (ALIVE_mapBounds select 1)) then {
+    if(worldName in ALIVE_mapBounds) then {
         _result = [ALIVE_mapBounds, worldName] call ALIVE_fnc_hashGet;
     };
 };

@@ -114,7 +114,7 @@ _gridData = [] call ALIVE_fnc_hashCreate;
     [_gridData, _sectorID, _sectorData] call ALIVE_fnc_hashSet;
 
 
-} forEach (ALIVE_clustersCiv select 2);
+} forEach (values ALIVE_clustersCiv);
 
 
 {
@@ -147,7 +147,7 @@ _gridData = [] call ALIVE_fnc_hashCreate;
     [_gridData, _sectorID, _sectorData] call ALIVE_fnc_hashSet;
 
 
-} forEach (ALIVE_clustersCivPower select 2);
+} forEach (values ALIVE_clustersCivPower);
 
 
 {
@@ -180,7 +180,7 @@ _gridData = [] call ALIVE_fnc_hashCreate;
     [_gridData, _sectorID, _sectorData] call ALIVE_fnc_hashSet;
 
 
-} forEach (ALIVE_clustersCivComms select 2);
+} forEach (values ALIVE_clustersCivComms);
 
 
 {
@@ -213,7 +213,7 @@ _gridData = [] call ALIVE_fnc_hashCreate;
     [_gridData, _sectorID, _sectorData] call ALIVE_fnc_hashSet;
 
 
-} forEach (ALIVE_clustersCivMarine select 2);
+} forEach (values ALIVE_clustersCivMarine);
 
 
 {
@@ -246,7 +246,7 @@ _gridData = [] call ALIVE_fnc_hashCreate;
     [_gridData, _sectorID, _sectorData] call ALIVE_fnc_hashSet;
 
 
-} forEach (ALIVE_clustersCivFuel select 2);
+} forEach (values ALIVE_clustersCivFuel);
 
 
 {
@@ -279,7 +279,7 @@ _gridData = [] call ALIVE_fnc_hashCreate;
     [_gridData, _sectorID, _sectorData] call ALIVE_fnc_hashSet;
 
 
-} forEach (ALIVE_clustersCivConstruction select 2);
+} forEach (values ALIVE_clustersCivConstruction);
 
 
 {
@@ -312,7 +312,7 @@ _gridData = [] call ALIVE_fnc_hashCreate;
     [_gridData, _sectorID, _sectorData] call ALIVE_fnc_hashSet;
 
 
-} forEach (ALIVE_clustersCivSettlement select 2);
+} forEach (values ALIVE_clustersCivSettlement);
 
 
 {

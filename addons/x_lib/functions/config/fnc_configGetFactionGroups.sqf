@@ -33,7 +33,7 @@ private _faction = _this;
 private _factionSide = _faction call ALiVE_fnc_factionSide;
 
 if (!isnil "ALiVE_factionCustomMappings") then {
-    if (_faction in (ALiVE_factionCustomMappings select 1)) then {
+    if (_faction in ALiVE_factionCustomMappings) then {
         private _factionData = [ALiVE_factionCustomMappings, _faction] call ALiVE_fnc_hashGet;
         _factionSide = [_factionData,"GroupSideName"] call ALiVE_fnc_hashGet;
         _faction = [_factionData,"GroupFactionName"] call ALiVE_fnc_hashGet;

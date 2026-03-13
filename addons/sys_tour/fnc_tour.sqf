@@ -428,7 +428,7 @@ switch(_operation) do {
                 _iconState set [1,0];
                 _iconState set [2,0];
             } forEach _x;
-        } forEach (_selectionOptions select 2);
+        } forEach (values _selectionOptions);
 
     };
 
@@ -2614,7 +2614,7 @@ switch(_operation) do {
                         };
                     };
 
-                } forEach (_civilianAgents select 2);
+                } forEach (values _civilianAgents);
 
                 ["closeSplash"] call ALIVE_fnc_displayMenu;
 

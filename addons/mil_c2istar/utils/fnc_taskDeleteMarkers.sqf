@@ -34,7 +34,7 @@ if!(isNil "ALIVE_taskMarkers") then {
     // get the markers array for this task
     // on this client, delete any already existing markers
 
-    if(_taskID in (ALIVE_taskMarkers select 1)) then {
+    if(_taskID in ALIVE_taskMarkers) then {
 
         _taskMarkers = [ALIVE_taskMarkers,_taskID] call ALIVE_fnc_hashGet;
 

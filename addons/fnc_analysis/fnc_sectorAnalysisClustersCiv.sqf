@@ -74,7 +74,7 @@ if(isNil "ALIVE_clustersCiv" && isNil "ALIVE_loadedCivClusters") then {
             _clusterID = [_cluster, "clusterID"] call ALIVE_fnc_hashGet;
             _consolidated pushback [_clusterCenter,_clusterID];
         };
-    } forEach (ALIVE_clustersCiv select 2);
+    } forEach (values ALIVE_clustersCiv);
 
     {
         _cluster = _x;
@@ -84,7 +84,7 @@ if(isNil "ALIVE_clustersCiv" && isNil "ALIVE_loadedCivClusters") then {
             _clusterID = [_cluster, "clusterID"] call ALIVE_fnc_hashGet;
             _power pushback [_clusterCenter,_clusterID];
         };
-    } forEach (ALIVE_clustersCivPower select 2);
+    } forEach (values ALIVE_clustersCivPower);
 
     {
         _cluster = _x;
@@ -94,7 +94,7 @@ if(isNil "ALIVE_clustersCiv" && isNil "ALIVE_loadedCivClusters") then {
             _clusterID = [_cluster, "clusterID"] call ALIVE_fnc_hashGet;
             _comms pushback [_clusterCenter,_clusterID];
         };
-    } forEach (ALIVE_clustersCivComms select 2);
+    } forEach (values ALIVE_clustersCivComms);
 
     {
         _cluster = _x;
@@ -104,7 +104,7 @@ if(isNil "ALIVE_clustersCiv" && isNil "ALIVE_loadedCivClusters") then {
             _clusterID = [_cluster, "clusterID"] call ALIVE_fnc_hashGet;
             _marine pushback [_clusterCenter,_clusterID];
         };
-    } forEach (ALIVE_clustersCivMarine select 2);
+    } forEach (values ALIVE_clustersCivMarine);
 
     /*
     {
@@ -115,7 +115,7 @@ if(isNil "ALIVE_clustersCiv" && isNil "ALIVE_loadedCivClusters") then {
             _clusterID = [_cluster, "clusterID"] call ALIVE_fnc_hashGet;
             _rail pushback [_clusterCenter,_clusterID];
         };
-    } forEach (ALIVE_clustersCivRail select 2);
+    } forEach (values ALIVE_clustersCivRail);
     */
 
     {
@@ -126,7 +126,7 @@ if(isNil "ALIVE_clustersCiv" && isNil "ALIVE_loadedCivClusters") then {
             _clusterID = [_cluster, "clusterID"] call ALIVE_fnc_hashGet;
             _fuel pushback [_clusterCenter,_clusterID];
         };
-    } forEach (ALIVE_clustersCivFuel select 2);
+    } forEach (values ALIVE_clustersCivFuel);
 
     {
         _cluster = _x;
@@ -136,7 +136,7 @@ if(isNil "ALIVE_clustersCiv" && isNil "ALIVE_loadedCivClusters") then {
             _clusterID = [_cluster, "clusterID"] call ALIVE_fnc_hashGet;
             _construction pushback [_clusterCenter,_clusterID];
         };
-    } forEach (ALIVE_clustersCivConstruction select 2);
+    } forEach (values ALIVE_clustersCivConstruction);
 
     {
         _cluster = _x;
@@ -146,7 +146,7 @@ if(isNil "ALIVE_clustersCiv" && isNil "ALIVE_loadedCivClusters") then {
             _clusterID = [_cluster, "clusterID"] call ALIVE_fnc_hashGet;
             _settlement pushback [_clusterCenter,_clusterID];
         };
-    } forEach (ALIVE_clustersCivSettlement select 2);
+    } forEach (values ALIVE_clustersCivSettlement);
 
     _clusters = [] call ALIVE_fnc_hashCreate;
     [_clusters, "consolidated", _consolidated] call ALIVE_fnc_hashSet;

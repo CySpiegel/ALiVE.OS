@@ -77,8 +77,10 @@ private ["_result"];
 
 TRACE_1("profileHandler - input",_this);
 
+if !(_this isEqualType []) then {_this = [_this, "", objNull]};
+
 params [
-    ["_logic", objNull, [objNull,[]]],
+    ["_logic", objNull, [objNull,[],createHashMap]],
     ["_operation", "", [""]],
     ["_args", objNull, [objNull,[],"",0,true,false]]
 ];
@@ -264,7 +266,7 @@ switch(_operation) do {
                         [_x,"debug", false] call ALIVE_fnc_profileVehicle;
                     };
                 };
-            } forEach (_profiles select 2);
+            } forEach (values _profiles);
 
             if (_args) then {
                 {
@@ -276,14 +278,7 @@ switch(_operation) do {
                             [_x,"debug", true] call ALIVE_fnc_profileVehicle;
                         };
                     };
-                } forEach (_profiles select 2);
-
-                // DEBUG -------------------------------------------------------------------------------------
-                //["----------------------------------------------------------------------------------------"] call ALIVE_fnc_dump;
-                //["Profile Handler State"] call ALiVE_fnc_dump;
-                //_state = [_logic, "state"] call MAINCLASS;
-                //_state call ALIVE_fnc_inspectHash;
-                // DEBUG -------------------------------------------------------------------------------------
+                } forEach (values _profiles);
             };
         };
 
@@ -794,11 +789,7 @@ switch(_operation) do {
     case "getProfile": {
         if (_args isEqualType "") then {
             private _profiles = [_logic, "profiles"] call ALIVE_fnc_hashGet;
-            private _index = (_profiles select 1) find _args;
-
-            if (_index != -1) then {
-                _result = (_profiles select 2) select _index;
-            };
+            _result = _profiles getOrDefault [_args, nil];
         };
     };
 
@@ -1273,7 +1264,7 @@ switch(_operation) do {
 
             };
 
-        } forEach (_profiles select 2);
+        } forEach (values _profiles);
 
         _result = _exportProfiles;
 
@@ -1489,7 +1480,7 @@ switch(_operation) do {
                     };
                 };
 
-            } forEach (_profiles select 2);
+            } forEach (values _profiles);
 
             //Sort collected index-numbers to get the highest one
             _vehicles sort false;

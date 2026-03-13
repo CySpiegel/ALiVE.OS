@@ -39,7 +39,7 @@ nil
 TRACE_1("profile - input",_this);
 
 params [
-    ["_logic", objNull, [objNull,[]]],
+    ["_logic", objNull, [objNull,[],createHashMap]],
     ["_operation", "", [""]],
     ["_args", objNull, [objNull,[],"",0,true,false]]
 ];
@@ -81,8 +81,7 @@ switch(_operation) do {
             ];
 
             {
-                (_logic select 1) pushback (_x select 0);
-                (_logic select 2) pushback (_x select 1);
+                _logic set [_x select 0, _x select 1];
             } foreach _fields;
         };
 

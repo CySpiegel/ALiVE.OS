@@ -45,9 +45,9 @@ if (_rev == "MISSING") exitWith {false};
 
 _data = [GVAR(DATAHANDLER), "delete", ["sys_patrolrep", _async, _docid, _rev]] call ALIVE_fnc_Data;
 
-_count = count (GVAR(STORE) select 1) - 1;
+_count = count keys GVAR(STORE) - 1;
 LOG(_count);
-if ( (count (GVAR(STORE) select 1) - 1) == 0 ) then {
+if ( (count keys GVAR(STORE) - 1) == 0 ) then {
     // Delete index doc if store hits zero records
     private "_indrevs";
     _indrevs = [GVAR(DATAHANDLER), "indexRevs", ""] call ALIVE_fnc_hashGet;

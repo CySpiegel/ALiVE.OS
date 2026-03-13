@@ -39,7 +39,7 @@ SpyderBlack723
 
 if (ALiVE_gamePaused) exitwith {
     private _profiles = [MOD(profileHandler),"profiles"] call ALiVE_fnc_hashGet;
-    {[_x,"timeLastSim", diag_tickTime] call ALiVE_fnc_hashSet} foreach (_profiles select 2);
+    {[_x,"timeLastSim", diag_tickTime] call ALiVE_fnc_hashSet} foreach (values _profiles);
 };
 
 // parse CBA perFrameHandler arguments
@@ -621,7 +621,7 @@ if (!_simAttacks) then {
     if (_attacksToSim isEqualTo []) then {
 
         private _profileAttacks = [MOD(profileCombatHandler),"attacksByID"] call ALiVE_fnc_hashGet;
-        _attacksToSim append (_profileAttacks select 1);
+        _attacksToSim append (keys _profileAttacks);
 
         [MOD(profileSystem),"simulatingAttacks", false] call ALiVE_fnc_hashSet;
 

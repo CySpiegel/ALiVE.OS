@@ -45,8 +45,10 @@ nil
 
 private ["_createMarkers","_deleteMarkers","_nodes","_center","_result"];
 
+if !(_this isEqualType []) then {_this = [_this, "", objNull]};
+
 params [
-    ["_logic", objNull, [objNull,[]]],
+    ["_logic", objNull, [objNull,[],createHashMap]],
     ["_operation", "", [""]],
     ["_args", objNull, [objNull,[],"",0,true,false]]
 ];

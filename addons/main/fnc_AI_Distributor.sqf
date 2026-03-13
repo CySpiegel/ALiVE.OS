@@ -119,12 +119,13 @@ GVAR(AI_DISTRIBUTOR) = [_interval] spawn {
         // Debug section //
         if (_debug) then {
             private _t = ["AI DISTRIBUTION", lineBreak];
+            private _keysArr = keys GVAR(AI_LOCALITIES);
             {
-                private _key = ((GVAR(AI_LOCALITIES) select 1) select _foreachIndex);
-                private _valueCount = (count _x);
+                private _key = _x;
+                private _valueCount = count (GVAR(AI_LOCALITIES) get _key);
 
                 _t = _t + [format ["Loc. %1 | Groups: %2", _key, _valueCount], lineBreak];
-            } foreach (GVAR(AI_LOCALITIES) select 2);
+            } foreach _keysArr;
 
             [composeText _t] call ALiVE_fnc_DumpMPH;
         };

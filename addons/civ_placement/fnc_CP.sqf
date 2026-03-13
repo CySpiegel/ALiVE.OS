@@ -577,15 +577,15 @@ switch(_operation) do {
                 if(_debug) then {
                     ["CP %1 - Startup completed", _faction] call ALiVE_fnc_dump;
                     ["CP %2 - Filtered Civ clusters %1",count _clusters, _faction] call ALiVE_fnc_dump;
-                    ["CP %2 - All Civilian clusters %1", count (ALIVE_clustersCiv select 2), _faction] call ALiVE_fnc_dump;
-                    ["CP %2 - Settlement clusters %1", count (ALIVE_clustersCivSettlement select 2), _faction] call ALiVE_fnc_dump;
-                    ["CP %2 - HQ clusters %1",count (ALIVE_clustersCivHQ select 2), _faction] call ALiVE_fnc_dump;
-                    ["CP %2 - Marine clusters %1",count (ALIVE_clustersCivMarine select 2), _faction] call ALiVE_fnc_dump;
-                    ["CP %2 - Rail clusters %1",count (ALIVE_clustersCivRail select 2), _faction] call ALiVE_fnc_dump;
-                    ["CP %2 - Fuel clusters %1",count (ALIVE_clustersCivFuel select 2), _faction] call ALiVE_fnc_dump;
-                    ["CP %2 - Power clusters %1",count (ALIVE_clustersCivPower select 2), _faction] call ALiVE_fnc_dump;
-                    ["CP %2 - Comms clusters %1",count (ALIVE_clustersCivComms select 2), _faction] call ALiVE_fnc_dump;
-                    ["CP %2 - Construction clusters %1",count (ALIVE_clustersCivConstruction select 2), _faction] call ALiVE_fnc_dump;
+                    ["CP %2 - All Civilian clusters %1", count (values ALIVE_clustersCiv), _faction] call ALiVE_fnc_dump;
+                    ["CP %2 - Settlement clusters %1", count (values ALIVE_clustersCivSettlement), _faction] call ALiVE_fnc_dump;
+                    ["CP %2 - HQ clusters %1",count (values ALIVE_clustersCivHQ), _faction] call ALiVE_fnc_dump;
+                    ["CP %2 - Marine clusters %1",count (values ALIVE_clustersCivMarine), _faction] call ALiVE_fnc_dump;
+                    ["CP %2 - Rail clusters %1",count (values ALIVE_clustersCivRail), _faction] call ALiVE_fnc_dump;
+                    ["CP %2 - Fuel clusters %1",count (values ALIVE_clustersCivFuel), _faction] call ALiVE_fnc_dump;
+                    ["CP %2 - Power clusters %1",count (values ALIVE_clustersCivPower), _faction] call ALiVE_fnc_dump;
+                    ["CP %2 - Comms clusters %1",count (values ALIVE_clustersCivComms), _faction] call ALiVE_fnc_dump;
+                    ["CP %2 - Construction clusters %1",count (values ALIVE_clustersCivConstruction), _faction] call ALiVE_fnc_dump;
 
                     [] call ALIVE_fnc_timer;
                 };

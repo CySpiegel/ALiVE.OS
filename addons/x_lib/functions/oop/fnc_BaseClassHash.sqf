@@ -38,18 +38,17 @@ nil
 ---------------------------------------------------------------------------- */
 if(
     isNil "_this" ||
-    {typeName _this != "ARRAY"} ||
+    {!(_this isEqualType [])} ||
     {count _this == 0} ||
-    {typeName (_this select 0) != "ARRAY"} // changed to array
+    {!((_this select 0) isEqualType [] || (_this select 0) isEqualType createHashMap)}
 ) then {
-    _this = [[], "create"]; // changed to array
+    _this = [createHashMap, "create"];
 };
 
 TRACE_1("baseClassHash - input",_this);
 
-//logic: changed to array as the allowed not sure if this is right..
 params [
-    ["_logic", objNull, [objNull,[]]],
+    ["_logic", objNull, [objNull,[],createHashMap]],
     ["_operation", "", [""]],
     ["_args", objNull, [objNull,[],"",0,true,false]]
 ];

@@ -107,7 +107,7 @@ if(isNil "ALIVE_taskMarkers") then {
 };
 
 
-if(_taskID in (ALIVE_taskMarkers select 1)) then {
+if(_taskID in ALIVE_taskMarkers) then {
 
     _taskMarkers = [ALIVE_taskMarkers,_taskID] call ALIVE_fnc_hashGet;
 

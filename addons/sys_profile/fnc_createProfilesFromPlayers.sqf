@@ -42,7 +42,7 @@ if (isMultiplayer) then {
 _playerProfiles = [ALIVE_profileHandler, "getPlayerEntities"] call ALIVE_fnc_profileHandler;
 _profileIndex = [ALIVE_profileHandler,"getPlayerIndex"] call ALIVE_fnc_profileHandler;
 
-_entityCount = count (_playerProfiles select 1);
+_entityCount = count keys _playerProfiles;
 
 // DEBUG -------------------------------------------------------------------------------------
 if(_debug) then {

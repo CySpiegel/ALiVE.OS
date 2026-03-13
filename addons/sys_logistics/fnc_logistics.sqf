@@ -134,7 +134,7 @@ switch (_operation) do {
                         _aliveContainers pushback _x;
                     };
                 } foreach _containers;
-            } foreach (ALIVE_factionDefaultContainers select 2);
+            } foreach (values ALIVE_factionDefaultContainers);
 
             // Define logistics properties on all localities (containers: select 0 / objects: select 1 / exclude: select 2)
             GVAR(CARRYABLE) = [["Man"],["Reammobox_F","Static","StaticWeapon","ThingX","NonStrategic"] + (_logic getvariable ["WHITELIST",[]]),["House"] + (_logic getvariable ["BLACKLIST",[]])];

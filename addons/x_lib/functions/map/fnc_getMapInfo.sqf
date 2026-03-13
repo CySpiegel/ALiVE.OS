@@ -36,5 +36,5 @@ _mapCenter set [2,0]; // 2d position
     _mapCenter, // Center
     [(_mapCenter select 0) * 2, (_mapCenter select 1) * 2, 0], // Top-right point
     (((_mapCenter select 0) max (_mapCenter select 1)) * sqrt(2)), // Max radius
-    (((_mapCenter select 0) min keys _mapCenter) * sqrt(2)) // Min radius
+    (((_mapCenter select 0) min (_mapCenter select 1)) * sqrt(2)) // Min radius
 ]

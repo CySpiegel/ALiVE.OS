@@ -50,21 +50,21 @@ if (_categorySelector isEqualTo []) then {
 
     if !(_categorySide isEqualTo "all") then {
         if (_categorySide isEqualType []) then {
-            _query = _query + " && ((_x get "side") in _categorySide)";
+            _query = _query + " && ((_x get ""side"") in _categorySide)";
         } else {
-            _query = _query + " && ((_x get "side") == _categorySide)";
+            _query = _query + " && ((_x get ""side"") == _categorySide)";
         };
     };
 
     if (_categoryType != "all") then {
-        _query = _query + " && {(_x get "type") == _categoryType}";
+        _query = _query + " && {(_x get ""type"") == _categoryType}";
     };
 
     if !(_categoryObjectType isEqualTo "none") then {
         if (_categoryObjectType isEqualType "") then {
-            _query = _query + " && {(_x get "objectType") == _categoryObjectType}";
+            _query = _query + " && {(_x get ""objectType"") == _categoryObjectType}";
         } else {
-            _query = _query + " && {(_x get "objectType") in _categoryObjectType}";
+            _query = _query + " && {(_x get ""objectType"") in _categoryObjectType}";
         };
     };
 

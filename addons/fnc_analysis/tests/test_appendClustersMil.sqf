@@ -109,7 +109,7 @@ _gridData = [] call ALIVE_fnc_hashCreate;
     [_gridData, _sectorID, _sectorData] call ALIVE_fnc_hashSet;
 
 
-} forEach (ALIVE_clustersMil select 2);
+} forEach (values ALIVE_clustersMil);
 
 
 {
@@ -137,7 +137,7 @@ _gridData = [] call ALIVE_fnc_hashCreate;
     [_gridData, _sectorID, _sectorData] call ALIVE_fnc_hashSet;
 
 
-} forEach (ALIVE_clustersMilAir select 2);
+} forEach (values ALIVE_clustersMilAir);
 
 
 {
@@ -165,7 +165,7 @@ _gridData = [] call ALIVE_fnc_hashCreate;
     [_gridData, _sectorID, _sectorData] call ALIVE_fnc_hashSet;
 
 
-} forEach (ALIVE_clustersMilHeli select 2);
+} forEach (values ALIVE_clustersMilHeli);
 
 
 {

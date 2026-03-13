@@ -52,8 +52,10 @@ private ["_result"];
 
 TRACE_1("OPCOM - input",_this);
 
+if !(_this isEqualType []) then {_this = [_this, "", objNull]};
+
 params [
-    ["_logic", objNull, [objNull,[],""]],
+    ["_logic", objNull, [objNull,[],"",createHashMap]],
     ["_operation", "", [""]],
     ["_args", objNull, [objNull,[],"",0,true,false]]
 ];
@@ -869,7 +871,7 @@ switch(_operation) do {
                                                 _active = [_profile,'active',false] call ALiVE_fnc_HashGet;
 
                                                 if (_active) then {
-                                                    _group = _profile get "group";
+                                                    _group = _profile get ""group"";
                                                     _group setSpeedmode 'LIMITED';
                                                     {(vehicle _x) land 'LAND'} foreach (units _group);
                                                 } else {

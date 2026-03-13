@@ -1349,7 +1349,7 @@ class FSM
                          "" \n
                          "	if (isnil ""_profile"") exitwith {};" \n
                          "" \n
-                         "	private _vehicleIDs = ([_profile,""vehicleAssignments"",[[],[]]] call ALIVE_fnc_hashGet) select 1;" \n
+                         "	private _vehicleIDs = keys ([_profile,""vehicleAssignments"",createHashMap] call ALIVE_fnc_hashGet);" \n
                          "	" \n
                          "	if (count _vehicleIDs > 0) then {" \n
                          "" \n

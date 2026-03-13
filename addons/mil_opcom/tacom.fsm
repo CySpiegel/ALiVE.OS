@@ -249,7 +249,7 @@ class FSM
                          "" \n
                          "                    if (isnil ""_target"") exitwith {};" \n
                          "" \n
-                         "                    _vehicle = ([_target,""vehicleAssignments"",[[],[]]] call ALIVE_fnc_hashGet) select 1;" \n
+                         "                    _vehicle = keys ([_target,""vehicleAssignments"",createHashMap] call ALIVE_fnc_hashGet);" \n
                          "" \n
                          "                    if (count _vehicle > 0) then {" \n
                          "" \n
@@ -572,7 +572,7 @@ class FSM
                          "_timestamp = time;" \n
                          "" \n
                          "//Get all profileIDs and objectives" \n
-                         "_profiles = ([ALIVE_profileHandler, ""getProfiles"", ""entity""] call ALIVE_fnc_profileHandler) select 1;" \n
+                         "_profiles = [ALIVE_profileHandler, ""getProfiles"", ""entity""] call ALIVE_fnc_profileHandler;" \n
                          "_objectives = [_OPCOM_HANDLER,""objectives""] call ALiVE_fnc_HashGet;" \n
                          "_section = [_objective,""section"",[]] call AliVE_fnc_HashGet;" \n
                          "_state = [_objective,""opcom_state"",""unassigned""] call ALiVE_fnc_HashGet;" \n

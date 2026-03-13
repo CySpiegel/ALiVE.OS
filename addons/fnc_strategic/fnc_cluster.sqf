@@ -45,13 +45,10 @@ nil
 
 private ["_createMarkers","_deleteMarkers","_nodes","_center","_result"];
 
-if !(_this isEqualType []) then {_this = [_this, "", objNull]};
-
-params [
-    ["_logic", objNull, [objNull,[],createHashMap]],
-    ["_operation", "", [""]],
-    ["_args", objNull, [objNull,[],"",0,true,false]]
-];
+private _input = if (_this isEqualType []) then {_this} else {[_this, "", objNull]};
+private _logic = _input param [0, objNull];
+private _operation = _input param [1, ""];
+private _args = _input param [2, objNull];
 
 TRACE_2("cluster - input",_operation,_args);
 

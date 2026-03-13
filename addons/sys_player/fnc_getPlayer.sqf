@@ -48,7 +48,7 @@ if (local _player) then {
     GVAR(resetAvailable) = true;
 
     // Store the document revision number on the player object
-    _player setVariable ["_rev", [_playerHash,"_rev"] call CBA_fnc_hashGet, true];
+    _player setVariable ["_rev", _playerHash get "_rev", true];
 
     // Get save options
     _saveLoadout = _logic getvariable ["saveLoadout",true];
@@ -82,7 +82,7 @@ if (local _player) then {
     {
         private ["_key","_cmd","_value"];
         _key = _x select 0;
-        _value = [_playerHash, _key] call CBA_fnc_hashGet;
+        _value = _playerHash get _key;
         _cmd = _x select 2;
 
         if (typeName _cmd != "STRING" && !(isNil "_value")) then {

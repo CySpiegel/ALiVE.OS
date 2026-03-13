@@ -229,8 +229,8 @@ _testData = [
     TIMERSTART
     _converted = [_x] call ALIVE_fnc_parseJSON;
     TIMEREND
-    ASSERT_TRUE(typeName _converted == "ARRAY", "FAILED!");
-    if (typeName _converted == "ARRAY") then {
+    ASSERT_TRUE(typeName _converted == "HASHMAP", "FAILED!");
+    if (typeName _converted == "HASHMAP") then {
         STAT(str(_converted));
     };
     sleep 1;

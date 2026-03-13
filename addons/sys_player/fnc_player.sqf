@@ -409,7 +409,7 @@ switch(_operation) do {
                     _unit  = _args select 0;
 
                     // Check that the hash is found
-                     if ([GVAR(gear_data), (getPlayerUID _unit)] call CBA_fnc_hashHasKey) then {
+                     if ((getPlayerUID _unit) in GVAR(gear_data)) then {
 
                             // Grab player data from memory store
                             _gearHash = [GVAR(gear_data), getPlayerUID _unit] call ALIVE_fnc_hashGet;
@@ -456,7 +456,7 @@ switch(_operation) do {
                     _owner = _args select 1;
 
                     // Check that the hash is found
-                     if ([GVAR(player_data), (getPlayerUID _unit)] call CBA_fnc_hashHasKey) then {
+                     if ((getPlayerUID _unit) in GVAR(player_data)) then {
 
                             // Grab player data from memory store
                             _playerHash = [GVAR(player_data), getPlayerUID _unit] call ALIVE_fnc_hashGet;

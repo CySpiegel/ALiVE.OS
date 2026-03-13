@@ -38,13 +38,13 @@ _data =  [];
 
 _player = _args select 0;
 
-_playerHash = [] call CBA_fnc_hashCreate;
+_playerHash = createHashMap;
 
 TRACE_1("SET PLAYER",_this);
 
 // ensure last document revision is passed with the new player record if it exists
 if (_player getVariable ["_rev","MISSING"] != "MISSING") then {
-    [_playerHash, "_rev", _player getVariable "_rev"] call CBA_fnc_hashSet;
+    _playerHash set ["_rev", _player getVariable "_rev"];
 };
 
     // Get save options
@@ -88,7 +88,7 @@ TRACE_5("SYS_PLAYER SET",_saveLoadout,_saveHealth,_savePosition,_saveScores, cou
     } else {
         TRACE_3("SYS_PLAYER SET PLAYER DATA",_player, _key, _value);
     };
-    [_playerHash, _key, _value] call CBA_fnc_hashSet;
+    _playerHash set [_key, _value];
 } foreach _data;
 
 // Add gear data to player's hash

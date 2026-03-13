@@ -98,7 +98,7 @@ switch(_operation) do {
         _simple_operations = ["targets", "size","type","faction"];
 
         if(typeName _args != "ARRAY") then {
-            _state = [] call CBA_fnc_hashCreate;
+            _state = createHashMap;
             // Save state
             {
                 [_state, _x, _logic getVariable _x] call ALIVE_fnc_hashSet;

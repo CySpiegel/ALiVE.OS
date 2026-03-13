@@ -44,16 +44,16 @@ _indexDoc = [_logic, "read", [_module, [], _missionKey]] call ALIVE_fnc_Data;
 
 TRACE_1("Load IndexDoc",_indexDoc);
 
-if (typeName _indexDoc == "ARRAY") then {
+if (typeName _indexDoc == "HASHMAP") then {
 
     // Set the index revision on the module data handler for purposes of saving a new index later
-    _indexRev = [_indexDoc, "_rev"] call CBA_fnc_hashGet;
-    [_logic,"indexRev",_indexRev] call CBA_fnc_hashSet;
+    _indexRev = _indexDoc get "_rev";
+    _logic set ["indexRev", _indexRev];
 
-    _data = [] call CBA_fnc_hashCreate;
+    _data = createHashMap;
 
     // Grab index
-    _index = [_indexDoc, "index"] call CBA_fnc_hashGet; // Should be an array of key values
+    _index = _indexDoc get "index"; // Should be an array of key values
 
     if(ALiVE_SYS_DATA_DEBUG_ON) then {
         ["SYS_DATA_COUCHDB - LOAD DATA LOAD INDEX: %1",_index] call ALiVE_fnc_dump;
@@ -65,7 +65,7 @@ if (typeName _indexDoc == "ARRAY") then {
         private ["_key","_record"];
         _key = _missionKey + "-" + _x;
         _record = [_logic, "read", [_module, [], _key]] call ALIVE_fnc_Data;
-        [_data, _x, _record] call CBA_fnc_hashSet;
+        _data set [_x, _record];
     } foreach _index;
 
     // Return data as hash

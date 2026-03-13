@@ -95,7 +95,7 @@ switch(_operation) do {
         private _simple_operations = ["targets", "size","type","faction"];
 
         if !(_args isEqualType []) then {
-            private _state = [] call CBA_fnc_hashCreate;
+            private _state = createHashMap;
 
             // Save state
             {

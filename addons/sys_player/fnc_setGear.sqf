@@ -38,7 +38,7 @@ _data =  [];
 
 _player = _args select 0;
 
-_gearHash = [] call CBA_fnc_hashCreate;
+_gearHash = createHashMap;
 
 // Create Data Command Array
 _data = GVAR(LOADOUT_DATA);
@@ -57,7 +57,7 @@ TRACE_5("SYS_PLAYER GEAR SET", count _data);
     } else {
         TRACE_3("SYS_PLAYER SET GEAR DATA",_player, _key, _value);
     };
-    [_gearHash, _key, _value] call CBA_fnc_hashSet;
+    _gearHash set [_key, _value];
 } foreach _data;
 
 // Add player hash to player data

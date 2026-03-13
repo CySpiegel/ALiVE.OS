@@ -382,7 +382,7 @@ switch(_operation) do {
 
                 //Check if there is data in DB
                 _data = false call ALiVE_fnc_CQBLoadData;
-                _success = (!(isnil "_data") && {typeName _data == "ARRAY"} && {count _data > 2});
+                _success = (!(isnil "_data") && {_data isEqualType createHashMap} && {count _data > 0});
 
                 //if data was loaded from DB before then overwrite CQB state
                 if (_success) then {
@@ -392,7 +392,7 @@ switch(_operation) do {
 
                         {
                             [_cqb_logic,"state",_x] call ALiVE_fnc_CQB
-                        } foreach (_data select 2);
+                        } foreach (values _data);
                     } foreach (MOD(CQB) getVariable ["instances",[]]);
 
                     ["CQB DATA loaded from DB! CQB states were reset!"] call ALiVE_fnc_dump;
@@ -957,7 +957,7 @@ switch(_operation) do {
 
                 // Make sure we got back a hash because we might be testing a
                 // position outside the ALIVE_sectorGrid returning ["",[],[],nil]
-                if ([_sector] call CBA_fnc_isHash) then {
+                if ([_sector] call ALiVE_fnc_isHash) then {
                     private _sectorID = [_sector, "id"] call ALiVE_fnc_sector;
 
                     // Divide sector into x rows and columns

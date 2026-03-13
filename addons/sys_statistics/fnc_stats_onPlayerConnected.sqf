@@ -50,11 +50,11 @@ if (GVAR(ENABLED) && isDedicated) then {
 
             if (count _data > 0 && ([_profile] call ALiVE_fnc_isHash)) then {
 
-                private _tmp = [] call CBA_fnc_hashCreate;
+                private _tmp = createHashMap;
                 for "_i" from 0 to ((count _data) - 1) step 2 do {
                     private _key = _data select _i;
                     private _value = _data select (_i + 1);
-                    [_tmp, _key, _value] call CBA_fnc_hashSet;
+                    _tmp set [_key, _value];
                 };
 
                 _data = _tmp;

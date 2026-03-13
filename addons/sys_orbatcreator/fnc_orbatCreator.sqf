@@ -7553,9 +7553,9 @@ switch(_operation) do {
         private _indentInner = _indentOuter + _indent;
         _result = "";
 
-        if ([_value] call CBA_fnc_isHash) then {
-            private _subAttributes = _value select 1;
-            private _subValues = _value select 2;
+        if ([_value] call ALiVE_fnc_isHash) then {
+            private _subAttributes = keys _value;
+            private _subValues = values _value;
 
             _result = _result + _newLine;
             _result = _result + _indentOuter + "class " + _attribute + " {" + _newLine;

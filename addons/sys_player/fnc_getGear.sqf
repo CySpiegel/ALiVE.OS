@@ -56,7 +56,7 @@ if (local _player) then {
     {
         private ["_key","_cmd","_value"];
         _key = _x select 0;
-        _value = [_gearHash, _key] call CBA_fnc_hashGet;
+        _value = _gearHash get _key;
         _cmd = _x select 2;
 
         if (typeName _cmd != "STRING") then {

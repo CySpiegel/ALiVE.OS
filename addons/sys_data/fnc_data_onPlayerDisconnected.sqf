@@ -86,7 +86,7 @@ if (_name == "__SERVER__") then {
 
             private ["_tempHash","_saveHash","_dictionaryName"];
 
-            GVAR(tempHash) = [] call CBA_fnc_hashCreate;
+            GVAR(tempHash) = createHashMap;
             GVAR(hashCount) = 0;
 
             _saveHash = {
@@ -97,7 +97,7 @@ if (_name == "__SERVER__") then {
                             ["SYS DATA - DICTIONARY HASH: %1",[str(GVAR(tempHash))] call CBA_fnc_strLen] call ALiVE_fnc_dump;
                         };
 
-                        [GVAR(tempHash), _x, _y] call CBA_fnc_hashSet;
+                        GVAR(tempHash) set [_x, _y];
                     } else {
                         private ["_dictionaryName"];
                         if (GVAR(hashCount) == 0) then {
@@ -106,7 +106,7 @@ if (_name == "__SERVER__") then {
                             _dictionaryName = format["dictionary_%1_%2_%3", GVAR(GROUP_ID), missionName, GVAR(hashCount)];
                         };
                         if (GVAR(hashCount) < count GVAR(DictionaryRevs)) then {
-                            [GVAR(tempHash), "_rev", GVAR(DictionaryRevs) select GVAR(hashCount)] call CBA_fnc_hashSet;
+                            GVAR(tempHash) set ["_rev", GVAR(DictionaryRevs) select GVAR(hashCount)];
                         };
                         _result = [GVAR(datahandler), "write", ["sys_data", GVAR(tempHash), false, _dictionaryName] ] call ALIVE_fnc_Data;
 
@@ -114,8 +114,8 @@ if (_name == "__SERVER__") then {
                             ["SYS DATA - SAVED DATA DICTIONARY: %1 %2",_dictionaryName,_result] call ALiVE_fnc_dump;
                         };
 
-                        GVAR(tempHash) = [] call CBA_fnc_hashCreate;
-                        [GVAR(tempHash), _x, _y] call CBA_fnc_hashSet;
+                        GVAR(tempHash) = createHashMap;
+                        GVAR(tempHash) set [_x, _y];
                         GVAR(hashCount) = GVAR(hashCount) + 1;
                     };
 
@@ -131,7 +131,7 @@ if (_name == "__SERVER__") then {
                 _dictionaryName = format["dictionary_%1_%2_%3", GVAR(GROUP_ID), missionName, GVAR(hashCount)];
             };
             if (GVAR(hashCount) < count GVAR(DictionaryRevs)) then {
-                [GVAR(tempHash), "_rev", GVAR(DictionaryRevs) select GVAR(hashCount)] call CBA_fnc_hashSet;
+                GVAR(tempHash) set ["_rev", GVAR(DictionaryRevs) select GVAR(hashCount)];
             };
             _result = [GVAR(datahandler), "write", ["sys_data", GVAR(tempHash), false, _dictionaryName] ] call ALIVE_fnc_Data;
 

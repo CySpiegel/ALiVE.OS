@@ -97,11 +97,11 @@ if (GVAR(ENABLED)) then {
             {
                 private ["_weaponCount","_weapon","_count","_muzzle","_shotsFiredHash"];
                 if (typename _x == "ARRAY") then {
-                    _shotsFiredHash = [] call CBA_fnc_hashCreate;
-                    [_shotsFiredHash, "weaponMuzzle", _x select 0] call CBA_fnc_hashSet;
-                    [_shotsFiredHash, "count", _x select 1] call CBA_fnc_hashSet;
-                    [_shotsFiredHash, "weaponType", _x select 2] call CBA_fnc_hashSet;
-                    [_shotsFiredHash, "weaponName", _x select 3] call CBA_fnc_hashSet;
+                    _shotsFiredHash = createHashMap;
+                    _shotsFiredHash set ["weaponMuzzle", _x select 0];
+                    _shotsFiredHash set ["count", _x select 1];
+                    _shotsFiredHash set ["weaponType", _x select 2];
+                    _shotsFiredHash set ["weaponName", _x select 3];
                     _shotsFiredData pushback _shotsFiredHash ;
                 };
             } foreach _shotsFired;

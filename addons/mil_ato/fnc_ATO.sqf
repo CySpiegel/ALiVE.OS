@@ -897,7 +897,7 @@ switch(_operation) do {
         private _runways = [_logic,"runways"] call MAINCLASS;
         private _runway = _args;
 
-        if !([_runways,_runway] call CBA_fnc_hashHasKey) then {
+        if !(_runway in _runways) then {
             [_runways, _runway, false] call ALIVE_fnc_hashSet;
             [_logic,"runways",_runways] call MAINCLASS;
         };
@@ -906,7 +906,7 @@ switch(_operation) do {
         private _runways = [_logic,"runways"] call MAINCLASS;
         private _runway = _args;
 
-        if ([_runways,_runway] call CBA_fnc_hashHasKey) then {
+        if (_runway in _runways) then {
             [_runways, _runway, false] call ALIVE_fnc_hashSet;
             [_logic,"runways",_runways] call MAINCLASS;
         };
@@ -5622,7 +5622,7 @@ switch(_operation) do {
                 // Remove the asset
                 private _assets = [_logic, "assets"] call MAINCLASS;
 
-                if ([_assets,_profileID] call CBA_fnc_hashHasKey) then {
+                if (_profileID in _assets) then {
 
                     private _asset = [_assets, _profileID] call ALiVE_fnc_hashGet;
 
@@ -5648,7 +5648,7 @@ switch(_operation) do {
                     };
 
                     // remove it from assets
-                    [_assets,_profileID] call CBA_fnc_hashRem;
+                    _assets deleteAt _profileID;
                     [_logic, "assets", _assets] call MAINCLASS;
                 };
                 _profiles set [_forEachIndex,"DELETE"];

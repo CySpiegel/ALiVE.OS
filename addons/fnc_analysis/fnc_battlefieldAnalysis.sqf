@@ -485,7 +485,7 @@ switch(_operation) do {
                         private _allowPlayerTasking = true;
 
                         if (_checkMilCustom) then {
-                            if (!isNil "ALIVE_clustersMilCustom" && {[ALIVE_clustersMilCustom, _clusterID] call CBA_fnc_hashHasKey}) then {
+                            if (!isNil "ALIVE_clustersMilCustom" && {_clusterID in ALIVE_clustersMilCustom}) then {
                                 private _clusterData = [ALIVE_clustersMilCustom, _clusterID] call ALIVE_fnc_hashGet;
                                 _allowPlayerTasking = [_clusterData, "allowPlayerTasking", true] call ALIVE_fnc_hashGet;
                             };
@@ -537,7 +537,7 @@ switch(_operation) do {
                         private _allowPlayerTasking = true;
 
                         if (_checkMilCustom) then {
-                            if (!isNil "ALIVE_clustersMilCustom" && {[ALIVE_clustersMilCustom, _clusterID] call CBA_fnc_hashHasKey}) then {
+                            if (!isNil "ALIVE_clustersMilCustom" && {_clusterID in ALIVE_clustersMilCustom}) then {
                                 private _clusterData = [ALIVE_clustersMilCustom, _clusterID] call ALIVE_fnc_hashGet;
                                 _allowPlayerTasking = [_clusterData, "allowPlayerTasking", true] call ALIVE_fnc_hashGet;
                             };

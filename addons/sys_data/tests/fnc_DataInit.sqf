@@ -234,7 +234,7 @@ if (isServer) then {
 		        ALIVE_DataDictionary = _response;
 
 		        // Capture Dictionary revision information
-		        GVAR(DictionaryRevs) pushback ([ALIVE_DataDictionary, "_rev"] call CBA_fnc_hashGet);
+		        GVAR(DictionaryRevs) pushback (ALIVE_DataDictionary get "_rev");
 
 		        // Try loading more dictionary entries
 		        private ["_i","_newresponse","_addResponse"];
@@ -242,11 +242,11 @@ if (isServer) then {
 		        while {_dictionaryName = format["dictionary_%1_%2_%3", GVAR(GROUP_ID), missionName, _i]; _newresponse = [GVAR(datahandler), "read", ["sys_data", [], _dictionaryName]] call ALIVE_fnc_Data; typeName _newresponse != "STRING"} do {
 
 		            _addResponse = {
-		                [ALIVE_DataDictionary, _x, _y] call CBA_fnc_hashSet;
+		                ALIVE_DataDictionary set [_x, _y];
 		            };
 
 		            _addResponse forEach _newresponse;
-		            GVAR(DictionaryRevs) pushback ([_newresponse, "_rev"] call CBA_fnc_hashGet);
+		            GVAR(DictionaryRevs) pushback (_newresponse get "_rev");
 		            _i = _i + 1;
 		        };
 
@@ -314,7 +314,7 @@ if (isServer) then {
     };
 
     // Handle basic mission persistence - date/time and custom variables
-    GVAR(mission_data) = [] call CBA_fnc_hashCreate;
+    GVAR(mission_data) = createHashMap;
     if (GVAR(dictionaryLoaded) && (MOD(sys_data) getVariable ["saveDateTime","false"] == "true")) then {
         private ["_missionName","_response"];
         // Read in date/time for mission
@@ -328,7 +328,7 @@ if (isServer) then {
                 ["SYS_DATA - MISSION DATA LOADED: %1",_response] call ALiVE_fnc_dump;
             };
 
-            setdate ([GVAR(mission_data), "date", date] call CBA_fnc_hashGet);
+            setdate (GVAR(mission_data) getOrDefault ["date", date]);
         } else {
 
             if(ALiVE_SYS_DATA_DEBUG_ON) then {
@@ -345,7 +345,7 @@ if (isServer) then {
     };
 
     // Handle compositions persistence
-    MOD(PCOMPOSITIONS) = [] call CBA_fnc_hashCreate;
+    MOD(PCOMPOSITIONS) = createHashMap;
     if (GVAR(dictionaryLoaded) && (MOD(sys_data) getVariable ["saveCompositions","false"] == "true")) then {
         private ["_missionName","_response"];
         // Read in compositions for mission

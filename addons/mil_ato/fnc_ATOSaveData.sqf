@@ -43,7 +43,7 @@ private _isPersistent = false;
 
 {
     private _opcom = _x;
-    private _module = [_opcom, "module"] call CBA_fnc_hashGet;
+    private _module = _opcom get "module";
 
     {
         private _object = _x;

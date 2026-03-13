@@ -70,7 +70,7 @@ ASSERT_TRUE(typeName _logic == "ARRAY", typeName _logic);
 STAT("Load Data Dictionary");
 TIMERSTART
 // Setup Data Dictionary
-ALIVE_DataDictionary = [] call CBA_fnc_hashCreate;
+ALIVE_DataDictionary = createHashMap;
 // Try loading dictionary from db
 _response = [_logic, "read", ["sys_data", [], "dictionary"]] call ALIVE_fnc_Data;
 if ( typeName _response != "STRING") then {
@@ -80,7 +80,7 @@ if ( typeName _response != "STRING") then {
 };
 TIMEREND
 ASSERT_DEFINED("ALIVE_DataDictionary",ALIVE_DataDictionary);
-ASSERT_TRUE(typeName ALIVE_DataDictionary == "ARRAY", typeName ALIVE_DataDictionary);
+ASSERT_TRUE(typeName ALIVE_DataDictionary == "HASHMAP", typeName ALIVE_DataDictionary);
 TRACE_2("DATA DICTIONARY", ALIVE_DataDictionary, _response);
 
 STAT("TEST DATA RESTORE FROM JSON STRING");

@@ -1163,7 +1163,7 @@ switch (_operation) do {
 
             _data = _args;
 
-            if !(typeName _data == "ARRAY" && {count _data > 2} && {count (_data select 2) > 0}) exitwith {_result = _data};
+            if !(_data isEqualType createHashMap && {count _data > 0}) exitwith {_result = _data};
 
             _dataSet = [
                 [QGVAR(ID),"ASL_ID"],

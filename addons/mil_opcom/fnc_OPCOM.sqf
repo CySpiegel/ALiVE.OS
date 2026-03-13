@@ -301,12 +301,12 @@ switch(_operation) do {
                         if (!isNil "ALIVE_sys_data" && {!ALIVE_sys_data_DISABLED}) then {
                             // Load starting forces
                             private _missionName = [missionName, "%20", "-"] call CBA_fnc_replace;
-                            private _key = format ["%1_%2-OPCOM_%3-starting-forces", ALIVE_sys_data_GROUP_ID, _missionName, [_handler, "opcomID"] call CBA_fnc_hashGet];
+                            private _key = format ["%1_%2-OPCOM_%3-starting-forces", ALIVE_sys_data_GROUP_ID, _missionName, _handler get "opcomID"];
                             private _result = [GVAR(DATAHANDLER), "read", ["mil_opcom", [], _key]] call ALIVE_fnc_Data;
 
-                            if (_result isEqualType []) then {
-                                private _startingForces = [_result, "data"] call CBA_fnc_hashGet;
-                                [_handler, "startForceStrength", _startingForces] call CBA_fnc_hashSet;
+                            if (_result isEqualType createHashMap) then {
+                                private _startingForces = _result get "data";
+                                _handler set ["startForceStrength", _startingForces];
                             };
                         };
                     };
@@ -1792,17 +1792,17 @@ switch(_operation) do {
 
                 // Save starting forces (every session to allow users to modify the array and persist it)
                 if (!isnil {[_logic,"startForceStrength"] call ALiVE_fnc_HashGet}) then {
-                    private _key = format ["%1-OPCOM_%2-starting-forces", _missionName, [_logic, "opcomID"] call CBA_fnc_hashGet];
+                    private _key = format ["%1-OPCOM_%2-starting-forces", _missionName, _logic get "opcomID"];
                     private _prev = [GVAR(DATAHANDLER), "read", ["mil_opcom", [], _key]] call ALIVE_fnc_Data;
 
                     private _startForceStrength = [_logic,"startForceStrength"] call ALiVE_fnc_HashGet;
-                    private _data = [[["data", _startForceStrength]]] call CBA_fnc_hashCreate;
+                    private _data = createHashMapFromArray [["data", _startForceStrength]];
 
-                    if (_prev isEqualType []) then {
-                        private _rev = [_prev, "_rev"] call CBA_fnc_hashGet;
+                    if (_prev isEqualType createHashMap) then {
+                        private _rev = _prev get "_rev";
 
                         if (!isNil {_rev}) then {
-                            [_data, "_rev", _rev] call CBA_fnc_hashSet;
+                            _data set ["_rev", _rev];
                         };
                     };
 

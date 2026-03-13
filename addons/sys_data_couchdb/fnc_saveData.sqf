@@ -67,16 +67,16 @@ _createIndex = {
 _createIndex forEach _data;
 
 // Create the index doc record
-_newIndexDoc = [] call CBA_fnc_hashCreate;
-[_newIndexDoc, "_id", _missionKey] call CBA_fnc_hashSet;
+_newIndexDoc = createHashMap;
+_newIndexDoc set ["_id", _missionKey];
 
 // If exists, get revision number so we can overwrite it
-_indexRev = [_logic, "indexRev", ""] call CBA_fnc_hashGet;
+_indexRev = _logic getOrDefault ["indexRev", ""];
 if (_indexRev != "") then {
-    [_newIndexDoc, "_rev", _indexRev] call CBA_fnc_hashSet;
+    _newIndexDoc set ["_rev", _indexRev];
 };
 
-[_newIndexDoc, "index", _indexArray] call CBA_fnc_hashSet;
+_newIndexDoc set ["index", _indexArray];
 
 TRACE_1("Save Data new index", _newIndexDoc);
 // Write new index

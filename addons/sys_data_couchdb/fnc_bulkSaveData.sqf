@@ -61,10 +61,10 @@ _createIndex = {
 _createIndex forEach _data;
 
 // Create the index doc record
-_newIndexDoc = [] call CBA_fnc_hashCreate;
-[_newIndexDoc, "_id", _missionKey] call CBA_fnc_hashSet;
+_newIndexDoc = createHashMap;
+_newIndexDoc set ["_id", _missionKey];
 
-[_newIndexDoc, "index", _indexArray] call CBA_fnc_hashSet;
+_newIndexDoc set ["index", _indexArray];
 
 // Handle indices greater than 10kb
 
@@ -76,7 +76,7 @@ if ( ([str(_newIndexDoc)] call CBA_fnc_strLen) > DATA_INBOUND_LIMIT ) then {
 
         private ["_tempIndex","_indexName","_i"];
 
-        _indexRevs = [_logic, "indexRevs", []] call CBA_fnc_hashGet;
+        _indexRevs = _logic getOrDefault ["indexRevs", []];
 
         _tempIndex = [];
 
@@ -99,12 +99,12 @@ if ( ([str(_newIndexDoc)] call CBA_fnc_strLen) > DATA_INBOUND_LIMIT ) then {
                     _indexName = format["%1_%2", _missionKey, _i];
                 };
 
-                _tempIndexDoc = [] call CBA_fnc_hashCreate;
-                [_tempIndexDoc, "_id", _indexName] call CBA_fnc_hashSet;
-                [_tempIndexDoc, "index", _tempIndex] call CBA_fnc_hashSet;
+                _tempIndexDoc = createHashMap;
+                _tempIndexDoc set ["_id", _indexName];
+                _tempIndexDoc set ["index", _tempIndex];
 
                 if (_i < count _indexRevs) then {
-                    [_tempIndexDoc, "_rev", _indexRevs select _i] call CBA_fnc_hashSet;
+                    _tempIndexDoc set ["_rev", _indexRevs select _i];
                 };
 
                 _result = [_logic, "write", [_module, _tempIndexDoc, false, _indexName] ] call ALIVE_fnc_Data;
@@ -128,15 +128,15 @@ if ( ([str(_newIndexDoc)] call CBA_fnc_strLen) > DATA_INBOUND_LIMIT ) then {
         } else {
             _indexName = format["%1_%2", _missionKey, _i];
         };
-        _tempIndexDoc = [] call CBA_fnc_hashCreate;
-        [_tempIndexDoc, "_id", _indexName] call CBA_fnc_hashSet;
-        [_tempIndexDoc, "index", _tempIndex] call CBA_fnc_hashSet;
+        _tempIndexDoc = createHashMap;
+        _tempIndexDoc set ["_id", _indexName];
+        _tempIndexDoc set ["index", _tempIndex];
         if (_i < count _indexRevs) then {
-            [_tempIndexDoc, "_rev", _indexRevs select _i] call CBA_fnc_hashSet;
+            _tempIndexDoc set ["_rev", _indexRevs select _i];
         };
         _result = [_logic, "write", [_module, _tempIndexDoc, false, _indexName] ] call ALIVE_fnc_Data;
 
-//        [_logic, "indexRevs", _indexRevs] call CBA_fnc_hashSet;
+//        _logic set ["indexRevs", _indexRevs];
 
         if(ALiVE_SYS_DATA_DEBUG_ON) then {
             ["SYS_DATA_COUCHDB - SAVING DATA INDEX: %1",_indexName,_result] call ALiVE_fnc_dump;
@@ -146,9 +146,9 @@ if ( ([str(_newIndexDoc)] call CBA_fnc_strLen) > DATA_INBOUND_LIMIT ) then {
 } else {
 
     // If exists, get revision number so we can overwrite it
-    _indexRevs = [_logic, "indexRevs", []] call CBA_fnc_hashGet;
+    _indexRevs = _logic getOrDefault ["indexRevs", []];
     if (count _indexRevs > 0) then {
-        [_newIndexDoc, "_rev", _indexRevs select 0] call CBA_fnc_hashSet;
+        _newIndexDoc set ["_rev", _indexRevs select 0];
     };
 
     if(ALiVE_SYS_DATA_DEBUG_ON) then {

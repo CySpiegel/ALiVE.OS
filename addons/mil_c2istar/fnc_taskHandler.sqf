@@ -126,12 +126,12 @@ switch (_operation) do {
 
             _data = call ALIVE_fnc_taskHandlerLoadData;
 
-            if(typeName _data == "ARRAY") then {
+            if(_data isEqualType createHashMap) then {
 
                 {
                     _taskID = _x;
 
-                    _task = _data select 2 select _forEachIndex;
+                    _task = _data get _taskID;
 
                     _newTask = [];
                     _newTask set [0,_taskID];

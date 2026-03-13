@@ -57,16 +57,12 @@ if (count _args > 3) then {
 };
 
 
-// Check to see if ARRAY rather than CBA HASH has been passed as data
-if (typeName (_data select 0) != "STRING") then {
-    private ["_tmp"];
-    _tmp = [] call CBA_fnc_hashCreate;
+// Check to see if ARRAY rather than HashMap has been passed as data
+if (_data isEqualType []) then {
+    private _tmp = createHashMap;
     {
-        private ["_key","_value"];
-        _key = _x select 0;
-        _value = _x select 1;
-        [_tmp, _key, _value] call CBA_fnc_hashSet;
-    } foreach _data;
+        _tmp set [_x select 0, _x select 1];
+    } forEach _data;
     _data = _tmp;
 };
 

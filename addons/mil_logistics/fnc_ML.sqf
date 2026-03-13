@@ -4308,7 +4308,7 @@ switch(_operation) do {
                                             };
                                         };
                                         private _key = format ["%1_%2", _groupFaction, _group];
-                                        private _value = [ALIVE_groupConfig, _key] call CBA_fnc_hashGet;
+                                        private _value = ALIVE_groupConfig get _key;
                                         private _side = (_value select 1) select 0;
                                         private _faction = (_value select 1) select 1;
                                         private _category = (_value select 1) select 2;

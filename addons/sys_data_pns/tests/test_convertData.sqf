@@ -70,11 +70,11 @@ ASSERT_TRUE(typeName _logic == "ARRAY", typeName _logic);
 STAT("Load Data Dictionary");
 TIMERSTART
 // Setup Data Dictionary
-ALIVE_DataDictionary = [] call CBA_fnc_hashCreate;
+ALIVE_DataDictionary = createHashMap;
 
 TIMEREND
 ASSERT_DEFINED("ALIVE_DataDictionary",ALIVE_DataDictionary);
-ASSERT_TRUE(typeName ALIVE_DataDictionary == "ARRAY", typeName ALIVE_DataDictionary);
+ASSERT_TRUE(typeName ALIVE_DataDictionary == "HASHMAP", typeName ALIVE_DataDictionary);
 TRACE_2("DATA DICTIONARY", ALIVE_DataDictionary, _response);
 
 STAT("TEST DATA CONVERSION TO JSON STRING");
@@ -82,17 +82,17 @@ STAT("TEST DATA CONVERSION TO JSON STRING");
 // Test is to send several different CBA Hashes with varying types of data
 private ["_test1","_test2","_test3","_test4","_keys1","_keys2","_keys3","_keys4","_values1","_values2","_values3","_values4","_i","_array","_testData"];
 _array = [];
-_test1 = [] call CBA_fnc_hashCreate;
-_test2 = [] call CBA_fnc_hashCreate;
-_test3 = [] call CBA_fnc_hashCreate;
-_test4 = [] call CBA_fnc_hashCreate;
+_test1 = createHashMap;
+_test2 = createHashMap;
+_test3 = createHashMap;
+_test4 = createHashMap;
 
 // create test 1 - basic numbers plus empty array
 _keys1 = ["realTime","Server","Operation","Map","gameTime","Event","PlayerSide","PlayerFaction","PlayerName","PlayerType","PlayerClass","Player","shotsFired","timePlayed","score","rating"];
 _values1 = ["16/07/2013 07:29:13","86.158.100.190","TupolovRevenge","Stratis","0816","PlayerFinish",WEST,"BLU_F","Matt","B_Soldier_F","Rifleman","76561197982137286",_array,1,0.5,123.456];
 _i=0;
 {
-    [_test1, _x, _values1 select _i] call CBA_fnc_hashSet;
+    _test1 set [_x, _values1 select _i];
     _i =_i + 1;
 } foreach _keys1;
 
@@ -101,7 +101,7 @@ _keys2 = ["realTime","Server","Operation","Map","gameTime","Event","PlayerSide",
 _values2 = ["16/07/2013 07:29:13","86.158.100.190","TupolovRevenge","Stratis","0816","PlayerFinish",EAST,"OPF_F","Matt","B_Soldier_F","Rifleman","76561197982137286",_array,123456.123456,0.000000000005,99999999999999999];
 _i=0;
 {
-    [_test2, _x, _values2 select _i] call CBA_fnc_hashSet;
+    _test2 set [_x, _values2 select _i];
     _i =_i + 1;
 } foreach _keys2;
 
@@ -111,19 +111,19 @@ _keys3 = ["realTime","Server","Operation","Map","gameTime","Event","PlayerSide",
 _values3 = ["16/07/2013 07:39:13","86.158.100.190","TupolovRevenge","Stratis","0816","PlayerFinish",resistance,"OPF_F","Matt","B_Soldier_F","Rifleman","76561197983137386",_array,1,99999999999999,0.0000005,["test string",0.5,1,12345.12345,[_text,"string1",0.5,1,12345,civilian,true,false,player]]];
 _i=0;
 {
-    [_test3, _x, _values3 select _i] call CBA_fnc_hashSet;
+    _test3 set [_x, _values3 select _i];
     _i =_i + 1;
 } foreach _keys3;
 
 
 // create test 4 - as above plus nested hash
 private ["_hash4","_hash4keys","_hash4values"];
-_hash4 = [] call CBA_fnc_hashCreate;
+_hash4 = createHashMap;
 _hash4keys = ["weaponMuzzle","count","weaponType","weaponName"];
 _hash4values = ["arifle_MX_ACO_pointer_F",567,"arifle_MX_ACO_pointer_F","MX 6.5Â mm"];
 _i=0;
 {
-    [_hash4, _x, _hash4values select _i] call CBA_fnc_hashSet;
+    _hash4 set [_x, _hash4values select _i];
     _i =_i + 1;
 } foreach _hash4keys;
 
@@ -131,7 +131,7 @@ _keys4 = ["realTime","Server","Operation","Map","gameTime","Event","PlayerSide",
 _values4 = ["16/07/2013 07:49:14","86.158.100.190","TupolovRevenge","Stratis","0816","PlayerFinish",WEST,"BLU_F","Matt","B_Soldier_F","Rifleman","76561197984147486",_hash4,9999999999999,99999999999999,0.0000005,["test string",0.5,1,12345.12345,[_text,"text",0.000000005,234.567,12345,civilian,true,false]]];
 _i=0;
 {
-    [_test4, _x, _values4 select _i] call CBA_fnc_hashSet;
+    _test4 set [_x, _values4 select _i];
     _i =_i + 1;
 } foreach _keys4;
 

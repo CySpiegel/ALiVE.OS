@@ -76,7 +76,7 @@ _instances = (MOD(CQB) getVariable ["instances",[]]);
             ["LOAD CQB DATA APPLYING STATE!"] call ALiVE_fnc_dump;
         };
 
-        {[_logic,"state",_x] call ALiVE_fnc_CQB} foreach (_data select 2);
+        {[_logic,"state",_x] call ALiVE_fnc_CQB} foreach (values _data);
 
         //([_logic,"state"] call ALiVE_fnc_CQB) call ALIVE_fnc_inspectHash;
     };

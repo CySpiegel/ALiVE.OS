@@ -190,10 +190,10 @@ switch(_operation) do {
         _result = [_logic,_operation,_args,DEFAULT_OBJECTIVES] call ALIVE_fnc_OOsimpleOperation;
     };
     case "eventQueue": {
-        _result = [_logic,_operation,_args,DEFAULT_EVENT_QUEUE] call ALIVE_fnc_OOsimpleOperation;
+        _result = [_logic,_operation,_args,createHashMap] call ALIVE_fnc_OOsimpleOperation;
     };
     case "reinforcementAnalysis": {
-        _result = [_logic,_operation,_args,DEFAULT_REINFORCEMENT_ANALYSIS] call ALIVE_fnc_OOsimpleOperation;
+        _result = [_logic,_operation,_args,createHashMap] call ALIVE_fnc_OOsimpleOperation;
     };
     case "forcePoolType": {
         _result = [_logic,_operation,_args,DEFAULT_FORCE_POOL_TYPE] call ALIVE_fnc_OOsimpleOperation;

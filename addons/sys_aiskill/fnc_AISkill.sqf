@@ -324,7 +324,7 @@ switch(_operation) do {
         _result = [_logic,_operation,_args,_logic getvariable [_operation,0]] call ALIVE_fnc_OOsimpleOperation;
     };
     case "factionSkills": {
-        _result = [_logic,_operation,_args,_logic getvariable [_operation,[]]] call ALIVE_fnc_OOsimpleOperation;
+        _result = [_logic,_operation,_args,_logic getvariable [_operation,createHashMap]] call ALIVE_fnc_OOsimpleOperation;
     };
 
 

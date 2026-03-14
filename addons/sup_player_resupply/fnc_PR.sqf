@@ -278,10 +278,10 @@ switch(_operation) do {
     };
 
     case "sortedVehicles": {
-        _result = [_logic,_operation,_args,DEFAULT_SORTED_VEHICLES] call ALIVE_fnc_OOsimpleOperation;
+        _result = [_logic,_operation,_args,createHashMap] call ALIVE_fnc_OOsimpleOperation;
     };
     case "sortedGroups": {
-        _result = [_logic,_operation,_args,DEFAULT_SORTED_GROUPS] call ALIVE_fnc_OOsimpleOperation;
+        _result = [_logic,_operation,_args,createHashMap] call ALIVE_fnc_OOsimpleOperation;
     };
     case "marker": {
         _result = [_logic,_operation,_args,DEFAULT_MARKER] call ALIVE_fnc_OOsimpleOperation;
@@ -1976,7 +1976,7 @@ switch(_operation) do {
 
                                         _options = ["<< Back"];
                                         _values = _options;
-                                        _factions = _sortedGroups select 1;
+                                        _factions = keys _sortedGroups;
                                         _options = _options + _factions;
 
                                         {

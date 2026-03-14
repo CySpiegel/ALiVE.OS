@@ -714,7 +714,7 @@ switch(_operation) do {
         _result = [_logic,_operation,_args,objNull] call ALIVE_fnc_OOsimpleOperation;
     };
     case "currentBase": {
-        _result = [_logic,_operation,_args,[]] call ALIVE_fnc_OOsimpleOperation;
+        _result = [_logic,_operation,_args,createHashMap] call ALIVE_fnc_OOsimpleOperation;
     };
     case "pilotbuilding": {
         _result = [_logic,_operation,_args,DEFAULT_PILOTBUILDING] call ALIVE_fnc_OOsimpleOperation;
@@ -891,7 +891,7 @@ switch(_operation) do {
         _result = _airDefenses;
     };
     case "requestAnalysis": {
-        _result = [_logic,_operation,_args,DEFAULT_ANALYSIS] call ALIVE_fnc_OOsimpleOperation;
+        _result = [_logic,_operation,_args,createHashMap] call ALIVE_fnc_OOsimpleOperation;
     };
     case "addRunway": {
         private _runways = [_logic,"runways"] call MAINCLASS;

@@ -1493,7 +1493,7 @@ switch (_operation) do {
                         //_newWaypointValue call ALIVE_fnc_inspectHash;
 
                         _waypointOptions pushBack _newWaypointOption;
-                        _waypoints pushBack (_newWaypointValue select 2);
+                        _waypoints pushBack _newWaypointValue;
 
                         _waypointList = SCOM_getControl(SCOMTablet_CTRL_MainDisplay,SCOMTablet_CTRL_WaypointList);
 

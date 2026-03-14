@@ -516,7 +516,7 @@ switch (_operation) do {
 
 
             if (!isNil "_taskSet" && {_taskSet isEqualType [] && !(_taskSet isEqualTo [])}) then {
-				private _managedTaskParams = [_logic, "managedTaskParams"] call ALIVE_fnc_hashSet;
+				private _managedTaskParams = [_logic, "managedTaskParams"] call ALIVE_fnc_hashGet;
 
 				if !(_taskID in keys _managedTaskParams) then {
 					[_managedTaskParams, _taskID, _taskSet select 1] call ALIVE_fnc_hashSet;
@@ -1463,7 +1463,7 @@ switch (_operation) do {
             waituntil {
                 private _managedTasks = [_logic, "managedTasks"] call ALIVE_fnc_hashGet;
                 private _activeTasks = [_logic, "activeTasks"] call ALIVE_fnc_hashGet;
-                private _managedTaskParams = [_logic, "managedTaskParams"] call ALIVE_fnc_hashSet;
+                private _managedTaskParams = [_logic, "managedTaskParams"] call ALIVE_fnc_hashGet;
                 private _managedTasksToRemove = [];
 
                 {

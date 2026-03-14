@@ -3472,7 +3472,7 @@ switch(_operation) do {
                             private _intruders = [_logic, "scanAirspace"] call MAINCLASS;
 
                             // Grab the airspaces with intruders
-                            private _airspaceIntruders = _intruders select 1;
+                            private _airspaceIntruders = keys _intruders;
 
                             {
                                 sleep (random 5);
@@ -3566,7 +3566,7 @@ switch(_operation) do {
                             private _airDefenses = [_logic, "scanAirDefenses"] call MAINCLASS;
 
                             // Grab air defense targets
-                            private _airDefenseTargets = _airDefenses select 1;
+                            private _airDefenseTargets = keys _airDefenses;
 
                             {
                                 sleep (random 5);

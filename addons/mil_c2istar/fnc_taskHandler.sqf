@@ -1600,9 +1600,8 @@ switch (_operation) do {
         if (_args isEqualType "") then {
             private _taskID = _args;
             private _tasks = [_logic, "tasks"] call ALIVE_fnc_hashGet;
-            private _taskIndex = _tasks select 1;
 
-            if (_taskID in _taskIndex) then {
+            if (_taskID in _tasks) then {
                 _result = [_tasks, _taskID] call ALIVE_fnc_hashGet;
             } else {
                 _result = nil;

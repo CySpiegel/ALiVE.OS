@@ -28,6 +28,12 @@ ARJay
 
 private _hash = _this select 0;
 private _key = _this select 1;
+
+if (count _this < 3) exitWith {
+    ["ALiVE_fnc_hashSet called with %1 args from %2 - key: %3 - this: %4", count _this, _fnc_scriptNameParent, _key, _this] call ALiVE_fnc_Dump;
+    _hash
+};
+
 private _value = _this select 2;
 
 _hash set [_key, _value];

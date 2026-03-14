@@ -758,13 +758,13 @@ switch(_operation) do {
         _result = _args;
     };
     case "assets": {
-        _result = [_logic,_operation,_args,[]] call ALIVE_fnc_OOsimpleOperation;
+        _result = [_logic,_operation,_args,createHashMap] call ALIVE_fnc_OOsimpleOperation;
     };
     case "eventQueue": {
-        _result = [_logic,_operation,_args,DEFAULT_EVENT_QUEUE] call ALIVE_fnc_OOsimpleOperation;
+        _result = [_logic,_operation,_args,createHashMap] call ALIVE_fnc_OOsimpleOperation;
     };
     case "airspaceAssets": {
-        _result = [_logic,_operation,_args,[]] call ALIVE_fnc_OOsimpleOperation;
+        _result = [_logic,_operation,_args,createHashMap] call ALIVE_fnc_OOsimpleOperation;
     };
     case "airspaceOps": {
         _result = [];
@@ -776,7 +776,7 @@ switch(_operation) do {
                 if ((_eventData select 3) == _args) then {
                     _result pushback _eventData;
                 };
-            } forEach (_eventQueue select 2);
+            } forEach (values _eventQueue);
         };
     };
     case "airspaceLastCAP": {
@@ -912,7 +912,7 @@ switch(_operation) do {
         };
     };
     case "runways": {
-        _result = [_logic,_operation,_args,[]] call ALIVE_fnc_OOsimpleOperation;
+        _result = [_logic,_operation,_args,createHashMap] call ALIVE_fnc_OOsimpleOperation;
     };
     case "registerProfile": {
 
@@ -1962,7 +1962,7 @@ switch(_operation) do {
                     ["ATO %1 AIR ASSETS: %2",_logic, _airCount] call ALiVE_fnc_dump;
                 };
 
-                if (count (_airCount select 1) < 2 && _placeAir && !_isCarrier) then {
+                if (count _airCount < 2 && _placeAir && !_isCarrier) then {
 
                     if(_debug) then {
                         ["ATO %1 - No armed air assets available, placing additional aircraft at base location", _logic] call ALiVE_fnc_dump;
@@ -2540,7 +2540,7 @@ switch(_operation) do {
 
                 _response = [];
 
-                if((count (_eventQueue select 2)) > 0) then {
+                if((count (values _eventQueue)) > 0) then {
 
                     {
                         _playerRequested = [_x, "playerRequested"] call ALIVE_fnc_hashGet;
@@ -2584,7 +2584,7 @@ switch(_operation) do {
                             };
                         };
 
-                    } forEach (_eventQueue select 2);
+                    } forEach (values _eventQueue);
 
                 };
 
@@ -2705,7 +2705,7 @@ switch(_operation) do {
 
                 _response = [];
 
-                if((count (_eventQueue select 2)) > 0) then {
+                if((count (values _eventQueue)) > 0) then {
 
                     {
                         _playerRequested = [_x, "playerRequested"] call ALIVE_fnc_hashGet;
@@ -2887,7 +2887,7 @@ switch(_operation) do {
                             };
                         };
 
-                    } forEach (_eventQueue select 2);
+                    } forEach (values _eventQueue);
 
                 };
             };
@@ -3423,11 +3423,11 @@ switch(_operation) do {
                                 // and manage each event
                                 _eventQueue = [_logic, "eventQueue"] call MAINCLASS;
 
-                                if((count (_eventQueue select 2)) > 0) then {
+                                if((count (values _eventQueue)) > 0) then {
 
                                     {
                                         [_logic,"monitorEvent",[_x, _requestAnalysis]] call MAINCLASS;
-                                    } forEach (_eventQueue select 2);
+                                    } forEach (values _eventQueue);
 
                                 };
 

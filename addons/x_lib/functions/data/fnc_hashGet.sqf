@@ -39,6 +39,10 @@ if (isNil "_hash" || {isNil "_key"}) exitWith {
     ["ALiVE_fnc_HashGet retrieved wrong input from %2 - %1",_this,_fnc_scriptNameParent] call ALiVE_fnc_Dump;
 };
 
+if !(_hash isEqualType createHashMap) exitWith {
+    ["ALiVE_fnc_HashGet expected HashMap but got %1 from %2 - %3",typeName _hash,_fnc_scriptNameParent,_this] call ALiVE_fnc_Dump;
+};
+
 if (count _this > 2) then {
     private _default = _this select 2;
     _hash getOrDefault [_key, _default]

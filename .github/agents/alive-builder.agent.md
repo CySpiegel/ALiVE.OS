@@ -129,3 +129,47 @@ Known non-issues to ignore:
 - ALWAYS verify PBOs match after deployment
 - ALWAYS verify `Using folder's prefix:x\alive\addons\<ADDON>` appears in build output
 - Check `No error(s)` in MakePBO output before deploying
+
+## Hash Wrapper Conversion
+
+The `feature/native-hashmap` branch migrated ALiVE from CBA array-based hashes to native Arma 3 HashMaps. Wrapper functions (`ALiVE_fnc_hashGet`, `ALiVE_fnc_hashSet`, `ALiVE_fnc_hashRem`, `ALiVE_fnc_hashCreate`) still exist in `x_lib/functions/data/` but add 6-10 scripted operations of overhead per call.
+
+### Conversion tool
+
+`utils/convert_hash.py` automates bulk conversion:
+
+```bash
+cd /home/spiegel/Projects/ALiVE.OS
+python3 utils/convert_hash.py addons/<MODULE>/*.sqf addons/<MODULE>/*.fsm
+```
+
+### Conversion rules
+
+| Wrapper call | Native replacement |
+|---|---|
+| `[_h, "k"] call ALiVE_fnc_hashGet` | `_h get "k"` |
+| `[_h, "k", def] call ALiVE_fnc_hashGet` | `_h getOrDefault ["k", def]` |
+| `[_h, "k", val] call ALiVE_fnc_hashSet` | `_h set ["k", val]` |
+| `[_h, "k"] call ALiVE_fnc_hashRem` | `_h deleteAt "k"` |
+| `[] call ALiVE_fnc_hashCreate` | `createHashMap` |
+
+### Post-conversion checks
+
+1. `hashSet` return value: The wrapper returned `_hash`, native `set` returns nil. Fix any `_var = _h set [...]` assignments.
+2. `createhashobject` pattern: Remove leftover `deleteAt "super"` / `deleteAt "class"` on freshly created HashMaps.
+3. `hashCopy` calls: These remain unconverted (no native equivalent).
+4. Commented-out lines with wrapper calls: Ignored by the script (correct).
+
+### Modules converted so far
+
+| Module | Files | Calls converted | Status |
+|--------|------:|-----------:|--------|
+| `sys_profile` (profileSimulator) | 1 | 124 | Tested clean |
+| `mil_opcom` | 16 | 747 | Tested clean |
+
+### Modules remaining (by priority)
+
+1. `amb_civ_population` — civilian agent system, high call count
+2. `sys_profile` (remaining files) — profileCombatHandler, profileHandler, etc.
+3. `mil_ato` — Air Tasking Orders
+4. All other modules

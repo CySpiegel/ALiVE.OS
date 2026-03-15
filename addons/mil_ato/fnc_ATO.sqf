@@ -4091,7 +4091,7 @@ switch(_operation) do {
                             // set state to event complete
                             private _oldEvent = [_eventQueue,_currentOp] call ALiVE_fnc_hashGet;
                             [_oldEvent, "state", "eventComplete"] call ALIVE_fnc_hashSet;
-                            [_eventQueue, _eventID, _oldEvent] call ALIVE_fnc_hashSet;
+                            [_eventQueue, _currentOp, _oldEvent] call ALIVE_fnc_hashSet;
                         };
 
                         // Update assets
@@ -4635,7 +4635,7 @@ switch(_operation) do {
 
                             private _wp = _grp addWaypoint [_wpPosition,0,1,"ATO"];
                             _wp setWaypointSpeed _eventSpeed;
-                            _wp setWaypointBehaviour "AWARE";
+                            _wp setWaypointBehaviour (if (_eventType in ["CAS","DCA","SEAD","Strike","OCA"]) then {"COMBAT"} else {"AWARE"});
                             _wp setWaypointCombatMode _eventROE;
 
                             switch (_eventType) do {
@@ -4654,7 +4654,6 @@ switch(_operation) do {
                                         _wp setWaypointType "DESTROY";
                                         _grp reveal (_eventTargets select 0);
                                         (units _grp) doTarget (_eventTargets select 0);
-                                        _wp setWaypointCompletionRadius _eventHeight;
                                     } else {
                                         _wp setWaypointType "SAD";
                                         _wp setWaypointPosition [_eventPosition, 0];
@@ -4724,7 +4723,6 @@ switch(_operation) do {
                                         _wp waypointAttachVehicle _targetObject;
                                         _wp setWaypointType "DESTROY";
                                         (units _grp) doTarget _targetObject;
-                                        _wp setWaypointCompletionRadius _eventHeight;
                                     };
 
                                 };
@@ -5007,6 +5005,14 @@ switch(_operation) do {
                         ["ATO %3 - Aircraft (%1 - %2) has no valid target.", _profileID, typeof _vehicle, _logic] call ALiVE_fnc_dump;
                     };
                     _missionComplete = true;
+                };
+
+                // Re-issue targeting commands so AI maintains focus on the target
+                if (count _eventTargets > 0 && {!isNull (_eventTargets select 0)} && {_eventType in ["CAS","DCA","SEAD","Strike","OCA"]}) then {
+                    private _tgt = _eventTargets select 0;
+                    private _grp = group _vehicle;
+                    _grp reveal _tgt;
+                    (units _grp) doTarget _tgt;
                 };
 
                 // Check damage

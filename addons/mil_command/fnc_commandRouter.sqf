@@ -305,7 +305,7 @@ switch(_operation) do {
 
                             _profile = _activeCommand select 0;
 
-                            if(typeName _profile == "ARRAY") then {
+                            if(typeName _profile in ["ARRAY","HASHMAP"]) then {
 
                                 _profileID = _profile get "profileID"; //[_logic,"profileID"] call ALIVE_fnc_hashGet;
 

@@ -16,6 +16,16 @@ This project runs under **WSL2 (Ubuntu)** with Windows drives mounted:
 | `/mnt/d/Program Files/Steam/steamapps/common/Arma 3/@alive/addons/` | Arma 3 mod deployment target |
 | `/mnt/c/Users/chimi/AppData/Local/Arma 3/` | RPT log files location |
 
+## CRITICAL: P: Drive Mount
+
+The P: drive is a Windows `subst` mapping (P: → C:\). WSL does **not** automount subst'd drives. You **must** mount it manually at the start of every session:
+
+```bash
+sudo mount -t drvfs P: /mnt/p
+```
+
+Verify with `ls /mnt/p/x/alive/addons/`. If it fails, the subst may not be active — run `cmd.exe /c "subst P: C:\\"` first, then mount.
+
 ## CRITICAL: File Sync Rules
 
 - **ALWAYS use `cp` to copy files from the git repo to the P: drive.** Never use `rsync` — it silently fails across the WSL→Windows filesystem boundary.

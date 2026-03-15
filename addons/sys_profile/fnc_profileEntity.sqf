@@ -1182,7 +1182,7 @@ switch(_operation) do {
                     };
                 } foreach _targets;
 
-                [MOD(profileCombatHandler),"removeAttacks", [_attack]] call ALiVE_fnc_profileCombatHandler;
+                [MOD(profileCombatHandler),"removeAttacks", [_attackID]] call ALiVE_fnc_profileCombatHandler;
               };
             };
 

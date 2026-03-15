@@ -4609,7 +4609,7 @@ switch(_operation) do {
                                ["ATO EVENT TARGETS: %1 (%2)", _eventTargets, typeName _eventTargets] call ALiVE_fnc_dump;
                             };
                             {
-                                if (isNull _x) then {
+                                if (_x isEqualType "" || {isNull _x}) then {
                                     private _profileID = _eventEnemyProfiles select _forEachIndex;
                                     private _targetProfile = [ALiVE_profileHandler, "getProfile", _profileID] call ALiVE_fnc_ProfileHandler;
                                     if !(isNil "_targetProfile") then {
@@ -4628,7 +4628,7 @@ switch(_operation) do {
                             private _wpPosition = _eventPosition;
 
                             if (_eventType in ["CAS","DCA","SEAD","Strike"] && count _eventTargets > 0) then {
-                                if !(isNull (_eventTargets select 0)) then {
+                                if ((_eventTargets select 0) isEqualType objNull && {!(isNull (_eventTargets select 0))}) then {
                                     _wpPosition = _eventTargets select 0;
                                 };
                             };
@@ -4649,7 +4649,7 @@ switch(_operation) do {
                                 };
                                 case "CAS": {
                                     // SAD waypoint, if targets then DESTROY
-                                    if ( count _eventTargets == 1 && !(isNull (_eventTargets select 0)) ) then {
+                                    if ( count _eventTargets == 1 && {(_eventTargets select 0) isEqualType objNull} && {!(isNull (_eventTargets select 0))} ) then {
                                         _wp waypointAttachVehicle (_eventTargets select 0);
                                         _wp setWaypointType "DESTROY";
                                         _grp reveal (_eventTargets select 0);
@@ -5012,7 +5012,7 @@ switch(_operation) do {
                 };
 
                 // Re-issue targeting commands so AI maintains focus on the target
-                if (count _eventTargets > 0 && {!isNull (_eventTargets select 0)} && {alive (_eventTargets select 0)} && {_eventType in ["CAS","DCA","SEAD","Strike","OCA"]}) then {
+                if (count _eventTargets > 0 && {(_eventTargets select 0) isEqualType objNull} && {!isNull (_eventTargets select 0)} && {alive (_eventTargets select 0)} && {_eventType in ["CAS","DCA","SEAD","Strike","OCA"]}) then {
                     private _tgt = _eventTargets select 0;
                     private _grp = group _vehicle;
                     _grp reveal _tgt;

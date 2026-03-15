@@ -43,7 +43,7 @@ private ["_logic","_operation","_args","_result"];
 
 _logic = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
 _operation = [_this, 1, "", [""]] call BIS_fnc_param;
-_args = [_this, 2, objNull, [objNull,[],"",0,true,false]] call BIS_fnc_param;
+_args = [_this, 2, objNull, [objNull,[],"",0,true,false,createHashMap]] call BIS_fnc_param;
 _result = true;
 
 TRACE_3("SYS_indexer",_logic, _operation, _args);

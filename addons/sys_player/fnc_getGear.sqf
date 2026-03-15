@@ -32,7 +32,7 @@ nil
 private ["_logic","_args","_player","_find","_data","_gearHash","_result","_data"];
 
 _logic = [_this, 0, objNull, [objNull,[],createHashMap]] call BIS_fnc_param;
-_args = [_this, 1, objNull, [objNull,[],"",0,true,false]] call BIS_fnc_param;
+_args = [_this, 1, objNull, [objNull,[],"",0,true,false,createHashMap]] call BIS_fnc_param;
 
 _player = _args select 0;
 _gearHash = _args select 1;

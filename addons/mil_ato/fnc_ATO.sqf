@@ -5012,7 +5012,7 @@ switch(_operation) do {
                 };
 
                 // Re-issue targeting commands so AI maintains focus on the target
-                if (count _eventTargets > 0 && {!isNull (_eventTargets select 0)} && {_eventType in ["CAS","DCA","SEAD","Strike","OCA"]}) then {
+                if (count _eventTargets > 0 && {!isNull (_eventTargets select 0)} && {alive (_eventTargets select 0)} && {_eventType in ["CAS","DCA","SEAD","Strike","OCA"]}) then {
                     private _tgt = _eventTargets select 0;
                     private _grp = group _vehicle;
                     _grp reveal _tgt;

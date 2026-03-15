@@ -2540,7 +2540,7 @@ switch(_operation) do {
 
                 _response = [];
 
-                if((count (values _eventQueue)) > 0) then {
+                if((count _eventQueue) > 0) then {
 
                     {
                         _playerRequested = [_x, "playerRequested"] call ALIVE_fnc_hashGet;
@@ -2705,7 +2705,7 @@ switch(_operation) do {
 
                 _response = [];
 
-                if((count (values _eventQueue)) > 0) then {
+                if((count _eventQueue) > 0) then {
 
                     {
                         _playerRequested = [_x, "playerRequested"] call ALIVE_fnc_hashGet;
@@ -3423,7 +3423,7 @@ switch(_operation) do {
                                 // and manage each event
                                 _eventQueue = [_logic, "eventQueue"] call MAINCLASS;
 
-                                if((count (values _eventQueue)) > 0) then {
+                                if((count _eventQueue) > 0) then {
 
                                     {
                                         [_logic,"monitorEvent",[_x, _requestAnalysis]] call MAINCLASS;
@@ -4732,7 +4732,8 @@ switch(_operation) do {
                                     _wp setWaypointLoiterType "CIRCLE";
                                     _wp setWaypointLoiterRadius (_eventRange * 0.7);
                                     _wp setWaypointTimeout [_eventDuration,_eventDuration,_eventDuration];
-                                    _wp setWaypointBehaviour "SAFE";
+                                    _wp setWaypointBehaviour "AWARE";
+                                    _wp setWaypointCombatMode "YELLOW";
                                     // _wp setWaypointCompletionRadius _eventRange;
                                 };
                             };
@@ -4999,12 +5000,15 @@ switch(_operation) do {
                     _missionComplete = true;
                 };
 
-                // Check to see if target is still there
-                if (count _eventTargets > 0 && isNull (_eventTargets select 0)) then {
-                    if (_debug) then {
-                        ["ATO %3 - Aircraft (%1 - %2) has no valid target.", _profileID, typeof _vehicle, _logic] call ALiVE_fnc_dump;
+                // Check to see if target is still there or has been destroyed
+                if (count _eventTargets > 0) then {
+                    private _tgtObj = _eventTargets select 0;
+                    if (isNull _tgtObj || {!alive _tgtObj}) then {
+                        if (_debug) then {
+                            ["ATO %3 - Aircraft (%1 - %2) target destroyed or invalid.", _profileID, typeof _vehicle, _logic] call ALiVE_fnc_dump;
+                        };
+                        _missionComplete = true;
                     };
-                    _missionComplete = true;
                 };
 
                 // Re-issue targeting commands so AI maintains focus on the target

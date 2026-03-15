@@ -801,7 +801,7 @@ switch(_operation) do {
 
                 _response = [];
 
-                if((count (values _eventQueue)) > 0) then {
+                if((count _eventQueue) > 0) then {
 
                     {
                         _playerRequested = [_x, "playerRequested"] call ALIVE_fnc_hashGet;
@@ -966,7 +966,7 @@ switch(_operation) do {
 
                 _response = [];
 
-                if((count (values _eventQueue)) > 0) then {
+                if((count _eventQueue) > 0) then {
 
                     {
                         _playerRequested = [_x, "playerRequested"] call ALIVE_fnc_hashGet;
@@ -1726,7 +1726,7 @@ switch(_operation) do {
                         // randomly pick between marine and mil location for start position
                         if(random 1 > 0.5) then {
 
-                            if(count(values ALIVE_clustersCivMarine) > 0) then {
+                            if(count ALIVE_clustersCivMarine > 0) then {
 
                                 // there are marine objectives available
 
@@ -1740,7 +1740,7 @@ switch(_operation) do {
                                 // no marine objectives available
                                 // pick a low priority location for airdrops
 
-                                if(count(values ALIVE_clustersMil) > 0) then {
+                                if(count ALIVE_clustersMil > 0) then {
 
                                     _sortedClusters = [values ALIVE_clustersMil,[],{([_x, "priority"] call ALIVE_fnc_hashGet)},"DESCEND"] call ALiVE_fnc_SortBy;
 
@@ -1757,7 +1757,7 @@ switch(_operation) do {
 
                             // pick a low priority location for airdrops
 
-                            if(count(values ALIVE_clustersMil) > 0) then {
+                            if(count ALIVE_clustersMil > 0) then {
 
                                 _sortedClusters = [values ALIVE_clustersMil,[],{([_x, "priority"] call ALIVE_fnc_hashGet)},"DESCEND"] call ALiVE_fnc_SortBy;
 
@@ -1841,7 +1841,7 @@ switch(_operation) do {
                                 // and manage each event
                                 _eventQueue = [_logic, "eventQueue"] call MAINCLASS;
 
-                                if((count (values _eventQueue)) > 0) then {
+                                if((count _eventQueue) > 0) then {
 
                                     {
                                         [_logic,"monitorEvent",[_x, _reinforcementAnalysis]] call MAINCLASS;

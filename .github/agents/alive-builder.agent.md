@@ -34,20 +34,35 @@ Verify with `ls /mnt/p/x/alive/addons/`. If it fails, the subst may not be activ
 
 ## Build Process
 
-PBOs are built using MakePBO from the P: drive tools directory:
+PBOs are built using MakePBO from the P: drive tools directory. The flags come from the official `ALIVE_makepbo.bat` build script:
 
 ```bash
-cd /mnt/p/x/alive/utils/tools && cmd.exe /c "MakePBO -A -P -N -U -X=thumbs.db,*.h,*.dep,*.bak,*.png,*.log,*.pew P:\\x\\alive\\addons\\<ADDON_NAME>"
+cd /mnt/p/x/alive/utils/tools && ./MakePbo.exe -A -BD -L -P -U -X=thumbs.db,*.h,*.dep,*.bak,*.png,*.log,*.pew -Z=default "P:\\x\\alive\\addons\\<ADDON_NAME>" 2>&1
 ```
 
 This produces `P:\x\alive\addons\<ADDON_NAME>.pbo`.
 
+**Special case — `mil_OPCOM`** uses an uncompressed build (no `-U` or `-Z` flags):
+```bash
+./MakePbo.exe -A -BD -L -P -X=thumbs.db,*.h,*.dep,*.bak,*.png,*.log,*.pew "P:\\x\\alive\\addons\\mil_OPCOM" 2>&1
+```
+
 Build multiple addons:
 ```bash
 cd /mnt/p/x/alive/utils/tools && for addon in addon1 addon2; do
-  echo "Building $addon..." && cmd.exe /c "MakePBO -A -P -N -U -X=thumbs.db,*.h,*.dep,*.bak,*.png,*.log,*.pew P:\\x\\alive\\addons\\$addon" 2>&1 | tail -3
+  echo "Building $addon..." && ./MakePbo.exe -A -BD -L -P -U -X=thumbs.db,*.h,*.dep,*.bak,*.png,*.log,*.pew -Z=default "P:\\x\\alive\\addons\\$addon" 2>&1 | tail -3
 done
 ```
+
+### CRITICAL: Never use the `-@` flag
+
+**NEVER** use `-@=alive` or any `-@` prefix override. Each addon has a `PboPrefix.txt` that sets the correct prefix (e.g. `x\alive\addons\mil_ato`). The `-@` flag overrides this to a flat name like `alive`, which makes ALL scripts "not found" at runtime because Arma expects paths like `\x\alive\addons\mil_ato\fnc_ATO.sqf` but the PBO only maps `\alive\fnc_ATO.sqf`.
+
+After building, verify the output contains the correct prefix line:
+```
+Using folder's prefix:x\alive\addons\<ADDON_NAME>
+```
+If it says `Prefix = alive` or any path that doesn't start with `x\alive\addons\`, the build is **broken**.
 
 ## Deploy Process
 
@@ -109,6 +124,8 @@ Known non-issues to ignore:
 ## Constraints
 
 - NEVER use `rsync` for WSL→Windows file copies
-- ALWAYS build from the P: drive path (`P:\\x\\alive\\addons\\`)
+- NEVER use the `-@` flag with MakePbo — it corrupts the PBO prefix and breaks all script paths at runtime
+- ALWAYS build from the P: drive path (`P:\\x\\alive\\addons\`)
 - ALWAYS verify PBOs match after deployment
+- ALWAYS verify `Using folder's prefix:x\alive\addons\<ADDON>` appears in build output
 - Check `No error(s)` in MakePBO output before deploying

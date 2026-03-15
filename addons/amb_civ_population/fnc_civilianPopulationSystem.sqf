@@ -159,7 +159,7 @@ switch(_operation) do {
 
     case "handleEvent": {
 
-        if(_args isEqualType []) then {
+        if(_args isEqualType [] || _args isEqualType createHashMap) then {
 
             private _debug = [_logic, "debug"] call MAINCLASS;
             private _event = _args;

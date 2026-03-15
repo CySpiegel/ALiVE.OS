@@ -2424,7 +2424,7 @@ switch(_operation) do {
 
         private["_event","_type","_eventData"];
 
-        if(_args isEqualType []) then {
+        if(_args isEqualType [] || _args isEqualType createHashMap) then {
 
             _event = _args;
             _type = [_event, "type"] call ALIVE_fnc_hashGet;
@@ -2440,7 +2440,7 @@ switch(_operation) do {
         private["_debug","_event","_eventData","_eventQueue","_side","_factions","_eventFaction","_eventSide","_factionFound",
         "_moduleFactions","_eventPlayerID","_eventRequestID"];
 
-        if(_args isEqualType []) then {
+        if(_args isEqualType [] || _args isEqualType createHashMap) then {
 
             _event = _args;
             _eventData = [_event, "data"] call ALIVE_fnc_hashGet;
@@ -2601,7 +2601,7 @@ switch(_operation) do {
         private["_debug","_event","_eventData","_eventQueue","_side","_factions","_eventFaction","_eventSide","_factionFound",
         "_moduleFactions","_eventPlayerID","_eventRequestID","_eventCancelRequestID"];
 
-        if(_args isEqualType []) then {
+        if(_args isEqualType [] || _args isEqualType createHashMap) then {
 
             _event = _args;
             _eventData = [_event, "data"] call ALIVE_fnc_hashGet;
@@ -2897,7 +2897,7 @@ switch(_operation) do {
     // Handle ATO request
     case "ATO_REQUEST": {
 
-        if(_args isEqualType []) then {
+        if(_args isEqualType [] || _args isEqualType createHashMap) then {
 
             // EVENT DATA STRUCTURE is hash
             // type : 'ATO_REQUEST'
@@ -3523,6 +3523,7 @@ switch(_operation) do {
 
                         // Check to see if there is a CAP
                         private _airspace = [_logic,"airspace"] call MAINCLASS;
+
                         {
 
                             sleep (random 5);
@@ -3541,6 +3542,7 @@ switch(_operation) do {
                                 // If no cap then request one
                                 if (!_CAP && (_CAPTime || time < 600) ) then {
                                     private _type = "CAP";
+
                                     private _range = if ((getMarkerSize _x) select 0 < (getMarkerSize _x) select 1) then {(getMarkerSize _x) select 0} else {(getMarkerSize _x) select 1};
                                     private _args = [
                                         "WHITE",                // ROE

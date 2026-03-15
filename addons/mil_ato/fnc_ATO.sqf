@@ -5116,7 +5116,7 @@ switch(_operation) do {
                 private _wp = _grp addWaypoint [_startPosition,400];
                 _wp setWaypointBehaviour "CARELESS";
                 _wp setWaypointCombatMode "BLUE";
-                _wp setWaypointStatements ["true","if (alive this) then {vehicle driver this setVariable ['ALIVE_MIL_ATO_RTB',true]; deleteWaypoint [group this, currentWaypoint (group this)];}"];
+                _wp setWaypointStatements ["true","if (alive this) then {vehicle driver this setVariable ['ALiVE_mil_ato_RTB',true]; deleteWaypoint [group this, currentWaypoint (group this)];}"];
 
                 // Quiesce group
                 _grp enableAttack false;

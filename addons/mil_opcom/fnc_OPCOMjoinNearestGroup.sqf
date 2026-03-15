@@ -46,7 +46,7 @@ _faction = faction _unit;
 _pos = getposATL _unit;
 _groupUnits = units (group _unit);
 
-{if ({_x == _faction} count ([_x,"factions",[]] call ALiVE_fnc_HashGet) > 0) exitwith {_logic = _x}} foreach OPCOM_instances;
+{if ({_x == _faction} count (_x getOrDefault ["factions", []]) > 0) exitwith {_logic = _x}} foreach OPCOM_instances;
 
 if (isnil "_logic") exitwith {};
 
@@ -56,22 +56,22 @@ _profileID = _unit getvariable "profileID"; if (isnil "_profileID") exitwith {};
 _profile = [ALiVE_ProfileHandler,"getProfile",_entityID] call ALiVE_fnc_ProfileHandler; if (isnil "_profile") exitwith {};
 _profileUnit = [ALiVE_ProfileHandler,"getProfile",_profileID] call ALiVE_fnc_ProfileHandler; if (isnil "_profileUnit") exitwith {};
 
-_pos = [_profile,"position"] call ALiVE_fnc_HashGet;
+_pos = _profile get "position";
 
 sleep 4;
 
 {_x setposATL _pos} foreach _groupUnits;
-waituntil {sleep 1; [_profile,"active"] call ALiVE_fnc_HashGet}; 
+waituntil {sleep 1; _profile get "active"}; 
 
 sleep 1;
 
-_units = [_profile,"units"] call ALIVE_fnc_hashGet;
+_units = _profile get "units";
 _group = group (_units select 0);
 
 _groupUnits join _group; {_x setposATL formationPosition _x} foreach _groupUnits;
 
 //Clone waypoints of joined entity
-[_profileUnit, "clearWaypoints"] call ALIVE_fnc_profileEntity; {[_profileUnit, "addWaypoint", _x] call ALIVE_fnc_profileEntity} foreach ([_profile,"waypoints",[]] call ALiVE_fnc_HashGet);
+[_profileUnit, "clearWaypoints"] call ALIVE_fnc_profileEntity; {[_profileUnit, "addWaypoint", _x] call ALIVE_fnc_profileEntity} foreach (_profile getOrDefault ["waypoints", []]);
 
 titleText ["Teleporting...", "BLACK IN",3];
 {titleText ['Teleporting...', 'BLACK IN',3]} remoteExec ["BIS_fnc_Spawn",owner _unit];

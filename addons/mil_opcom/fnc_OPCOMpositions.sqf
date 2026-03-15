@@ -37,9 +37,9 @@ _state = _this select 1;
 {
     private ["_OPCOM","_OPCOM_faction"];
     _OPCOM = _x;
-    _OPCOM_faction = [_OPCOM,"factions",[]] call ALiVE_fnc_HashGet;
+    _OPCOM_faction = _OPCOM getOrDefault ["factions", []];
 
-    if ((_faction) in (_OPCOM_faction)) exitwith {_objectives = [_OPCOM,"objectives",[]] call ALiVE_fnc_HashGet};
+    if ((_faction) in (_OPCOM_faction)) exitwith {_objectives = _OPCOM getOrDefault ["objectives", []]};
 } foreach OPCOM_INSTANCES;
 
 _result = [];
@@ -47,10 +47,10 @@ _result = [];
     private ["_objective","_OPCOM_state","_pos"];
 
     _objective = _x;
-    _OPCOM_state = [_objective,"opcom_state","unassigned"] call ALiVE_fnc_HashGet;
+    _OPCOM_state = _objective getOrDefault ["opcom_state", "unassigned"];
 
     if (_OPCOM_state == _state) then {
-        _pos = [_objective,"center"] call ALiVE_fnc_HashGet;
+        _pos = _objective get "center";
         _result pushback _pos;
     };
 } foreach _objectives;

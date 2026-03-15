@@ -44,32 +44,32 @@ _markers = [];
 
 {
     _OPCOM_HANDLER = _x;
-    _sideOPCOM = [_OPCOM_HANDLER,"side",[]] call ALiVE_fnc_HashGet;
+    _sideOPCOM = _OPCOM_HANDLER getOrDefault ["side", []];
     _sideOPCOM = [_sideOPCOM] call ALIVE_fnc_sideTextToObject;
 
     if (isnil "_sideIn" || {!isnil "_sideIn" && {_sideIn == _sideOPCOM}}) then {
 
-        _objectives = [_OPCOM_HANDLER,"objectives",[]] call ALiVE_fnc_HashGet;
+        _objectives = _OPCOM_HANDLER getOrDefault ["objectives", []];
 
         {
             _objective = _x;
 
-            _center = [_objective,"center"] call ALiVE_fnc_HashGet;
+            _center = _objective get "center";
 
             if (isnil "_pos" || {_pos distance _center < _radius}) then {
 
-                _id = [_objective,"objectiveID",""] call ALiVE_fnc_HashGet;
-                _size = [_objective,"size",150] call ALiVE_fnc_HashGet;
-                _type = [_objective,"objectiveType","none"] call ALiVE_fnc_HashGet;
+                _id = _objective getOrDefault ["objectiveID", ""];
+                _size = _objective getOrDefault ["size", 150];
+                _type = _objective getOrDefault ["objectiveType", "none"];
 
-                _factory = [_OPCOM_HANDLER,"convertObject",[_objective,"factory",[]] call ALiVE_fnc_HashGet] call ALiVE_fnc_OPCOM;
-                _HQ = [_OPCOM_HANDLER,"convertObject",[_objective,"HQ",[]] call ALiVE_fnc_HashGet] call ALiVE_fnc_OPCOM;
-                _ambush = [_OPCOM_HANDLER,"convertObject",[_objective,"ambush",[]] call ALiVE_fnc_HashGet] call ALiVE_fnc_OPCOM;
-                _depot = [_OPCOM_HANDLER,"convertObject",[_objective,"depot",[]] call ALiVE_fnc_HashGet] call ALiVE_fnc_OPCOM;
-                _sabotage = [_OPCOM_HANDLER,"convertObject",[_objective,"sabotage",[]] call ALiVE_fnc_HashGet] call ALiVE_fnc_OPCOM;
-                _ied = [_OPCOM_HANDLER,"convertObject",[_objective,"ied",[]] call ALiVE_fnc_HashGet] call ALiVE_fnc_OPCOM;
-                _suicide = [_OPCOM_HANDLER,"convertObject",[_objective,"suicide",[]] call ALiVE_fnc_HashGet] call ALiVE_fnc_OPCOM;
-                _roadblocks = [_OPCOM_HANDLER,"convertObject",[_objective,"roadblocks",[]] call ALiVE_fnc_HashGet] call ALiVE_fnc_OPCOM;
+                _factory = [_OPCOM_HANDLER,"convertObject",_objective getOrDefault ["factory", []]] call ALiVE_fnc_OPCOM;
+                _HQ = [_OPCOM_HANDLER,"convertObject",_objective getOrDefault ["HQ", []]] call ALiVE_fnc_OPCOM;
+                _ambush = [_OPCOM_HANDLER,"convertObject",_objective getOrDefault ["ambush", []]] call ALiVE_fnc_OPCOM;
+                _depot = [_OPCOM_HANDLER,"convertObject",_objective getOrDefault ["depot", []]] call ALiVE_fnc_OPCOM;
+                _sabotage = [_OPCOM_HANDLER,"convertObject",_objective getOrDefault ["sabotage", []]] call ALiVE_fnc_OPCOM;
+                _ied = [_OPCOM_HANDLER,"convertObject",_objective getOrDefault ["ied", []]] call ALiVE_fnc_OPCOM;
+                _suicide = [_OPCOM_HANDLER,"convertObject",_objective getOrDefault ["suicide", []]] call ALiVE_fnc_OPCOM;
+                _roadblocks = [_OPCOM_HANDLER,"convertObject",_objective getOrDefault ["roadblocks", []]] call ALiVE_fnc_OPCOM;
 
                 _markers append [[format["reg_%1",_id],_center,"ELLIPSE", [_size,_size],"ColorRed","IED", "n_installation", "FDiagonal",0,0.5] call ALIVE_fnc_createMarkerGlobal];
                 _markers append [[format["regI_%1",_id],_center,"ICON", [0.1,0.1],"ColorRed",format["%1",_type], "mil_dot", "FDiagonal",0,0.5] call ALIVE_fnc_createMarkerGlobal];

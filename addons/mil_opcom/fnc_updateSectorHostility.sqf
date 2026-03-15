@@ -30,21 +30,21 @@ if (isnil QMOD(SECTORGRID) || {isnil QMOD(CLUSTERHANDLER)} || {isnil QMOD(SECTOR
 PARAMS_3(_pos,_sides,_value);
 
 _sector = [ALIVE_sectorGrid, "positionToSector", _pos] call ALIVE_fnc_sectorGrid;
-_sectorData = [_sector,"data",createHashMap] call ALIVE_fnc_hashGet;
+_sectorData = _sector getOrDefault ["data", createHashMap];
 
 if ("clustersCiv" in keys _sectorData) then {
-    _civClusters = [_sectorData,"clustersCiv"] call ALIVE_fnc_hashGet;
-    _settlementClusters = [_civClusters,"settlement"] call ALIVE_fnc_hashGet;
+    _civClusters = _sectorData get "clustersCiv";
+    _settlementClusters = _civClusters get "settlement";
 
     {
         _clusterID = _x select 1;
         _cluster = [ALIVE_clusterHandler, "getCluster", _clusterID] call ALIVE_fnc_clusterHandler;
 
         if !(isNil "_cluster") then {
-            _clusterHostility = [_cluster, "hostility"] call ALIVE_fnc_hashGet;
+            _clusterHostility = _cluster get "hostility";
     
-            {[_clusterHostility,_x,([_clusterHostility,_x,0] call ALIVE_fnc_hashGet) + _value] call ALIVE_fnc_hashSet} foreach _sides;
-            [_cluster, "hostility",_clusterHostility] call ALIVE_fnc_hashSet;
+            {_clusterHostility set [_x, (_clusterHostility getOrDefault [_x, 0]) + _value]} foreach _sides;
+            _cluster set ["hostility", _clusterHostility];
         };
     } forEach _settlementClusters;
 };

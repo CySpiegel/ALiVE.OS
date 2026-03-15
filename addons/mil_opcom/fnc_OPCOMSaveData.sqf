@@ -38,7 +38,7 @@ if(ALiVE_SYS_DATA_DEBUG_ON) then {
 };
 
     {
-        if ([_x,"persistent",false] call ALIVE_fnc_HashGet) then {
+        if (_x getOrDefault ["persistent", false]) then {
             _results pushback ([_x,"saveData"] call ALIVE_fnc_OPCOM);
         };
     } foreach OPCOM_INSTANCES;

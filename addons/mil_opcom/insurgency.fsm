@@ -103,20 +103,20 @@ class FSM
                          "_OPCOM_status = ""PreInit"";" \n
                          "" \n
                          "_OPCOM_HANDLER = _this select 0;" \n
-                         "_OBJECTIVES = [_OPCOM_HANDLER,""objectives"",[]] call ALiVE_fnc_HashGet;" \n
-                         "_OPCOM_FSM =  [_OPCOM_HANDLER,""OPCOM_FSM""] call ALiVE_fnc_HashGet;" \n
-                         "_CQB = [_OPCOM_HANDLER,""CQB"",[]] call ALiVE_fnc_HashGet;" \n
+                         "_OBJECTIVES = _OPCOM_HANDLER getOrDefault [""objectives"", []];" \n
+                         "_OPCOM_FSM =  _OPCOM_HANDLER get ""OPCOM_FSM"";" \n
+                         "_CQB = _OPCOM_HANDLER getOrDefault [""CQB"", []];" \n
                          "" \n
-                         "_debug = [_OPCOM_HANDLER,""debug"",false] call ALiVE_fnc_HashGet;" \n
-                         "_side = [_OPCOM_HANDLER,""side"",""EAST""] call ALiVE_fnc_HashGet;" \n
-                         "_factions = [_OPCOM_HANDLER,""factions"",[""OPF_F""]] call ALiVE_fnc_HashGet;" \n
-                         "_sidesEnemy = [_OPCOM_HANDLER,""sidesenemy"",[""WEST""]] call ALiVE_fnc_HashGet;" \n
-                         "_sidesFriendly = [_OPCOM_HANDLER,""sidesfriendly"",[""EAST""]] call ALiVE_fnc_HashGet;" \n
-                         "_controltype = [_OPCOM_HANDLER, ""controltype"",""invasion""] call ALiVE_fnc_HashGet;" \n
-                         "_simultanObjectives = [_OPCOM_HANDLER, ""simultanobjectives"",10] call ALiVE_fnc_HashGet;" \n
-                         "_minAgents = [_OPCOM_HANDLER, ""minAgents"",2] call ALiVE_fnc_HashGet;" \n
-                         "_reinforcementRatio = [_OPCOM_HANDLER, ""reinforcements"",0.9] call ALiVE_fnc_HashGet;" \n
-                         "_roadblocks = [_OPCOM_HANDLER, ""roadblocks"",true] call ALiVE_fnc_HashGet;" \n
+                         "_debug = _OPCOM_HANDLER getOrDefault [""debug"", false];" \n
+                         "_side = _OPCOM_HANDLER getOrDefault [""side"", ""EAST""];" \n
+                         "_factions = _OPCOM_HANDLER getOrDefault [""factions"", [""OPF_F""]];" \n
+                         "_sidesEnemy = _OPCOM_HANDLER getOrDefault [""sidesenemy"", [""WEST""]];" \n
+                         "_sidesFriendly = _OPCOM_HANDLER getOrDefault [""sidesfriendly"", [""EAST""]];" \n
+                         "_controltype = _OPCOM_HANDLER getOrDefault [""controltype"", ""invasion""];" \n
+                         "_simultanObjectives = _OPCOM_HANDLER getOrDefault [""simultanobjectives"", 10];" \n
+                         "_minAgents = _OPCOM_HANDLER getOrDefault [""minAgents"", 2];" \n
+                         "_reinforcementRatio = _OPCOM_HANDLER getOrDefault [""reinforcements"", 0.9];" \n
+                         "_roadblocks = _OPCOM_HANDLER getOrDefault [""roadblocks"", true];" \n
                          "" \n
                          "_delay = 0.2;" \n
                          "_cycleTime = 30;" \n
@@ -130,14 +130,14 @@ class FSM
                          "_civFactions = [];" \n
                          "" \n
                          "// Get all controlled profiles initially and pass ambient movement command in case there is no garrison command given" \n
-                         "_all = []; {_all append ([_OPCOM_HANDLER,_x,[]] call ALiVE_fnc_HashGet)} foreach [""infantry"",""motorized"",""mechanized"",""armored"",""artillery"",""AAA"",""air"",""sea""];" \n
+                         "_all = []; {_all append (_OPCOM_HANDLER getOrDefault [_x, []])} foreach [""infantry"",""motorized"",""mechanized"",""armored"",""artillery"",""AAA"",""air"",""sea""];" \n
                          "{" \n
                          "    private [""_profile"",""_range""];" \n
                          "" \n
                          "    _profile = [ALiVE_profileHandler,""getProfile"",_x] call ALiVE_fnc_profileHandler;" \n
                          "" \n
                          "    if !(isnil ""_profile"") then {" \n
-                         "        _commands = [_profile,""activeCommands"",[]] call ALiVE_fnc_HashGet;" \n
+                         "        _commands = _profile getOrDefault [""activeCommands"", []];" \n
                          "" \n
                          "        if ({(_x select 0) == ""ALIVE_fnc_garrison""} count _commands == 0) then {[_profile, ""setActiveCommand"", [""ALIVE_fnc_ambientMovement"",""spawn"",[300,""STEALTH"",[0,0,0]]]] call ALIVE_fnc_profileEntity};" \n
                          "    };" \n
@@ -151,12 +151,12 @@ class FSM
                          "" \n
                          "// Get civilian factions from Amb Civs" \n
                          "If (!isnil ""ALiVE_Agenthandler"") then {" \n
-                         "    _agents = [ALiVE_Agenthandler,""agents"",["""",[],[],""""]] call ALiVE_fnc_HashGet;" \n
-                         "    if (count _agents > 0) exitwith {_civFactions = _civFactions + [[(values _agents) select 0,""faction"",""CIV_F""] call ALiVE_fnc_HashGet]};" \n
+                         "    _agents = ALiVE_Agenthandler getOrDefault [""agents"", ["""",[],[],""""]];" \n
+                         "    if (count _agents > 0) exitwith {_civFactions = _civFactions + [(values _agents) select 0 getOrDefault [""faction"", ""CIV_F""]]};" \n
                          "};" \n
                          "" \n
                          "// Get AgentsData" \n
-                         "_agentClusterData = if (!isnil ""ALIVE_agentHandler"") then {[ALIVE_agentHandler,""agentsByCluster"",["""",[],[],""""]] call ALiVE_fnc_hashGet} else {["""",[],[],""""]};" \n
+                         "_agentClusterData = if (!isnil ""ALIVE_agentHandler"") then {ALIVE_agentHandler getOrDefault [""agentsByCluster"", ["""",[],[],""""]]} else {["""",[],[],""""]};" \n
                          "" \n
                          "_fnc_selectSection = {" \n
                          "    private [""_handler"",""_pos"",""_factions"",""_count"",""_section"",""_types""];" \n
@@ -167,23 +167,23 @@ class FSM
                          "    _count = _this select 3;" \n
                          "    _types = _this select 4;" \n
                          "" \n
-                         "    _section = []; {_section = _section + ([_handler,_x,[]] call ALiVE_fnc_HashGet)} foreach _types;" \n
+                         "    _section = []; {_section = _section + (_handler getOrDefault [_x, []])} foreach _types;" \n
                          "" \n
                          "    _section = [" \n
                          "            _section," \n
                          "            [_pos],{" \n
                          "" \n
                          "                _p = [ALiVE_ProfileHandler,""getProfile"",_x] call ALiVE_fnc_ProfileHandler;" \n
-                         "                _pp = [_p,""position""] call ALiVE_fnc_HashGet;" \n
+                         "                _pp = _p get ""position"";" \n
                          "    " \n
                          "            _Input0 distance _pp;" \n
                          "        },""ASCEND""," \n
                          "        {" \n
                          "                _pf = [ALiVE_ProfileHandler,""getProfile"",_x] call ALiVE_fnc_ProfileHandler;" \n
                          "" \n
-                         "               !isnil ""_pf"" && {!([_pf,""busy"",false] call ALiVE_fnc_HashGet)} &&" \n
-                         "		   {([_pf,""type"",""""] call ALiVE_fnc_HashGet) == ""entity""} &&" \n
-                         "		   {{toLower(_x select 0) == ""alive_fnc_garrison""} count  ([_pf,""activeCommands"",[]] call ALiVE_fnc_HashGet) == 0}" \n
+                         "               !isnil ""_pf"" && {!(_pf getOrDefault [""busy"", false])} &&" \n
+                         "		   {(_pf getOrDefault [""type"", """"]) == ""entity""} &&" \n
+                         "		   {{toLower(_x select 0) == ""alive_fnc_garrison""} count  (_pf getOrDefault [""activeCommands"", []]) == 0}" \n
                          "            }" \n
                          "    ] call ALiVE_fnc_SortBy;" \n
                          "    " \n
@@ -240,7 +240,7 @@ class FSM
                                          "        _cycle = _cycleTime;" \n
                                          "    " \n
                                          "        _troopsAnalysis = [_OPCOM_HANDLER] spawn {[_this select 0,""scantroops""] call ALiVE_fnc_OPCOM};" \n
-                                         "        _agentClusterData = if (!isnil ""ALIVE_agentHandler"") then {[ALIVE_agentHandler,""agentsByCluster"",["""",[],[],""""]] call ALiVE_fnc_hashGet} else {["""",[],[],""""]};" \n
+                                         "        _agentClusterData = if (!isnil ""ALIVE_agentHandler"") then {ALIVE_agentHandler getOrDefault [""agentsByCluster"", ["""",[],[],""""]]} else {["""",[],[],""""]};" \n
                                          "    };"/*%FSM</CONDPRECONDITION""">*/;
                                         condition=/*%FSM<CONDITION""">*/"time - _time > _delay && {time - _time > _cycle} && {!_pause};"/*%FSM</CONDITION""">*/;
                                         action=/*%FSM<ACTION""">*/"_time = time; _cycle = 0;" \n
@@ -263,24 +263,24 @@ class FSM
                          "" \n
                          "_objective = _objectives select _iteration;" \n
                          "" \n
-                         "_center = [_objective,""center""] call ALiVE_fnc_HashGet;" \n
-                         "_id = [_objective,""objectiveID""] call ALiVE_fnc_HashGet;" \n
-                         "_cid = [_objective,""clusterID""] call ALiVE_fnc_HashGet;" \n
-                         "_size = [_objective,""size""] call ALiVE_fnc_HashGet;" \n
-                         "_guards = [_objective,""guards""] call ALiVE_fnc_HashGet;" \n
-                         "_agents = [_objective,""agents"",[]] call ALiVE_fnc_HashGet;" \n
-                         "_section =  [_objective,""section"",[]] call ALiVE_fnc_HashGet;" \n
-                         "_actions = [_objective,""actions""] call ALiVE_fnc_HashGet;" \n
-                         "_actionsFulfilled = [_objective,""actionsFulfilled"",[]] call ALiVE_fnc_HashGet;" \n
+                         "_center = _objective get ""center"";" \n
+                         "_id = _objective get ""objectiveID"";" \n
+                         "_cid = _objective get ""clusterID"";" \n
+                         "_size = _objective get ""size"";" \n
+                         "_guards = _objective get ""guards"";" \n
+                         "_agents = _objective getOrDefault [""agents"", []];" \n
+                         "_section =  _objective getOrDefault [""section"", []];" \n
+                         "_actions = _objective get ""actions"";" \n
+                         "_actionsFulfilled = _objective getOrDefault [""actionsFulfilled"", []];" \n
                          "" \n
-                         "_factory = [_OPCOM_HANDLER,""convertObject"",[_objective,""factory"",[]] call ALiVE_fnc_HashGet] call ALiVE_fnc_OPCOM;" \n
-                         "_HQ = [_OPCOM_HANDLER,""convertObject"",[_objective,""HQ"",[]] call ALiVE_fnc_HashGet] call ALiVE_fnc_OPCOM;" \n
-                         "_ambush = [_OPCOM_HANDLER,""convertObject"",[_objective,""ambush"",[]] call ALiVE_fnc_HashGet] call ALiVE_fnc_OPCOM;" \n
-                         "_depot = [_OPCOM_HANDLER,""convertObject"",[_objective,""depot"",[]] call ALiVE_fnc_HashGet] call ALiVE_fnc_OPCOM;" \n
-                         "_sabotage = [_OPCOM_HANDLER,""convertObject"",[_objective,""sabotage"",[]] call ALiVE_fnc_HashGet] call ALiVE_fnc_OPCOM;" \n
-                         "_ied = [_OPCOM_HANDLER,""convertObject"",[_objective,""ied"",[]] call ALiVE_fnc_HashGet] call ALiVE_fnc_OPCOM;" \n
-                         "_suicide = [_OPCOM_HANDLER,""convertObject"",[_objective,""suicide"",[]] call ALiVE_fnc_HashGet] call ALiVE_fnc_OPCOM;" \n
-                         "_roadblocks = [_OPCOM_HANDLER,""convertObject"",[_objective,""roadblocks"",[]] call ALiVE_fnc_HashGet] call ALiVE_fnc_OPCOM;" \n
+                         "_factory = [_OPCOM_HANDLER,""convertObject"",_objective getOrDefault [""factory"", []]] call ALiVE_fnc_OPCOM;" \n
+                         "_HQ = [_OPCOM_HANDLER,""convertObject"",_objective getOrDefault [""HQ"", []]] call ALiVE_fnc_OPCOM;" \n
+                         "_ambush = [_OPCOM_HANDLER,""convertObject"",_objective getOrDefault [""ambush"", []]] call ALiVE_fnc_OPCOM;" \n
+                         "_depot = [_OPCOM_HANDLER,""convertObject"",_objective getOrDefault [""depot"", []]] call ALiVE_fnc_OPCOM;" \n
+                         "_sabotage = [_OPCOM_HANDLER,""convertObject"",_objective getOrDefault [""sabotage"", []]] call ALiVE_fnc_OPCOM;" \n
+                         "_ied = [_OPCOM_HANDLER,""convertObject"",_objective getOrDefault [""ied"", []]] call ALiVE_fnc_OPCOM;" \n
+                         "_suicide = [_OPCOM_HANDLER,""convertObject"",_objective getOrDefault [""suicide"", []]] call ALiVE_fnc_OPCOM;" \n
+                         "_roadblocks = [_OPCOM_HANDLER,""convertObject"",_objective getOrDefault [""roadblocks"", []]] call ALiVE_fnc_OPCOM;" \n
                          "" \n
                          "_clusterHostility = ["""",[],[],""""];" \n
                          "_clusterCasualties = ["""",[],[],""""];" \n
@@ -293,16 +293,16 @@ class FSM
                          "" \n
                          "// Get sector data" \n
                          "_sector = [ALIVE_sectorGrid, ""positionToSector"", _center] call ALIVE_fnc_sectorGrid;" \n
-                         "_sectorData = [_sector, ""data"",["""",[],[],""""]] call ALIVE_fnc_hashGet;" \n
-                         "_entitiesBySide = [_sectorData, ""entitiesBySide"",["""",[],[],""""]] call ALIVE_fnc_hashGet;" \n
+                         "_sectorData = _sector getOrDefault [""data"", ["""",[],[],""""]];" \n
+                         "_entitiesBySide = _sectorData getOrDefault [""entitiesBySide"", ["""",[],[],""""]];" \n
                          "" \n
                          "// Get amb civilian clusterdata" \n
                          "if (""clustersCiv"" in _sectorData) then {" \n
                          "" \n
                          "    if (isnil ""ALIVE_agentHandler"") exitwith {};" \n
                          "" \n
-                         "    _civClusters = [_sectorData,""clustersCiv""] call ALIVE_fnc_hashGet;" \n
-                         "    _settlementClusters = [_civClusters,""settlement"",[]] call ALIVE_fnc_hashGet;" \n
+                         "    _civClusters = _sectorData get ""clustersCiv"";" \n
+                         "    _settlementClusters = _civClusters getOrDefault [""settlement"", []];" \n
                          "" \n
                          "    if (count _settlementClusters <= 0) exitwith {};" \n
                          "" \n
@@ -311,24 +311,24 @@ class FSM
                          "        _cluster = [ALIVE_clusterHandler, ""getCluster"", _clusterID] call ALIVE_fnc_clusterHandler;" \n
                          "" \n
                          "        if !(isNil ""_cluster"") then {" \n
-                         "                 _clusterHostility = [_cluster, ""hostility""] call ALIVE_fnc_hashGet;" \n
-                         "                _clusterCasualties = [_cluster, ""casualties""] call ALIVE_fnc_hashGet;" \n
+                         "                 _clusterHostility = _cluster get ""hostility"";" \n
+                         "                _clusterCasualties = _cluster get ""casualties"";" \n
                          "        };" \n
                          "    } forEach _settlementClusters;" \n
                          "" \n
                          "    _settlementClusters = [_settlementClusters,[_center],{_Input0 distance (_x select 0)},""ASCEND""] call ALiVE_fnc_SortBy;" \n
-                         "    _agents =  keys ([_agentClusterData,_settlementClusters select 0 select 1,["""",[],[],""""]] call ALiVE_fnc_HashGet);" \n
+                         "    _agents =  keys (_agentClusterData getOrDefault [_settlementClusters select 0 select 1, ["""",[],[],""""]]);" \n
                          "" \n
-                         "    [_objective,""agents"",_agents] call ALiVE_fnc_HashSet;" \n
+                         "    _objective set [""agents"", _agents];" \n
                          "};" \n
                          "" \n
                          "" \n
                          "// Determine hostility" \n
-                         "_enemies = []; {_enemies = _enemies + ([_entitiesBySide,_x,[]] call ALiVE_fnc_HashGet)} foreach _sidesEnemy;" \n
-                         "_friendlies = []; {_friendlies = _friendlies + ([_entitiesBySide,_x,[]] call ALiVE_fnc_HashGet)} foreach _sidesFriendly;" \n
+                         "_enemies = []; {_enemies = _enemies + (_entitiesBySide getOrDefault [_x, []])} foreach _sidesEnemy;" \n
+                         "_friendlies = []; {_friendlies = _friendlies + (_entitiesBySide getOrDefault [_x, []])} foreach _sidesFriendly;" \n
                          "" \n
                          "_troopsHostility = if (count _enemies <= 0) then {-100} else {((count _enemies)*10) - ((count _friendlies)*10)};" \n
-                         "_objectiveHostility = [_clusterHostility,_side,0] call ALiVE_fnc_HashGet;" \n
+                         "_objectiveHostility = _clusterHostility getOrDefault [_side, 0];" \n
                          "" \n
                          "_hostility = _troopsHostility + _objectiveHostility;" \n
                          "" \n
@@ -342,7 +342,7 @@ class FSM
                          "    [_center,_sidesFriendly, 50] call ALiVE_fnc_updateSectorHostility;" \n
                          "    [_center,_sidesEnemy, -50] call ALiVE_fnc_updateSectorHostility;" \n
                          "" \n
-                         "    _guards = [_objective,""guards""] call ALiVE_fnc_HashRem;" \n
+                         "    _guards = _objective deleteAt ""guards"";" \n
                          "};" \n
                          "" \n
                          "// debug ---------------------------------------" \n
@@ -402,7 +402,7 @@ class FSM
                         itemno = 10;
                         init = /*%FSM<STATEINIT""">*/"private [""_orders""];" \n
                          "" \n
-                         "_orders = [_objective,""opcom_orders"",""none""] call ALiVE_fnc_HashGet;" \n
+                         "_orders = _objective getOrDefault [""opcom_orders"", ""none""];" \n
                          "" \n
                          "if (_orders == ""none"") then {" \n
                          "" \n
@@ -411,7 +411,7 @@ class FSM
                          "    if (_hostility >= -50 && {_hostility < 20}) then {_orders = ""attack""};" \n
                          "    if (_hostility < -50) then {_orders = ""reserve""};" \n
                          "" \n
-                         "    if !(isnil ""_orders"") then {[_objective,""opcom_orders"",_orders] call ALiVE_fnc_HashSet};" \n
+                         "    if !(isnil ""_orders"") then {_objective set [""opcom_orders"", _orders]};" \n
                          "};" \n
                          "" \n
                          "//[""FSM state: %1 %2 %3"",""SELECT ORDERS"",_orders,_hostility] call ALIVE_fnc_dumpR;" \n
@@ -493,8 +493,8 @@ class FSM
                         itemno = 11;
                         init = /*%FSM<STATEINIT""">*/"private [""_actions"",""_actionsFulfilled"",""_possibleTypes"",""_type"",""_types"",""_agents"",""_state""];" \n
                          "" \n
-                         "_actions = [_objective,""actions""] call ALiVE_fnc_HashGet;" \n
-                         "_actionsFulfilled = [_objective,""actionsFulfilled"",[]] call ALiVE_fnc_HashGet;" \n
+                         "_actions = _objective get ""actions"";" \n
+                         "_actionsFulfilled = _objective getOrDefault [""actionsFulfilled"", []];" \n
                          "_allActions = [""assault"",""ambush""];" \n
                          "_state = ""attacking"";" \n
                          "" \n
@@ -502,7 +502,7 @@ class FSM
                          "_unusedActions = _allActions;" \n
                          "" \n
                          "// Get civilian agents" \n
-                         "_agents = [_objective,""agents"",[]] call ALiVE_fnc_HashGet;" \n
+                         "_agents = _objective getOrDefault [""agents"", []];" \n
                          "" \n
                          "// Analyse" \n
                          "// Determine best action type" \n
@@ -602,7 +602,7 @@ class FSM
                          "            [_behaviour,_speed,_command,_types,_groupsize,_guard]        // Behaviour and speed, TACOM command and types" \n
                          "        ];" \n
                          "" \n
-                         "    [_objective,""actions"",_actions] call ALiVE_fnc_HashSet;" \n
+                         "    _objective set [""actions"", _actions];" \n
                          "" \n
                          "    // debug ---------------------------------------" \n
                          "    if(_debug) then {" \n
@@ -637,8 +637,8 @@ class FSM
                         itemno = 12;
                         init = /*%FSM<STATEINIT""">*/"private [""_actions"",""_actionsFulfilled"",""_possibleTypes"",""_type"",""_types"",""_agents"",""_state""];" \n
                          "" \n
-                         "_actions = [_objective,""actions""] call ALiVE_fnc_HashGet;" \n
-                         "_actionsFulfilled = [_objective,""actionsFulfilled"",[]] call ALiVE_fnc_HashGet;" \n
+                         "_actions = _objective get ""actions"";" \n
+                         "_actionsFulfilled = _objective getOrDefault [""actionsFulfilled"", []];" \n
                          "_allActions = [""retreat""];" \n
                          "_state = ""defending"";" \n
                          "" \n
@@ -646,7 +646,7 @@ class FSM
                          "_unusedActions = _allActions;" \n
                          "" \n
                          "// Get civilian agents" \n
-                         "_agents = [_objective,""agents"",[]] call ALiVE_fnc_HashGet;" \n
+                         "_agents = _objective getOrDefault [""agents"", []];" \n
                          "" \n
                          "// Analyse" \n
                          "// Determine best action type" \n
@@ -718,7 +718,7 @@ class FSM
                          "            [_behaviour,_speed,_command,_types,_groupsize,_guard]        // Behaviour and speed, TACOM command and types" \n
                          "        ];" \n
                          "" \n
-                         "    [_objective,""actions"",_actions] call ALiVE_fnc_HashSet;" \n
+                         "    _objective set [""actions"", _actions];" \n
                          "" \n
                          "    // debug ---------------------------------------" \n
                          "    if(_debug) then {" \n
@@ -753,8 +753,8 @@ class FSM
                         itemno = 13;
                         init = /*%FSM<STATEINIT""">*/"private [""_actions"",""_actionsFulfilled"",""_possibleTypes"",""_type"",""_types"",""_agents"",""_state""];" \n
                          "" \n
-                         "_actions = [_objective,""actions""] call ALiVE_fnc_HashGet;" \n
-                         "_actionsFulfilled = [_objective,""actionsFulfilled"",[]] call ALiVE_fnc_HashGet;" \n
+                         "_actions = _objective get ""actions"";" \n
+                         "_actionsFulfilled = _objective getOrDefault [""actionsFulfilled"", []];" \n
                          "_allActions = [""factory"",""sabotage"",""ied"",""suicide""];" \n
                          "_state = ""terrorizing"";" \n
                          "" \n
@@ -762,7 +762,7 @@ class FSM
                          "_unusedActions = _allActions - _actionsFulfilled;" \n
                          "" \n
                          "// Get civilian agents" \n
-                         "_agents = [_objective,""agents"",[]] call ALiVE_fnc_HashGet;" \n
+                         "_agents = _objective getOrDefault [""agents"", []];" \n
                          "" \n
                          "// Analyse" \n
                          "// Determine best action type" \n
@@ -772,7 +772,7 @@ class FSM
                          "_type = if (count _unusedActions > 0) then {(selectRandom _unusedActions)} else {""idle""};" \n
                          "" \n
                          "// Overwrite type with factory if fitting" \n
-                         "// if (!alive ([[],""convertObject"",[_objective,""factory"",[]] call ALiVE_fnc_HashGet] call ALiVE_fnc_OPCOM) && {_size >= 200}) then {_type = ""factory""};" \n
+                         "// if (!alive ([[],""convertObject"",_objective getOrDefault [""factory"", []]] call ALiVE_fnc_OPCOM) && {_size >= 200}) then {_type = ""factory""};" \n
                          "" \n
                          "" \n
                          "" \n
@@ -798,7 +798,7 @@ class FSM
                          "            _switch = false;" \n
                          "            _faction = (selectRandom _factions);" \n
                          "" \n
-                         "            _building = [[],""convertObject"",[_objective,""factory"",[]] call ALiVE_fnc_HashGet] call ALiVE_fnc_OPCOM;" \n
+                         "            _building = [[],""convertObject"",_objective getOrDefault [""factory"", []]] call ALiVE_fnc_OPCOM;" \n
                          "" \n
                          "            if (!alive _building) then {" \n
                          "                _buildings = [_center, _size + 300] call ALiVE_fnc_INS_filterObjectiveBuildings;" \n
@@ -831,7 +831,7 @@ class FSM
                          "            _switch = false;" \n
                          "            _faction = (selectRandom _factions);" \n
                          "" \n
-                         "            _building = [[],""convertObject"",[_objective,""factory"",[]] call ALiVE_fnc_HashGet] call ALiVE_fnc_OPCOM;" \n
+                         "            _building = [[],""convertObject"",_objective getOrDefault [""factory"", []]] call ALiVE_fnc_OPCOM;" \n
                          "" \n
                          "            //Override destination if there is an explosive factory" \n
                          "            if (alive _building) then {_pos = getposATL _building} else {_pos = [_pos, 200, 300, 1, 0, 100, 0, [], [_pos]] call BIS_fnc_findSafePos};" \n
@@ -855,7 +855,7 @@ class FSM
                          "            _switch = false;" \n
                          "            _faction = (selectRandom _factions);" \n
                          "" \n
-                         "            _building = [[],""convertObject"",[_objective,""factory"",[]] call ALiVE_fnc_HashGet] call ALiVE_fnc_OPCOM;" \n
+                         "            _building = [[],""convertObject"",_objective getOrDefault [""factory"", []]] call ALiVE_fnc_OPCOM;" \n
                          "" \n
                          "            //Override destination if there is a munitions dump" \n
                          "            if (alive _building) then {_pos = getposATL _building} else {_pos = [_pos, 200, 300, 1, 0, 100, 0, [], [_pos]] call BIS_fnc_findSafePos};" \n
@@ -882,7 +882,7 @@ class FSM
                          "            _behaviour = ""SAFE"";" \n
                          "            _speed = ""LIMITED"";" \n
                          "" \n
-                         "            _building = [[],""convertObject"",[_objective,""factory"",[]] call ALiVE_fnc_HashGet] call ALiVE_fnc_OPCOM;" \n
+                         "            _building = [[],""convertObject"",_objective getOrDefault [""factory"", []]] call ALiVE_fnc_OPCOM;" \n
                          "" \n
                          "            //Override destination if there is an explosive factory" \n
                          "            if (alive _building) then {_pos = getposATL _building} else {_pos = [_pos, 200, 300, 1, 0, 100, 0, [], [_pos]] call BIS_fnc_findSafePos};" \n
@@ -949,7 +949,7 @@ class FSM
                          "            [_behaviour,_speed,_command,_types,_groupsize,_guard]        // Behaviour and speed, TACOM command and types" \n
                          "        ];" \n
                          "" \n
-                         "    [_objective,""actions"",_actions] call ALiVE_fnc_HashSet;" \n
+                         "    _objective set [""actions"", _actions];" \n
                          "" \n
                          "    // debug ---------------------------------------" \n
                          "    if(_debug) then {" \n
@@ -984,11 +984,11 @@ class FSM
                         itemno = 14;
                         init = /*%FSM<STATEINIT""">*/"private [""_actions"",""_actionsFulfilled"",""_possibleTypes"",""_type"",""_types"",""_agents"",""_state"",""_roadblocks""];" \n
                          "" \n
-                         "_actions = [_objective,""actions""] call ALiVE_fnc_HashGet;" \n
-                         "_actionsFulfilled = [_objective,""actionsFulfilled"",[]] call ALiVE_fnc_HashGet;" \n
+                         "_actions = _objective get ""actions"";" \n
+                         "_actionsFulfilled = _objective getOrDefault [""actionsFulfilled"", []];" \n
                          "_allActions = [""depot"",""roadblocks""];" \n
                          "_state = ""reserving"";" \n
-                         "_roadblocks = [_OPCOM_HANDLER, ""roadblocks"",true] call ALiVE_fnc_HashGet;" \n
+                         "_roadblocks = _OPCOM_HANDLER getOrDefault [""roadblocks"", true];" \n
                          "" \n
                          "if (!_roadblocks) then {" \n
                          "	_allActions = [""depot""];" \n
@@ -998,7 +998,7 @@ class FSM
                          "_unusedActions = _allActions - _actionsFulfilled;" \n
                          "" \n
                          "// Get civilian agents" \n
-                         "_agents = [_objective,""agents"",[]] call ALiVE_fnc_HashGet;" \n
+                         "_agents = _objective getOrDefault [""agents"", []];" \n
                          "" \n
                          "// Analyse" \n
                          "// Determine best action type" \n
@@ -1031,7 +1031,7 @@ class FSM
                          "            _faction = (selectRandom _factions);" \n
                          "		_behaviour = ""STEALTH"";" \n
                          "" \n
-                         "            _handle = [[],""convertObject"",[_objective,""roadblocks"",[]] call ALiVE_fnc_HashGet] call ALiVE_fnc_OPCOM;" \n
+                         "            _handle = [[],""convertObject"",_objective getOrDefault [""roadblocks"", []]] call ALiVE_fnc_OPCOM;" \n
                          "" \n
                          "            //Override destination if there is a handle" \n
                          "            if (alive _handle) then {_pos = getposATL _handle};" \n
@@ -1056,7 +1056,7 @@ class FSM
                          "            _faction = (selectRandom _factions);" \n
                          "		_behaviour = ""STEALTH"";" \n
                          "" \n
-                         "            _building = [[],""convertObject"",[_objective,""depot"",[]] call ALiVE_fnc_HashGet] call ALiVE_fnc_OPCOM;" \n
+                         "            _building = [[],""convertObject"",_objective getOrDefault [""depot"", []]] call ALiVE_fnc_OPCOM;" \n
                          "" \n
                          "            if (!alive _building) then {" \n
                          "                _buildings = [_center, _size] call ALiVE_fnc_INS_filterObjectiveBuildings;" \n
@@ -1087,7 +1087,7 @@ class FSM
                          "            _groupsize = 1;" \n
                          "            _faction = (selectRandom _factions);" \n
                          "" \n
-                         "            _building = [[],""convertObject"",[_objective,""HQ"",[]] call ALiVE_fnc_HashGet] call ALiVE_fnc_OPCOM;" \n
+                         "            _building = [[],""convertObject"",_objective getOrDefault [""HQ"", []]] call ALiVE_fnc_OPCOM;" \n
                          "" \n
                          "            if (!alive _building) then {" \n
                          "                _buildings = [_center, _size] call ALiVE_fnc_INS_filterObjectiveBuildings;" \n
@@ -1140,7 +1140,7 @@ class FSM
                          "            [_behaviour,_speed,_command,_types,_groupsize,_guard]        // Behaviour, speed, command and types" \n
                          "        ];" \n
                          "" \n
-                         "    [_objective,""actions"",_actions] call ALiVE_fnc_HashSet;" \n
+                         "    _objective set [""actions"", _actions];" \n
                          "" \n
                          "    // debug ---------------------------------------" \n
                          "    if(_debug) then {" \n
@@ -1174,8 +1174,8 @@ class FSM
                         itemno = 17;
                         init = /*%FSM<STATEINIT""">*/"private [""_section"",""_dead"",""_types"",""_agents""];" \n
                          "" \n
-                         "_section = [_objective,""section"",[]] call ALiVE_fnc_HashGet;" \n
-                         "_actions = [_objective,""actions""] call ALiVE_fnc_HashGet;" \n
+                         "_section = _objective getOrDefault [""section"", []];" \n
+                         "_actions = _objective get ""actions"";" \n
                          "" \n
                          "_types = _actions select 6 select 3;" \n
                          "_groupsize = _actions select 6 select 4;" \n
@@ -1187,7 +1187,7 @@ class FSM
                          "_dead = []; {private [""_profile""]; _profile = [ALIVE_profileHandler, ""getProfile"", _x] call ALIVE_fnc_profileHandler; if (isnil ""_profile"") then {_dead pushback _x}} foreach _section;" \n
                          "" \n
                          "// Remove dead profiles from system" \n
-                         "if (count _dead > 0) then {_section = _section - _dead; _troopsBusy = _troopsBusy - _dead; _OPCOM_FSM setFSMvariable [_var,(_OPCOM_FSM getFSMvariable _var) - _dead]; [_objective,""section"",_section] call ALiVE_fnc_HashSet};" \n
+                         "if (count _dead > 0) then {_section = _section - _dead; _troopsBusy = _troopsBusy - _dead; _OPCOM_FSM setFSMvariable [_var,(_OPCOM_FSM getFSMvariable _var) - _dead]; _objective set [""section"", _section]};" \n
                          "" \n
                          "// Collect section" \n
                          "if (_groupSize > 0) then {" \n
@@ -1204,19 +1204,19 @@ class FSM
                          "    " \n
                          "        // Add section" \n
                          "        if ((count _section) >= ceil(_sizeSection/3)) then {" \n
-                         "            [_objective,""section"",_section] call ALiVE_fnc_HashSet;" \n
-                         "            [_objective,""opcom_state"",_state] call ALiVE_fnc_HashSet;" \n
-                         "            [_objective,""tacom_state"",_orders] call AliVE_fnc_HashSet;" \n
+                         "            _objective set [""section"", _section];" \n
+                         "            _objective set [""opcom_state"", _state];" \n
+                         "            _objective set [""tacom_state"", _orders];" \n
                          "            " \n
                          "            _troopsBusy = _troopsBusy + _section;" \n
                          "            _simultan = (_simultan - [_id]) + [_id];" \n
                          "    " \n
                          "        // Remove section" \n
                          "        } else {" \n
-                         "            [_objective,""section""] call ALiVE_fnc_HashRem;" \n
-                         "            [_objective,""opcom_state"",""unassigned""] call ALiVE_fnc_HashSet;" \n
+                         "            _objective deleteAt ""section"";" \n
+                         "            _objective set [""opcom_state"", ""unassigned""];" \n
                          "    " \n
-                         "            {[[ALIVE_profileHandler, ""getProfile"", _x] call ALIVE_fnc_profileHandler,""busy"",false] call ALiVE_fnc_HashSet} foreach _section;" \n
+                         "            {[ALIVE_profileHandler, ""getProfile"", _x] call ALIVE_fnc_profileHandler set [""busy"", false]} foreach _section;" \n
                          "    " \n
                          "            _OPCOM_FSM setFSMvariable [_var,nil];" \n
                          "            _troopsBusy = _troopsBusy - _section;" \n
@@ -1269,7 +1269,7 @@ class FSM
                         itemno = 19;
                         init = /*%FSM<STATEINIT""">*/"private [""_pos"",""_actions"",""_switch"",""_behaviour"",""_speed"",""_command"",""_commandParams"",""_pending"",""_count""];" \n
                          "" \n
-                         "_actions = [_objective,""actions""] call ALiVE_fnc_HashGet;" \n
+                         "_actions = _objective get ""actions"";" \n
                          "_pos = _actions select 1;" \n
                          "_switch = _actions select 2;" \n
                          "_behaviour = _actions select 6 select 0;" \n
@@ -1286,11 +1286,11 @@ class FSM
                          "    _profileID = _x;" \n
                          "" \n
                          "    _profile = [ALIVE_profileHandler, ""getProfile"", _profileID] call ALIVE_fnc_profileHandler;" \n
-                         "    _waypoints = [_profile,""waypoints"",[]] call ALIVE_fnc_HashGet;" \n
-                         "    _profilePosition = [_profile,""position"",_pos] call ALiVE_fnc_HashGet;" \n
-                         "    _active = [_profile,""active"",false] call ALiVE_fnc_HashGet;" \n
+                         "    _waypoints = _profile getOrDefault [""waypoints"", []];" \n
+                         "    _profilePosition = _profile getOrDefault [""position"", _pos];" \n
+                         "    _active = _profile getOrDefault [""active"", false];" \n
                          "" \n
-                         "    [_profile,""busy"",true] call ALiVE_fnc_HashSet;" \n
+                         "    _profile set [""busy"", true];" \n
                          "" \n
                          "    if (_count == 0 && {_profilePosition distance _pos > 50}) then {" \n
                          "" \n
@@ -1314,9 +1314,9 @@ class FSM
                          "        //_nearRoads = _stagingPosition nearRoads 100; if (count _nearRoads > 0) then {_stagingPosition = getposATL (_nearRoads select 0)} else {_stagingPosition = [_stagingPosition,50] call CBA_fnc_RandPos};" \n
                          "" \n
                          "        _profileWaypoint = [_stagingPosition, 50] call ALIVE_fnc_createProfileWaypoint;" \n
-                         "        [_profileWaypoint,""statements"",[""true"",_statements]] call ALIVE_fnc_hashSet;" \n
-                         "        [_profileWaypoint,""behaviour"",_behaviour] call ALIVE_fnc_hashSet;" \n
-                         "        [_profileWaypoint,""speed"",_speed] call ALIVE_fnc_hashSet;" \n
+                         "        _profileWaypoint set [""statements"", [""true"",_statements]];" \n
+                         "        _profileWaypoint set [""behaviour"", _behaviour];" \n
+                         "        _profileWaypoint set [""speed"", _speed];" \n
                          "" \n
                          "        [_profile,""addWaypoint"",_profileWaypoint] call ALIVE_fnc_profileEntity;" \n
                          "        [_profile, ""setActiveCommand"", [_command,""spawn"",_commandParams]] call ALIVE_fnc_profileEntity;" \n
@@ -1324,28 +1324,28 @@ class FSM
                          "        if (_switch) then {" \n
                          "            private [""_storage"",""_profileSide"",""_unitClasses"",""_positions"",""_damages"",""_ranks"",""_faction"",""_class"",""_civFaction""];" \n
                          "" \n
-                         "            _storage = [_objective,""storage"",[]] call ALiVE_fnc_HashGet;" \n
+                         "            _storage = _objective getOrDefault [""storage"", []];" \n
                          "            " \n
                          "            if (({(_x select 0 == _profileID)} count _storage < 1)) then {" \n
                          "" \n
-                         "                _profileSide = [_profile,""side""] call ALiVE_fnc_HashGet;" \n
-                         "                _unitClasses = [_profile,""unitClasses""] call ALiVE_fnc_HashGet;" \n
-                         "                _positions = [_profile,""positions""] call ALiVE_fnc_HashGet;" \n
-                         "                _damages = [_profile,""damages""] call ALiVE_fnc_HashGet;" \n
-                         "                _ranks = [_profile,""ranks""] call ALiVE_fnc_HashGet;" \n
-                         "                _faction = [_profile,""faction""] call ALiVE_fnc_HashGet;" \n
+                         "                _profileSide = _profile get ""side"";" \n
+                         "                _unitClasses = _profile get ""unitClasses"";" \n
+                         "                _positions = _profile get ""positions"";" \n
+                         "                _damages = _profile get ""damages"";" \n
+                         "                _ranks = _profile get ""ranks"";" \n
+                         "                _faction = _profile get ""faction"";" \n
                          "                _civFaction = (selectRandom _civFactions);" \n
                          "                _class = [[_civFaction],1,[],false] call ALiVE_fnc_chooseRandomUnits;" \n
                          "" \n
                          "                _storage pushback [_profileID,_profileSide,_unitClasses,_positions,_damages,_ranks,_faction];" \n
-                         "                [_objective,""storage"",_storage ] call ALiVE_fnc_HashSet;" \n
+                         "                _objective set [""storage"", _storage];" \n
                          "" \n
-                         "                [_profile,""side"",""CIV""] call ALiVE_fnc_HashSet;" \n
-                         "                [_profile,""faction"",_civFaction] call ALiVE_fnc_HashSet;" \n
-                         "                [_profile,""unitClasses"",_class] call ALiVE_fnc_HashSet;" \n
-                         "                [_profile,""positions"",[_positions select 0]] call ALiVE_fnc_HashSet;" \n
-                         "                [_profile,""damages"",[_damages select 0]] call ALiVE_fnc_HashSet;" \n
-                         "                [_profile,""ranks"",[_ranks select 0]] call ALiVE_fnc_HashSet;" \n
+                         "                _profile set [""side"", ""CIV""];" \n
+                         "                _profile set [""faction"", _civFaction];" \n
+                         "                _profile set [""unitClasses"", _class];" \n
+                         "                _profile set [""positions"", [_positions select 0]];" \n
+                         "                _profile set [""damages"", [_damages select 0]];" \n
+                         "                _profile set [""ranks"", [_ranks select 0]];" \n
                          "" \n
                          "                _profileVehicle1 = [nil, ""create""] call ALIVE_fnc_profileVehicle;" \n
                          "                [_profileVehicle1, ""init""] call ALIVE_fnc_profileVehicle;" \n
@@ -1386,7 +1386,7 @@ class FSM
                                          "    private [""_profile""];" \n
                                          "" \n
                                          "    _profile = [ALiVE_profileHandler, ""getProfile"", _x] call ALIVE_fnc_profileHandler;" \n
-                                         "    !isnil ""_profile"" && {([_profile,""position""] call ALiVE_fnc_HashGet) distance _pos > 100}" \n
+                                         "    !isnil ""_profile"" && {(_profile get ""position"") distance _pos > 100}" \n
                                          "} count _section;" \n
                                          "" \n
                                          "_ready = ((_troopCount + _count) == 0);" \n
@@ -1424,8 +1424,8 @@ class FSM
                         itemno = 21;
                         init = /*%FSM<STATEINIT""">*/"private [""_type"",""_pos"",""_switch"",""_actions"",""_code""];" \n
                          "" \n
-                         "_actions = [_objective,""actions""] call ALiVE_fnc_HashGet;" \n
-                         "_code = [_objective,""code""] call ALiVE_fnc_HashGet;" \n
+                         "_actions = _objective get ""actions"";" \n
+                         "_code = _objective get ""code"";" \n
                          "" \n
                          "_type = _actions select 0;" \n
                          "_pos = _actions select 1;" \n
@@ -1436,7 +1436,7 @@ class FSM
                          "" \n
                          "if (isnil ""_code"") then {" \n
                          "    _code = _paramsActions spawn (missionNamespace getVariable [_codeActions,{}]);" \n
-                         "    [_objective,""code"",_code] call ALiVE_fnc_HashSet;" \n
+                         "    _objective set [""code"", _code];" \n
                          "};" \n
                          "" \n
                          "//[""FSM state: %1"",""EXECUTE ACTIONS""] call ALIVE_fnc_dumpR;" \n
@@ -1501,14 +1501,14 @@ class FSM
                          "" \n
                          "    _profileID = _x;" \n
                          "    _profile = [ALIVE_profileHandler, ""getProfile"", _profileID] call ALIVE_fnc_profileHandler;" \n
-                         "    _position = [_profile,""position""] call ALiVE_fnc_HashGet;" \n
-                         "    _assignments = [_profile,""vehicleAssignments"",[]] call ALiVE_fnc_HashGet;" \n
-                         "    _active = [_profile,""active"",false] call ALiVE_fnc_HashGet;" \n
+                         "    _position = _profile get ""position"";" \n
+                         "    _assignments = _profile getOrDefault [""vehicleAssignments"", []];" \n
+                         "    _active = _profile getOrDefault [""active"", false];" \n
                          "" \n
                          "    if (_guard > 0) then {" \n
                          "        if (count _guards < _guard) then {" \n
                          "" \n
-                         "            [_profile,""busy"",true] call ALiVE_fnc_HashSet;" \n
+                         "            _profile set [""busy"", true];" \n
                          "            [_profile, ""clearWaypoints""] call ALIVE_fnc_profileEntity;" \n
                          "            [_profile, ""clearActiveCommands""] call ALIVE_fnc_profileEntity;" \n
                          "            [_profile, ""setActiveCommand"", [""ALIVE_fnc_garrison"",""spawn"",[30,""true"",[0,0,0]]]] call ALIVE_fnc_profileEntity;" \n
@@ -1518,18 +1518,18 @@ class FSM
                          "    } else {" \n
                          "        if (_switch) then {" \n
                          "" \n
-                         "            _storage = [_objective,""storage"",[]] call ALiVE_fnc_HashGet;" \n
+                         "            _storage = _objective getOrDefault [""storage"", []];" \n
                          "" \n
                          "            {" \n
                          "                _entry = _x;" \n
                          "" \n
                          "                if ((_x select 0) == _profileID) then {" \n
-                         "                    [_profile,""side"",_x select 1] call ALiVE_fnc_HashSet;" \n
-                         "                    [_profile,""unitClasses"",_x select 2] call ALiVE_fnc_HashSet;" \n
-                         "                    [_profile,""positions"",_x select 3] call ALiVE_fnc_HashSet;" \n
-                         "                    [_profile,""damages"",_x select 4] call ALiVE_fnc_HashSet;" \n
-                         "                    [_profile,""ranks"",_x select 5] call ALiVE_fnc_HashSet;" \n
-                         "                    [_profile,""faction"",_x select 6] call ALiVE_fnc_HashSet;" \n
+                         "                    _profile set [""side"", _x select 1];" \n
+                         "                    _profile set [""unitClasses"", _x select 2];" \n
+                         "                    _profile set [""positions"", _x select 3];" \n
+                         "                    _profile set [""damages"", _x select 4];" \n
+                         "                    _profile set [""ranks"", _x select 5];" \n
+                         "                    _profile set [""faction"", _x select 6];" \n
                          "                };" \n
                          "            } foreach _storage;" \n
                          "" \n
@@ -1555,18 +1555,18 @@ class FSM
                          "                    " \n
                          "                    _profile = [ALiVE_ProfileHandler,'getProfile',%1] call ALiVE_fnc_ProfileHandler;" \n
                          "    " \n
-                         "                    [_profile, 'busy', false] call ALiVE_fnc_HashSet;" \n
+                         "                    _profile set ['busy', false];" \n
                          "                    [_profile, 'clearWaypoints'] call ALIVE_fnc_profileEntity;" \n
                          "                    [_profile, 'despawn'] call ALIVE_fnc_profileEntity;" \n
                          "                "",str(_profileID)];" \n
-                         "                [_profileWaypoint,""statements"",[""true"",_statements]] call ALIVE_fnc_hashSet;" \n
+                         "                _profileWaypoint set [""statements"", [""true"",_statements]];" \n
                          "                [_profile, ""addWaypoint"", _profileWaypoint] call ALIVE_fnc_profileEntity;" \n
                          "            } else {" \n
-                         "                [_profile,""busy"",false] call ALiVE_fnc_HashSet;" \n
+                         "                _profile set [""busy"", false];" \n
                          "                [_profile, ""clearWaypoints""] call ALIVE_fnc_profileEntity;" \n
                          "            };" \n
                          "        } else {" \n
-                         "            [_profile,""busy"",false] call ALiVE_fnc_HashSet;" \n
+                         "            _profile set [""busy"", false];" \n
                          "            [_profile, ""clearWaypoints""] call ALIVE_fnc_profileEntity;" \n
                          "        };" \n
                          "" \n
@@ -1574,21 +1574,21 @@ class FSM
                          "} foreach _section;" \n
                          "" \n
                          "// Set guards if defined" \n
-                         "if (count _guards > 0) then {[_objective,""guards"",([_objective,""guards"",[]] call ALiVE_fnc_HashGet) + _guards] call ALiVE_fnc_HashSet};" \n
+                         "if (count _guards > 0) then {_objective set [""guards"", (_objective getOrDefault [""guards"", []]) + _guards]};" \n
                          "" \n
                          "// Update" \n
-                         "[_objective,""actionsFulfilled"",(([_objective,""actionsFulfilled"",[]] call ALiVE_fnc_HashGet) - [_type]) + [_type]] call ALiVE_fnc_HashSet;" \n
+                         "_objective set [""actionsFulfilled"", ((_objective getOrDefault [""actionsFulfilled"", []]) - [_type]) + [_type]];" \n
                          "_troopsBusy = _troopsBusy - (_section - _guards);" \n
                          "_simultan = _simultan - [_id];" \n
                          "" \n
                          "// Reset" \n
                          "_OPCOM_FSM setFSMvariable [_var,nil];" \n
-                         "[_objective,""code""] call ALiVE_fnc_HashRem;" \n
-                         "[_objective,""storage""] call ALiVE_fnc_HashRem;" \n
-                         "[_objective,""actions""] call ALiVE_fnc_HashRem;" \n
-                         "[_objective,""section""] call ALiVE_fnc_HashRem;" \n
-                         "[_objective,""opcom_orders"",""none""] call ALiVE_fnc_HashSet;" \n
-                         "[_objective,""opcom_state"",""unassigned""] call ALiVE_fnc_HashSet;" \n
+                         "_objective deleteAt ""code"";" \n
+                         "_objective deleteAt ""storage"";" \n
+                         "_objective deleteAt ""actions"";" \n
+                         "_objective deleteAt ""section"";" \n
+                         "_objective set [""opcom_orders"", ""none""];" \n
+                         "_objective set [""opcom_state"", ""unassigned""];" \n
                          "" \n
                          "//[""FSM state: %1"",""DETERMINE SUCCESS""] call ALIVE_fnc_dumpR;"/*%FSM</STATEINIT""">*/;
                         precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
@@ -1670,7 +1670,7 @@ class FSM
                                          "        _cycle = _cycleTime;" \n
                                          "    " \n
                                          "        _troopsAnalysis = [_OPCOM_HANDLER] spawn {[_this select 0,""scantroops""] call ALiVE_fnc_OPCOM};" \n
-                                         "        _agentClusterData = if (!isnil ""ALIVE_agentHandler"") then {[ALIVE_agentHandler,""agentsByCluster"",["""",[],[],""""]] call ALiVE_fnc_hashGet} else {["""",[],[],""""]};" \n
+                                         "        _agentClusterData = if (!isnil ""ALIVE_agentHandler"") then {ALIVE_agentHandler getOrDefault [""agentsByCluster"", ["""",[],[],""""]]} else {["""",[],[],""""]};" \n
                                          "    };"/*%FSM</CONDPRECONDITION""">*/;
                                         condition=/*%FSM<CONDITION""">*/"time - _time > _delay && {time - _time > _cycle} && {!_pause};"/*%FSM</CONDITION""">*/;
                                         action=/*%FSM<ACTION""">*/"_time = time; _cycle = 0;" \n
@@ -1714,7 +1714,7 @@ class FSM
                                          "        _cycle = _cycleTime;" \n
                                          "    " \n
                                          "        _troopsAnalysis = [_OPCOM_HANDLER] spawn {[_this select 0,""scantroops""] call ALiVE_fnc_OPCOM};" \n
-                                         "        _agentClusterData = if (!isnil ""ALIVE_agentHandler"") then {[ALIVE_agentHandler,""agentsByCluster"",["""",[],[],""""]] call ALiVE_fnc_hashGet} else {["""",[],[],""""]};" \n
+                                         "        _agentClusterData = if (!isnil ""ALIVE_agentHandler"") then {ALIVE_agentHandler getOrDefault [""agentsByCluster"", ["""",[],[],""""]]} else {["""",[],[],""""]};" \n
                                          "    };"/*%FSM</CONDPRECONDITION""">*/;
                                         condition=/*%FSM<CONDITION""">*/"time - _time > _delay && {time - _time > _cycle} && {!_pause};"/*%FSM</CONDITION""">*/;
                                         action=/*%FSM<ACTION""">*/"_time = time; _cycle = 0;" \n
@@ -1730,7 +1730,7 @@ class FSM
                 {
                         name = "END";
                         itemno = 34;
-                        init = /*%FSM<STATEINIT""">*/"[_OPCOM_HANDLER,""OPCOM_FSM""] call ALiVE_fnc_HashRem;"/*%FSM</STATEINIT""">*/;
+                        init = /*%FSM<STATEINIT""">*/"_OPCOM_HANDLER deleteAt ""OPCOM_FSM"";"/*%FSM</STATEINIT""">*/;
                         precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
                         class Links
                         {

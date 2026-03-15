@@ -47,7 +47,7 @@ _position = getposATL _unit;
 _faction = faction _unit;
 
 //Select OPCOM
-{if ({_x == _faction} count ([_x,"factions",[]] call ALiVE_fnc_HashGet) > 0) exitwith {_logic = _x}} foreach OPCOM_instances;
+{if ({_x == _faction} count (_x getOrDefault ["factions", []]) > 0) exitwith {_logic = _x}} foreach OPCOM_instances;
 
 switch (_state) do {
     case ("attacking") : {_color = "COLORRED"};

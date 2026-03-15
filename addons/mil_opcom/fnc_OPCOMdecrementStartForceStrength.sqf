@@ -78,13 +78,13 @@ switch _type do {
 };
    
 { 
-	_sideTarget = [_x, "side", ""] call ALIVE_fnc_hashGet;
+	_sideTarget = _x getOrDefault ["side", ""];
 	if (_sideTarget == _side) then { 
-		_instance =  [_x,"startForceStrength"] call ALiVE_fnc_HashGet;
+		_instance =  _x get "startForceStrength";
 		_currentVal = _instance select _typeNum;
 		if ((_instance select _typeNum) > 0) then {
 		  _instance set [_typeNum, (_instance select _typeNum) - _decrementAmount];
-      _result = [_x,"startForceStrength"] call ALiVE_fnc_HashGet;  
+      _result = _x get "startForceStrength";  
       _newVal = _result select _typeNum;  
 	  	// DEBUG -------------------------------------------------------------------------------------
       if (ALiVE_SYS_PROFILE_DEBUG_ON) then {
@@ -92,7 +92,7 @@ switch _type do {
 		  };
 	  	// DEBUG -------------------------------------------------------------------------------------
 	  } else {
-	  	_result = [_x,"startForceStrength"] call ALiVE_fnc_HashGet;  
+	  	_result = _x get "startForceStrength";  
 	  	// DEBUG -------------------------------------------------------------------------------------
       if (ALiVE_SYS_PROFILE_DEBUG_ON) then {
 	  	  ["OPCOM %1 cannot decrement %2 StartForceStrength; already zero!, startForceStrength: %3", _side, _type, _result] call ALIVE_fnc_dump;

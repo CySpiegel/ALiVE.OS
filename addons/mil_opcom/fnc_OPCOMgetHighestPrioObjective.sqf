@@ -34,7 +34,7 @@ _result = "";
 {
     private _handle = _x;
 
-    if (([_handle,"side",""] call ALiVE_fnc_HashGet) == _side) exitwith {
+    if ((_handle getOrDefault ["side", ""]) == _side) exitwith {
         _opcom = _handle;
     };
 } foreach OPCOM_instances;
@@ -43,13 +43,13 @@ if (isnil "_opcom") exitwith {
     ["MIL OPCOM - fnc_OPCOMgetHighestPrioObjective didn't find an OPCOM for side %1! Exiting...",_side] call ALiVE_fnc_dump;
 };
 
-private _objectives = [_opcom,"objectives",[]] call ALiVE_fnc_HashGet;
+private _objectives = _opcom getOrDefault ["objectives", []];
 
 {
     private _objective = _x;
 
-    private _id = [_objective,"objectiveID",""] call ALiVE_fnc_HashGet;
-    private _state = [_objective,"opcom_state","none"] call ALiVE_fnc_HashGet;
+    private _id = _objective getOrDefault ["objectiveID", ""];
+    private _state = _objective getOrDefault ["opcom_state", "none"];
 
     if (_state in _states) exitwith {
         _result = _id;

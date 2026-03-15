@@ -63,7 +63,7 @@ ALiVE_fnc_INS_assault = {
                     private ["_agent"];
                     _agent = [ALiVE_AgentHandler,"getAgent",_x] call ALiVE_fnc_AgentHandler;
 
-                    if (!isnil "_agent" && {([_agent,"type",""] call ALiVE_fnc_HashGet) == "agent"}) exitwith {
+                    if (!isnil "_agent" && {(_agent getOrDefault ["type", ""]) == "agent"}) exitwith {
                         [_agent, "setActiveCommand", ["ALIVE_fnc_cc_suicideTarget", "managed", [_sides]]] call ALIVE_fnc_civilianAgent;
                     };
                 } foreach _agents;
@@ -94,14 +94,14 @@ ALiVE_fnc_INS_ambush = {
                 _roadObject = [[],"convertObject",_road] call ALiVE_fnc_OPCOM;
 
                 // Establish ambush position
-                if (alive _roadObject) then {[_objective,"ambush",_road] call ALiVE_fnc_HashSet};
+                if (alive _roadObject) then {_objective set ["ambush", _road]};
 
                 // Add TACOM suicide command on one ambient civilian agents
                 {
                     private ["_agent"];
                     _agent = [ALiVE_AgentHandler,"getAgent",_x] call ALiVE_fnc_AgentHandler;
 
-                    if (!isnil "_agent" && {([_agent,"type",""] call ALiVE_fnc_HashGet) == "agent"}) exitwith {
+                    if (!isnil "_agent" && {(_agent getOrDefault ["type", ""]) == "agent"}) exitwith {
                         [_agent, "setActiveCommand", ["ALIVE_fnc_cc_rogueTarget", "managed", [_sides]]] call ALIVE_fnc_civilianAgent;
                     };
                 } foreach _agents;
@@ -128,7 +128,7 @@ ALiVE_fnc_INS_ambush = {
                 _timeTaken = time; waituntil {time - _timeTaken > 900};
 
                 // Remove ambush marker
-                if (alive _roadObject) then {deletemarker format["Ambush_%1",getposATL _roadObject]; [_objective,"ambush"] call ALiVE_fnc_HashRem};
+                if (alive _roadObject) then {deletemarker format["Ambush_%1",getposATL _roadObject]; _objective deleteAt "ambush"};
 };
 
 ALiVE_fnc_INS_retreat = {
@@ -153,23 +153,23 @@ ALiVE_fnc_INS_retreat = {
                     private ["_agent"];
                     _agent = [ALiVE_AgentHandler,"getAgent",_x] call ALiVE_fnc_AgentHandler;
 
-                    if (!isnil "_agent" && {([_agent,"type",""] call ALiVE_fnc_HashGet) == "agent"}) exitwith {
+                    if (!isnil "_agent" && {(_agent getOrDefault ["type", ""]) == "agent"}) exitwith {
                         [_agent, "setActiveCommand", ["ALIVE_fnc_cc_rogueTarget", "managed", [_allSides - _sides]]] call ALIVE_fnc_civilianAgent;
                     };
                 } foreach _agents;
 
                 //remove installations if existing
                 {
-                    _object = [[],"convertObject",[_objective,_x,[]] call ALiVE_fnc_HashGet] call ALiVE_fnc_OPCOM;
+                    _object = [[],"convertObject",_objective getOrDefault [_x, []]] call ALiVE_fnc_OPCOM;
 
                     if (alive _object && {_x in ["ied","suicide"]}) then {deletevehicle _object};
                     if (alive _object) then {_object setdamage 1; deleteMarker format["%1_%2",_x,_id]};
 
-                    [_objective,_x] call ALiVE_fnc_HashRem;
+                    _objective deleteAt _x;
                 } foreach ["factory","hq","ambush","depot","sabotage","ied","suicide"];
 
                 // Reset all actions done on that objective so they can be performed again
-                [_objective,"actionsFulfilled",[]] call ALiVE_fnc_HashSet;
+                _objective set ["actionsFulfilled", []];
 
                 // Reduce hostility level after retreat
                 [_pos,_sides, 20] call ALiVE_fnc_updateSectorHostility;
@@ -221,7 +221,7 @@ ALiVE_fnc_INS_factory = {
                     {[_x,"addHouse",_factory] call ALiVE_fnc_CQB} foreach _CQB;
 
                     // Set factory
-                    [_objective,"factory",[[],"convertObject",_factory] call ALiVE_fnc_OPCOM] call ALiVE_fnc_HashSet;
+                    _objective set ["factory", [[],"convertObject",_factory] call ALiVE_fnc_OPCOM];
                 };
 
                 // Add TACOM IED command on all selected agents
@@ -229,7 +229,7 @@ ALiVE_fnc_INS_factory = {
                     private ["_agent"];
                     _agent = [ALiVE_AgentHandler,"getAgent",_x] call ALiVE_fnc_AgentHandler;
 
-                    if (!isnil "_agent" && {([_agent,"type",""] call ALiVE_fnc_HashGet) == "agent"}) exitwith {
+                    if (!isnil "_agent" && {(_agent getOrDefault ["type", ""]) == "agent"}) exitwith {
                         [_agent, "setActiveCommand", ["ALIVE_fnc_cc_getWeapons", "managed", [_pos]]] call ALIVE_fnc_civilianAgent;
                     };
                 } foreach _agents;
@@ -284,7 +284,7 @@ ALiVE_fnc_INS_ied = {
                     _placeholders = ((nearestobjects [_pos,["Static"],150]) + (_pos nearRoads 150));
                     if (!isnil "_placeholders" && {count _placeholders > 0}) then {_trg = _placeholders select 0};
 
-                    [_objective,"ied",[[],"convertObject",_trg] call ALiVE_fnc_OPCOM] call ALiVE_fnc_HashSet;
+                    _objective set ["ied", [[],"convertObject",_trg] call ALiVE_fnc_OPCOM];
                 };
 
                 // Add TACOM rogue command on all selected agents
@@ -292,7 +292,7 @@ ALiVE_fnc_INS_ied = {
                     private ["_agent"];
                     _agent = [ALiVE_AgentHandler,"getAgent",_x] call ALiVE_fnc_AgentHandler;
 
-                    if (!isnil "_agent" && {([_agent,"type",""] call ALiVE_fnc_HashGet) == "agent"}) exitwith {
+                    if (!isnil "_agent" && {(_agent getOrDefault ["type", ""]) == "agent"}) exitwith {
                         [_agent, "setActiveCommand", ["ALIVE_fnc_cc_rogueTarget", "managed", [_sides]]] call ALIVE_fnc_civilianAgent;
                     };
                 } foreach _agents;
@@ -340,7 +340,7 @@ ALiVE_fnc_INS_suicide = {
                     _placeholders = ((nearestobjects [_pos,["Static"],150]) + (_pos nearRoads 150));
                     if (!isnil "_placeholders" && {count _placeholders > 0}) then {_trg = _placeholders select 0};
 
-                    [_objective,"suicide",[[],"convertObject",_trg] call ALiVE_fnc_OPCOM] call ALiVE_fnc_HashSet;
+                    _objective set ["suicide", [[],"convertObject",_trg] call ALiVE_fnc_OPCOM];
                 };
 
                 // Add TACOM suicide command on one ambient civilian agents
@@ -348,7 +348,7 @@ ALiVE_fnc_INS_suicide = {
                     private ["_agent"];
                     _agent = [ALiVE_AgentHandler,"getAgent",_x] call ALiVE_fnc_AgentHandler;
 
-                    if (!isnil "_agent" && {([_agent,"type",""] call ALiVE_fnc_HashGet) == "agent"}) exitwith {
+                    if (!isnil "_agent" && {(_agent getOrDefault ["type", ""]) == "agent"}) exitwith {
                         [_agent, "setActiveCommand", ["ALIVE_fnc_cc_suicideTarget", "managed", [_sides]]] call ALIVE_fnc_civilianAgent;
                     };
                 } foreach _agents;
@@ -384,14 +384,14 @@ ALiVE_fnc_INS_sabotage = {
                 waituntil {time - _timeTaken > 120};
 
                 // Assign sabotage target
-                if (alive _target) then {[_objective,"sabotage",[[],"convertObject",_target] call ALiVE_fnc_OPCOM] call ALiVE_fnc_HashSet};
+                if (alive _target) then {_objective set ["sabotage", [[],"convertObject",_target] call ALiVE_fnc_OPCOM]};
 
                 // Add TACOM Sabotage command on all selected agents
                 {
                     private ["_agent"];
                      _agent = [ALiVE_AgentHandler,"getAgent",_x] call ALiVE_fnc_AgentHandler;
 
-                    if (!isnil "_agent" && {([_agent,"type",""] call ALiVE_fnc_HashGet) == "agent"}) exitwith {
+                    if (!isnil "_agent" && {(_agent getOrDefault ["type", ""]) == "agent"}) exitwith {
                         [_agent, "setActiveCommand", ["ALIVE_fnc_cc_sabotage", "managed", [getposATL _target]]] call ALIVE_fnc_civilianAgent;
                     };
                 } foreach _agents;
@@ -430,7 +430,7 @@ ALiVE_fnc_INS_roadblocks = {
                     private ["_agent"];
                     _agent = [ALiVE_AgentHandler,"getAgent",_x] call ALiVE_fnc_AgentHandler;
 
-                    if (!isnil "_agent" && {([_agent,"type",""] call ALiVE_fnc_HashGet) == "agent"}) exitwith {
+                    if (!isnil "_agent" && {(_agent getOrDefault ["type", ""]) == "agent"}) exitwith {
                         [_agent, "setActiveCommand", ["ALIVE_fnc_cc_rogueTarget", "managed", [_sides]]] call ALIVE_fnc_civilianAgent;
                     };
                 } foreach _agents;
@@ -512,7 +512,7 @@ ALiVE_fnc_INS_roadblocks = {
                 };
 
                 // Identify location
-                [_objective,"roadblocks",[[],"convertObject",_pos nearestObject "building"] call ALiVE_fnc_OPCOM] call ALiVE_fnc_HashSet;
+                _objective set ["roadblocks", [[],"convertObject",_pos nearestObject "building"] call ALiVE_fnc_OPCOM];
 
                 _event = ['OPCOM_RESERVE',[_side,_objective],"OPCOM"] call ALIVE_fnc_event;
                 _eventID = [ALIVE_eventLog, "addEvent",_event] call ALIVE_fnc_eventLog;
@@ -557,7 +557,7 @@ ALiVE_fnc_INS_depot = {
                     {[_x,"addHouse",_depot] call ALiVE_fnc_CQB} foreach _CQB;
 
                     // Set depot
-                    [_objective,"depot",[[],"convertObject",_depot] call ALiVE_fnc_OPCOM] call ALiVE_fnc_HashSet;
+                    _objective set ["depot", [[],"convertObject",_depot] call ALiVE_fnc_OPCOM];
                 };
 
                 // Add TACOM get weapons command on all selected agents
@@ -622,7 +622,7 @@ ALiVE_fnc_INS_recruit = {
                     {[_x,"addHouse",_HQ] call ALiVE_fnc_CQB} foreach _CQB;
 
                     // Set HQ
-                    [_objective,"HQ",[[],"convertObject",_HQ] call ALiVE_fnc_OPCOM] call ALiVE_fnc_HashSet;
+                    _objective set ["HQ", [[],"convertObject",_HQ] call ALiVE_fnc_OPCOM];
                 };
 
                 // Add TACOM IED command on all selected agents
@@ -944,34 +944,34 @@ ALIVE_fnc_INS_buildingKilledEH = {
     [ALiVE_eventLog, "addEvent", _event] call ALIVE_fnc_eventLog;
 
     private _objective = [[],"getobjectivebyid",_id] call ALiVE_fnc_OPCOM;
-    private _opcomID = [_objective,"opcomID",""] call ALiVE_fnc_HashGet;
-    _pos = [_objective,"center",_pos] call ALiVE_fnc_HashGet;
+    private _opcomID = _objective getOrDefault ["opcomID", ""];
+    _pos = _objective getOrDefault ["center", _pos];
 
     if !(isnil "_factory") then {
-        [_objective,"factory"] call ALiVE_fnc_HashRem;
-        [_objective,"actionsFulfilled",([_objective,"actionsFulfilled",[]] call ALiVE_fnc_HashGet) - ["factory"]] call ALiVE_fnc_HashSet;
+        _objective deleteAt "factory";
+        _objective set ["actionsFulfilled", (_objective getOrDefault ["actionsFulfilled", []]) - ["factory"]];
     };
     if !(isnil "_depot") then {
-        [_objective,"depot"] call ALiVE_fnc_HashRem;
-        [_objective,"actionsFulfilled",([_objective,"actionsFulfilled",[]] call ALiVE_fnc_HashGet) - ["depot"]] call ALiVE_fnc_HashSet;
+        _objective deleteAt "depot";
+        _objective set ["actionsFulfilled", (_objective getOrDefault ["actionsFulfilled", []]) - ["depot"]];
     };
     if !(isnil "_HQ") then {
-        [_objective,"HQ"] call ALiVE_fnc_HashRem;
-        [_objective,"actionsFulfilled",([_objective,"actionsFulfilled",[]] call ALiVE_fnc_HashGet) - ["recruit"]] call ALiVE_fnc_HashSet;
+        _objective deleteAt "HQ";
+        _objective set ["actionsFulfilled", (_objective getOrDefault ["actionsFulfilled", []]) - ["recruit"]];
     };
 
     {deleteVehicle _x} foreach _furniture;
     _building setvariable [QGVAR(furnitured),[]];
 
     {
-        if (([_x,"opcomID"," "] call ALiVE_fnc_HashGet) == _opcomID) exitwith {
+        if ((_x getOrDefault ["opcomID", " "]) == _opcomID) exitwith {
             _opcom = _x
         }
     } foreach OPCOM_instances;
 
     if !(isnil "_opcom") then {
-        _enemy = [_opcom,"sidesenemy",[]] call ALiVE_fnc_HashGet;
-        _friendly = [_opcom,"sidesfriendly",[]] call ALiVE_fnc_HashGet;
+        _enemy = _opcom getOrDefault ["sidesenemy", []];
+        _friendly = _opcom getOrDefault ["sidesfriendly", []];
 
         [_pos,_friendly, 50] call ALiVE_fnc_updateSectorHostility;
         [_pos,_enemy, -50] call ALiVE_fnc_updateSectorHostility;

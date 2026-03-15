@@ -78,12 +78,12 @@ switch _type do {
 };
    
 { 
-	_sideTarget = [_x, "side", ""] call ALIVE_fnc_hashGet;
+	_sideTarget = _x getOrDefault ["side", ""];
 	if (_sideTarget == _side) then { 
-		_instance =  [_x,"startForceStrength"] call ALiVE_fnc_HashGet;
+		_instance =  _x get "startForceStrength";
 		_currentVal = _instance select _typeNum;
 		_instance set [_typeNum, (_instance select _typeNum) + _incrementAmount];
-    _result = [_x,"startForceStrength"] call ALiVE_fnc_HashGet;  
+    _result = _x get "startForceStrength";  
     _newVal = _result select _typeNum;  
     // DEBUG -------------------------------------------------------------------------------------
      if (ALiVE_SYS_PROFILE_DEBUG_ON) then {

@@ -38,36 +38,36 @@ SpyderBlack723
 ---------------------------------------------------------------------------- */
 
 if (ALiVE_gamePaused) exitwith {
-    private _profiles = [MOD(profileHandler),"profiles"] call ALiVE_fnc_hashGet;
-    {[_x,"timeLastSim", diag_tickTime] call ALiVE_fnc_hashSet} foreach (values _profiles);
+    private _profiles = MOD(profileHandler) get "profiles";
+    {_x set ["timeLastSim", diag_tickTime]} foreach (values _profiles);
 };
 
 // parse CBA perFrameHandler arguments
 //_this = _this select 0;
 
 
-private _debug = [MOD(profileSystem),"debug"] call ALiVE_fnc_hashGet;
-private _profileSystemPaused = [MOD(profileSystem),"paused"] call ALiVE_fnc_hashGet;
+private _debug = MOD(profileSystem) get "debug";
+private _profileSystemPaused = MOD(profileSystem) get "paused";
 
-private _combatRange = [MOD(profileCombatHandler),"combatRange"] call ALiVE_fnc_hashGet;
-private _profilesToSim = [MOD(profileSystem),"profilesToSim"] call ALiVE_fnc_hashGet;
-private _simAttacks = [MOD(profileSystem),"simulatingAttacks"] call ALiVE_fnc_hashGet;
+private _combatRange = MOD(profileCombatHandler) get "combatRange";
+private _profilesToSim = MOD(profileSystem) get "profilesToSim";
+private _simAttacks = MOD(profileSystem) get "simulatingAttacks";
 
 if (_profilesToSim isEqualTo []) then {
-    private _profilesByType = [MOD(profileHandler),"profilesByType"] call ALiVE_fnc_hashGet;
-    private _entities = [_profilesByType,"entity"] call ALiVE_fnc_hashGet;
+    private _profilesByType = MOD(profileHandler) get "profilesByType";
+    private _entities = _profilesByType get "entity";
     _profilesToSim append _entities;
 
     _simAttacks = true;
-    [MOD(profileSystem),"simulatingAttacks", true] call ALiVE_fnc_hashSet;
+    MOD(profileSystem) set ["simulatingAttacks", true];
 
 };
 
 if (!_simAttacks) then {
 
-    private _speedModifier = [MOD(profileSystem),"speedModifier", 1] call ALiVE_fnc_HashGet;
-    private _boatsEnabled = [MOD(profileSystem),"seaTransport", false] call ALiVE_fnc_HashGet;
-    private _pathfindingEnabled = [MOD(profileSystem),"pathfinding", false] call ALiVE_fnc_hashGet;
+    private _speedModifier = MOD(profileSystem) getOrDefault ["speedModifier", 1];
+    private _boatsEnabled = MOD(profileSystem) getOrDefault ["seaTransport", false];
+    private _pathfindingEnabled = MOD(profileSystem) getOrDefault ["pathfinding", false];
 
     // find profile to sim
     // sim up to 4 profiles per frame
@@ -88,15 +88,15 @@ if (!_simAttacks) then {
             if (!_profileSystemPaused && !ALiVE_gamePaused) then {
                 // begin sim
 
-                private _locked = [_profile,"locked", false] call ALiVE_fnc_HashGet;
-                private _combat = [_profile,"combat", false] call ALiVE_fnc_HashGet;
+                private _locked = _profile getOrDefault ["locked", false];
+                private _combat = _profile getOrDefault ["combat", false];
 
                 // only sim if profile is not locked or in combat
                 // locked entities could be spawning/despawning or other
 
                 if (!_locked && !_combat) then {
 
-                    private _timeLastSim = [_profile,"timeLastSim", diag_tickTime - 0.001] call ALiVE_fnc_hashGet;
+                    private _timeLastSim = _profile getOrDefault ["timeLastSim", diag_tickTime - 0.001];
                     private _simModifier = diag_tickTime - _timeLastSim;
 
                     // gather info on this profile
@@ -158,8 +158,8 @@ if (!_simAttacks) then {
                             if (!isnil "_attackID") then {
                                 //["%1 begins attacking %2", _profileID, _nearEnemies] call ALiVE_fnc_Dump;
                                 _combat = true;
-                                [_profile,"combat", true] call ALiVE_fnc_HashSet;
-                                [_profile,"attackID", _attackID] call ALiVE_fnc_HashSet;
+                                _profile set ["combat", true];
+                                _profile set ["attackID", _attackID];
                             };
                         };
                     };
@@ -177,15 +177,15 @@ if (!_simAttacks) then {
                                 // profile is not spawned, simulate movement
 
                                 private _activeWaypoint = _waypoints select 0;
-                                private _destination = [_activeWaypoint,"position"] call ALiVE_fnc_hashGet;
-                                private _completionRadius = [_activeWaypoint,"completionRadius"] call ALiVE_fnc_hashGet;
-                                private _statements = [_activeWaypoint,"statements"] call ALiVE_fnc_hashGet;
+                                private _destination = _activeWaypoint get "position";
+                                private _completionRadius = _activeWaypoint get "completionRadius";
+                                private _statements = _activeWaypoint get "statements";
                                 private _distanceToWaypoint = _profilePosition distance2D _destination;
 
                                 private _speedPerSecondArray = _profile get "speedPerSecond";
                                 private _speedPerSecond = _speedPerSecondArray select 1;
 
-                                switch ([_activeWaypoint,"speed"] call ALiVE_fnc_hashGet) do {
+                                switch (_activeWaypoint get "speed") do {
                                     case "LIMITED": {_speedPerSecond = _speedPerSecondArray select 0};
                                     case "NORMAL":  {_speedPerSecond = _speedPerSecondArray select 1};
                                     case "FULL":    {_speedPerSecond = _speedPerSecondArray select 2};
@@ -214,7 +214,7 @@ if (!_simAttacks) then {
                                     private _executeStatements = false;
                                     private _handleWPcomplete = {};
 
-                                    switch ([_activeWaypoint,"type"] call ALiVE_fnc_hashGet) do {
+                                    switch (_activeWaypoint get "type") do {
                                         case "CYCLE" : {
                                             _direction = _profilePosition getDir _destination;
                                             _newPosition = _profilePosition getPos [_moveDistance, _direction];
@@ -263,7 +263,7 @@ if (!_simAttacks) then {
 
                                     if (_vehicleCommander) then {
                                         // move vehicles that profile is in
-                                        [_profile,"hasSimulated", true] call ALiVE_fnc_hashSet;
+                                        _profile set ["hasSimulated", true];
 
                                         {
                                             private _vehicleProfile = [MOD(profileHandler),"getProfile", _x] call ALiVE_fnc_ProfileHandler;
@@ -273,7 +273,7 @@ if (!_simAttacks) then {
                                                 // move all entities within the vehicle
                                                 // set the vehicle position and merge all assigned entities positions
 
-                                                [_vehicleProfile,"hasSimulated", true] call ALiVE_fnc_hashSet;
+                                                _vehicleProfile set ["hasSimulated", true];
                                                 [_vehicleProfile,"engineOn", true] call ALiVE_fnc_profileVehicle;
                                                 [_vehicleProfile,"position", _newPosition] call ALiVE_fnc_profileVehicle;
                                                 [_vehicleProfile,"direction", _direction] call ALiVE_fnc_profileVehicle;
@@ -282,7 +282,7 @@ if (!_simAttacks) then {
                                                 // if profile is in boat, and is no longer on water
                                                 // remove boat
 
-                                                private _boat = [_profile,"boat"] call ALiVE_fnc_hashGet;
+                                                private _boat = _profile get "boat";
                                                 if (_boatsEnabled && {!isnil "_boat"} && {!surfaceIsWater _profilePosition}) then {
                                                     private _boatProfileID = _boat select 0;
                                                     private _boatProfile = [MOD(profileHandler),"getProfile", _boatProfileID] call ALiVE_fnc_ProfileHandler;
@@ -290,8 +290,8 @@ if (!_simAttacks) then {
                                                     if (isnil "_boatProfile") then {
                                                         if (_debug) then {["Profile Simulator _boatProfile is nil _profile is %1",_profile] call ALiVE_fnc_dumpR};
                                                     } else {
-                                                        private _profileID = [_profile,"profileID", "no-ID"] call ALiVE_fnc_hashGet;
-                                                        private _boatID = [_boatProfile,"profileID", "no-ID"] call ALiVE_fnc_hashGet;
+                                                        private _profileID = _profile getOrDefault ["profileID", "no-ID"];
+                                                        private _boatID = _boatProfile getOrDefault ["profileID", "no-ID"];
 
                                                         if (_debug) then {["Profile Simulator is removing boat %1 from entity profile %2", _boatID, _profileID] call ALiVE_fnc_dump};
 
@@ -301,7 +301,7 @@ if (!_simAttacks) then {
                                                         [MOD(profileHandler),"unregisterProfile", _boatProfile] call ALiVE_fnc_profileHandler;
                                                     };
 
-                                                    [_profile,"boat"] call ALiVE_fnc_hashRem;
+                                                    _profile deleteAt "boat";
                                                 };
                                             };
                                         } forEach _vehiclesInCommandOf;
@@ -314,11 +314,11 @@ if (!_simAttacks) then {
                                             {[_position,_destination] call ALiVE_fnc_crossesSea;}
                                         };
                                         if (_boatsEnabled && {surfaceIsWater _profilePosition} && {surfaceIsWater _newPosition} && {call _isSeaTravel}) then {
-                                            if (isnil {[_profile,"boat"] call ALiVE_fnc_hashGet}) then {
+                                            if (isnil {_profile get "boat"}) then {
                                                 if (_debug) then {["Profile Simulator is adding a boat to entity profile %1",_profileID] call ALiVE_fnc_dump};
 
                                                 private _unitPositions = _profile get "positions";
-                                                private _faction = [_profile, "faction"] call ALiVE_fnc_hashGet;
+                                                private _faction = _profile get "faction";
                                                 private _side = _profile get "side";
 
                                                 private _boatTypes = [(count _unitPositions) - 1, [_faction],"SHIP"] call ALiVE_fnc_findVehicleType;
@@ -334,13 +334,13 @@ if (!_simAttacks) then {
                                                     [_profile,"insertWaypoint", _shoreWaypoint] call ALiVE_fnc_profileEntity;
                                                 };
 
-                                                [_profile, "boat", [[_boatProfile,"profileID"] call ALiVE_fnc_HashGet, _newPosition]] call ALiVE_fnc_hashSet;
+                                                _profile set ["boat", [_boatProfile get "profileID", _newPosition]];
                                             };
                                         } else {
                                             // Remove boat if not on water anymore
                                             // failsafe, will be handled by _vehicleCommander case above
 
-                                            private _boat = [_profile,"boat"] call ALiVE_fnc_hashGet;
+                                            private _boat = _profile get "boat";
                                             if (_boatsEnabled && {!isnil "_boat"}) then {
                                                 private _boatProfileID = _boat select 0;
                                                 private _boatProfile = [MOD(profileHandler),"getProfile", _boatProfileID] call ALiVE_fnc_ProfileHandler;
@@ -348,8 +348,8 @@ if (!_simAttacks) then {
                                                 if (isnil "_boatProfile") then {
                                                     if (_debug) then {["Profile Simulator _boatProfile is nil _profile is %1",_profile] call ALiVE_fnc_dumpR};
                                                 } else {
-                                                    private _profileID = [_profile,"profileID","no-ID"] call ALiVE_fnc_hashGet;
-                                                    private _boatID = [_boatProfile,"profileID","no-ID"] call ALiVE_fnc_hashGet;
+                                                    private _profileID = _profile getOrDefault ["profileID", "no-ID"];
+                                                    private _boatID = _boatProfile getOrDefault ["profileID", "no-ID"];
 
                                                     if (_debug) then {["Profile Simulator is removing boat %1 from entity profile %2",_boatID,_profileID] call ALiVE_fnc_dump};
 
@@ -359,12 +359,12 @@ if (!_simAttacks) then {
                                                     [MOD(profileHandler),"unregisterProfile", _boatProfile] call ALiVE_fnc_profileHandler;
                                                 };
 
-                                                [_profile,"boat"] call ALiVE_fnc_hashRem;
+                                                _profile deleteAt "boat";
                                             };
                                         };
 
                                         // set the profile position and merge all unit positions to group position
-                                        [_profile,"hasSimulated", true] call ALiVE_fnc_hashSet;
+                                        _profile set ["hasSimulated", true];
                                         [_profile,"position", _newPosition] call ALiVE_fnc_profileEntity;
                                         [_profile,"mergePositions"] call ALiVE_fnc_profileEntity;
                                     };
@@ -379,7 +379,7 @@ if (!_simAttacks) then {
                                         };
                                     };
                                 } else {
-                                    if (_debug) then {["Profile-Simulator profile movement stopped for profile %1: currentPosition: %2 destination: %3", [_profile,"profileID","no-ID"] call ALiVE_fnc_hashGet, _profilePosition, _destination] call ALiVE_fnc_dump};
+                                    if (_debug) then {["Profile-Simulator profile movement stopped for profile %1: currentPosition: %2 destination: %3", _profile getOrDefault ["profileID", "no-ID"], _profilePosition, _destination] call ALiVE_fnc_dump};
                                 };
 
                             } else {
@@ -392,9 +392,9 @@ if (!_simAttacks) then {
 
                                 if (!isnil "_newPosition" && {!(_newPosition isEqualTo [])} && {!isnil "_profilePosition"} && {!(_profilePosition isEqualTo [])}) then {
                                     private _activeWaypoint = _waypoints select 0;
-                                    private _type = [_activeWaypoint,"type"] call ALiVE_fnc_hashGet;
-                                    private _speed = [_activeWaypoint,"speed"] call ALiVE_fnc_hashGet;
-                                    private _destination = [_activeWaypoint,"position"] call ALiVE_fnc_hashGet;
+                                    private _type = _activeWaypoint get "type";
+                                    private _speed = _activeWaypoint get "speed";
+                                    private _destination = _activeWaypoint get "position";
 
                                     private _moveDistance = _newPosition distance _profilePosition;
                                     private _nearDestination = _newPosition distance _destination < 100;
@@ -421,17 +421,17 @@ if (!_simAttacks) then {
                                             // remove any boat if not on water anymore
                                             // if (_boatsEnabled && {_shallow} && {!isnil {[_profile,"boat"] call ALiVE_fnc_hashGet}} && {!(([_newPosition,0,50,0,0,0.5,1,[],[[0,0,0]]] call BIS_fnc_findSafePos) isEqualto [0,0,0])}) then {...};
 
-                                            private _boat = [_profile,"boat"] call ALiVE_fnc_hashGet;
+                                            private _boat = _profile get "boat";
                                             if (_boatsEnabled && {((_newPosition) select 2) < 4} && {_nearDestination} && {!isnil "_boat"}) then {
                                                 private _boatProfileID = _boat select 0;
-                                                private _creation = ([_profile,"boat"] call ALiVE_fnc_hashGet) select 1;
+                                                private _creation = (_profile get "boat") select 1;
                                                 private _boatProfile = [MOD(profileHandler),"getProfile", _boatProfileID] call ALiVE_fnc_ProfileHandler;
 
                                                 if (isnil "_boatProfile") then {
                                                     if (_debug) then {["Profile Simulator _boatProfile is nil _profile is %1",_profile] call ALiVE_fnc_dumpR};
                                                 } else {
                                                     if (_newPosition distance _creation > 100) then {
-                                                        private _profileID = [_profile,"profileID", "no-ID"] call ALiVE_fnc_hashGet;
+                                                        private _profileID = _profile getOrDefault ["profileID", "no-ID"];
 
                                                         if (_debug) then {["Profile Simulator is removing boat %1 from entity profile %2 (LIVE)",_boatProfileID,_profileID] call ALiVE_fnc_dump};
 
@@ -447,7 +447,7 @@ if (!_simAttacks) then {
                                                     };
                                                 };
 
-                                                [_profile,"boat"] call ALiVE_fnc_hashRem;
+                                                _profile deleteAt "boat";
                                             };
 
                                         } else {
@@ -461,12 +461,12 @@ if (!_simAttacks) then {
 
                                             // Assign a boat to entities if on water
                                             if (_boatsEnabled && {surfaceIsWater _profilePosition} && {surfaceIsWater _newPosition} && {_deepEnough} && {call _isSeaTravel}) then {
-                                                if (isnil {[_profile,"boat"] call ALiVE_fnc_hashGet}) then {
+                                                if (isnil {_profile get "boat"}) then {
 
                                                     if (_debug) then {["Profile Simulator is adding a boat to entity profile (LIVE) %1",_profileID] call ALiVE_fnc_dump};
 
                                                     private _unitPositions = _profile get "positions";
-                                                    private _faction = [_profile, "faction"] call ALiVE_fnc_hashGet;
+                                                    private _faction = _profile get "faction";
                                                     private _side = _profile get "side";
 
                                                     private _boatTypes = [(count _unitPositions) - 1, [_faction],"SHIP"] call ALiVE_fnc_findVehicleType;
@@ -475,7 +475,7 @@ if (!_simAttacks) then {
                                                     private _boatProfile = [_boatType,_side,_faction,_newPosition,0,false,_faction,[]] call ALiVE_fnc_createProfileVehicle;
                                                     [_profile,_boatProfile] call ALiVE_fnc_createProfileVehicleAssignment;
 
-                                                    private _vehicleAssignments = [_profile,"vehicleAssignments"] call ALiVE_fnc_hashGet;
+                                                    private _vehicleAssignments = _profile get "vehicleAssignments";
                                                     [_vehicleAssignments,_profile, true] call ALiVE_fnc_profileVehicleAssignmentsToVehicleAssignments;
 
                                                     // create waypoint to nearest shore point
@@ -485,7 +485,7 @@ if (!_simAttacks) then {
                                                         [_profile,"insertWaypoint", _shoreWaypoint] call ALiVE_fnc_profileEntity;
                                                     };
 
-                                                    [_profile,"boat", [[_boatProfile,"profileID"] call ALiVE_fnc_HashGet, _newPosition]] call ALiVE_fnc_hashSet;
+                                                    _profile set ["boat", [_boatProfile get "profileID", _newPosition]];
                                                 };
                                             };
 
@@ -543,14 +543,14 @@ if (!_simAttacks) then {
                             };
 
                             // remove any ambient sea transport if no waypoint is assigned (should not happen - failsafe)
-                            if (_boatsEnabled && {_vehicleCommander} && {!isnil {[_profile,"boat"] call ALiVE_fnc_hashGet}}) then {
-                                private _boatProfileID = ([_profile,"boat"] call ALiVE_fnc_hashGet) select 0;
+                            if (_boatsEnabled && {_vehicleCommander} && {!isnil {_profile get "boat"}}) then {
+                                private _boatProfileID = (_profile get "boat") select 0;
                                 private _boatProfile = [ALiVE_ProfileHandler,"getProfile",_boatProfileID] call ALiVE_fnc_ProfileHandler;
 
                                 if (isnil "_boatProfile") then {
                                     ["Profile Simulator _boatProfile is nil _profile is %1",_profile] call ALiVE_fnc_dumpR;
                                 } else {
-                                    private _profileID = [_profile,"profileID","no-ID"] call ALiVE_fnc_hashGet;
+                                    private _profileID = _profile getOrDefault ["profileID", "no-ID"];
 
                                     if (_debug) then {["Profile Simulator is removing boat %1 from entity profile %2",_boatProfileID,_profileID] call ALiVE_fnc_dump};
 
@@ -559,7 +559,7 @@ if (!_simAttacks) then {
                                     [MOD(profileHandler),"unregisterProfile", _boatProfile] call ALiVE_fnc_profileHandler;
                                 };
 
-                                [_profile,"boat"] call ALiVE_fnc_hashRem;
+                                _profile deleteAt "boat";
                             };
                         };
                     };
@@ -607,7 +607,7 @@ if (!_simAttacks) then {
 
             };
 
-            [_profile,"timeLastSim", diag_tickTime] call ALiVE_fnc_hashSet;
+            _profile set ["timeLastSim", diag_tickTime];
         };
     };
 
@@ -615,15 +615,15 @@ if (!_simAttacks) then {
 
     // Simulate attacks
 
-    private _combatRate = [MOD(profileCombatHandler),"combatRate"] call ALiVE_fnc_hashGet;
-    private _attacksToSim = [MOD(profileSystem),"profileAttacksToSim"] call ALiVE_fnc_hashGet;
+    private _combatRate = MOD(profileCombatHandler) get "combatRate";
+    private _attacksToSim = MOD(profileSystem) get "profileAttacksToSim";
 
     if (_attacksToSim isEqualTo []) then {
 
-        private _profileAttacks = [MOD(profileCombatHandler),"attacksByID"] call ALiVE_fnc_hashGet;
+        private _profileAttacks = MOD(profileCombatHandler) get "attacksByID";
         _attacksToSim append (keys _profileAttacks);
 
-        [MOD(profileSystem),"simulatingAttacks", false] call ALiVE_fnc_hashSet;
+        MOD(profileSystem) set ["simulatingAttacks", false];
 
     } else {
 
@@ -645,17 +645,17 @@ if (!_simAttacks) then {
 
                 if (!_profileSystemPaused && !ALiVE_gamePaused) then {
 
-                    private _cyclesLeft = [_attack,"cyclesLeft"] call ALiVE_fnc_hashGet;
-                    private _timeLastSim = [_attack,"timeLastSim", diag_tickTime - 0.001] call ALiVE_fnc_hashGet;
+                    private _cyclesLeft = _attack get "cyclesLeft";
+                    private _timeLastSim = _attack getOrDefault ["timeLastSim", diag_tickTime - 0.001];
                     private _simModifier = (diag_tickTime - _timeLastSim) * accTime;
 
                     private _active = false;
 
                     if (_cyclesLeft > 0) then {
-                        [_attack,"cyclesLeft", _cyclesLeft - 1] call ALiVE_fnc_hashSet;
+                        _attack set ["cyclesLeft", _cyclesLeft - 1];
 
-                        private _attackerID = [_attack,"attacker"] call ALiVE_fnc_hashGet;
-                        private _targetIDs = [_attack,"targets"] call ALiVE_fnc_hashGet;
+                        private _attackerID = _attack get "attacker";
+                        private _targetIDs = _attack get "targets";
 
                         _attacker = [MOD(profileHandler),"getProfile", _attackerID] call ALiVE_fnc_profileHandler;
 
@@ -676,7 +676,7 @@ if (!_simAttacks) then {
                                 private _targetPos = _target get "position";                         // [_target,"position"] call ALiVE_fnc_hashGet;
 
                               //  private _maxEngagementRange = [_attack,"maxRange"] call ALiVE_fnc_hashGet;
-                                private _maxEngagementRange = [MOD(profileCombatHandler),"combatRange"] call ALiVE_fnc_hashGet;
+                                private _maxEngagementRange = MOD(profileCombatHandler) get "combatRange";
 
                                 if (_attackerPos distance2D _targetPos <= _maxEngagementRange) then {
                                     // get profiles to attack with
@@ -730,9 +730,9 @@ if (!_simAttacks) then {
 
                                         if (_targetToAttackType == "entity") then {
                                             // must be copied so that calling "removeUnit" doesn't alter the new damage array
-                                            _profileToAttackHealth = +([_targetToAttack,"damages"] call ALiVE_fnc_hashGet);
+                                            _profileToAttackHealth = +(_targetToAttack get "damages");
                                         } else {
-                                            _profileToAttackHealth = [_targetToAttack,"damage"] call ALiVE_fnc_hashGet;
+                                            _profileToAttackHealth = _targetToAttack get "damage";
 
                                             // if vehicle hasn't been spawned yet
                                             // init hitpoint values
@@ -803,7 +803,7 @@ if (!_simAttacks) then {
                                                         _unitCount = _unitCount - 1;
                                                     } foreach _indexesToRemove;
 
-                                                    [_targetToAttack,"damages", _profileToAttackHealth] call ALiVE_fnc_hashSet;
+                                                    _targetToAttack set ["damages", _profileToAttackHealth];
 
                                                     if (_unitCount == 0) then {
                                                         _toBeKilled pushbackunique [_attacker,_targetToAttack];
@@ -869,7 +869,7 @@ if (!_simAttacks) then {
                                                 } foreach _profileToAttackHealth;
 
                                                 if (_deadHitPointCount < floor (_hitPointCount * 0.75) && !_vehCritical) then {
-                                                    [_targetToAttack,"damage", _profileToAttackHealth] call ALiVE_fnc_hashSet;
+                                                    _targetToAttack set ["damage", _profileToAttackHealth];
                                                 } else {
                                                     _toBeUnassigned pushbackunique [_target,_targetToAttack];
                                                     _toBeKilled pushbackunique [_attacker,_targetToAttack];
@@ -890,7 +890,7 @@ if (!_simAttacks) then {
                                                             
                                                             _attackTargetsKilled pushback _x;
                                                         };
-                                                    } foreach ([_targetToAttack,"entitiesInCommandOf"] call ALiVE_fnc_hashGet);
+                                                    } foreach (_targetToAttack get "entitiesInCommandOf");
                                                 };
                                             };
                                         };
@@ -911,13 +911,13 @@ if (!_simAttacks) then {
                         _attacksToRemove pushback _attackID;
 
                         if (!isnil "_attacker") then {
-                            [_attacker,"combat", false] call ALiVE_fnc_hashSet;
+                            _attacker set ["combat", false];
                         };
                     };
 
                 };
 
-                [_attack,"timeLastSim", diag_tickTime] call ALiVE_fnc_hashSet;
+                _attack set ["timeLastSim", diag_tickTime];
             };
         };
 
@@ -932,7 +932,7 @@ if (!_simAttacks) then {
             if (count _vehAssignments > 0) then {
                 private _vehicleID = _subordinateVehicle get "profileID";
 
-                private _vehAssignment = [_vehAssignments,_vehicleID] call ALiVE_fnc_hashGet;
+                private _vehAssignment = _vehAssignments get _vehicleID;
                 private _unitAssignments = +(_vehAssignment param [2, [], [[]]]);
 
                 reverse _unitAssignments; // must remove in reverse order

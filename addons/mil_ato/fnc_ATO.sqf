@@ -4610,7 +4610,7 @@ switch(_operation) do {
                             };
                             {
                                 if (_x isEqualType "" || {isNull _x}) then {
-                                    private _profileID = _eventEnemyProfiles select _forEachIndex;
+                                    private _profileID = if (_forEachIndex < count _eventEnemyProfiles) then {_eventEnemyProfiles select _forEachIndex} else {_x};
                                     private _targetProfile = [ALiVE_profileHandler, "getProfile", _profileID] call ALiVE_fnc_ProfileHandler;
                                     if !(isNil "_targetProfile") then {
                                         private _type = [_targetProfile,"type"] call ALiVE_fnc_hashGet;
@@ -5003,7 +5003,7 @@ switch(_operation) do {
                 // Check to see if target is still there or has been destroyed
                 if (count _eventTargets > 0) then {
                     private _tgtObj = _eventTargets select 0;
-                    if (isNull _tgtObj || {!alive _tgtObj}) then {
+                    if (_tgtObj isEqualType objNull && {isNull _tgtObj || {!alive _tgtObj}}) then {
                         if (_debug) then {
                             ["ATO %3 - Aircraft (%1 - %2) target destroyed or invalid.", _profileID, typeof _vehicle, _logic] call ALiVE_fnc_dump;
                         };

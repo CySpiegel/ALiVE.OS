@@ -420,7 +420,7 @@ switch (_operation) do {
         [_logic, "autoGenerateTasks", _eventData] call MAINCLASS;
     };
     case "autoGenerateTasks": {
-        if (_args isEqualType []) then {
+        if (_args isEqualType [] || _args isEqualType createHashMap) then {
             private _debug = [_logic, "debug", false] call ALIVE_fnc_hashGet;
             private _taskData = _args;
 
@@ -482,7 +482,7 @@ switch (_operation) do {
         };
     };
     case "generateTask": {
-        if (_args isEqualType []) then {
+        if (_args isEqualType [] || _args isEqualType createHashMap) then {
             private _debug = [_logic, "debug", false] call ALIVE_fnc_hashGet;
 
             private _taskData = _args;
@@ -542,7 +542,7 @@ switch (_operation) do {
         };
     };
     case "syncTasks": {
-        if (_args isEqualType []) then {
+        if (_args isEqualType [] || _args isEqualType createHashMap) then {
             [_logic, _args] spawn {
 				params ["_logic", "_eventData"];
 
@@ -801,7 +801,7 @@ switch (_operation) do {
         };
     };
     case "registerTask": {
-        if (_args isEqualType []) then {
+        if (_args isEqualType [] || _args isEqualType createHashMap) then {
             private _task = _args;
 			_task params [
 					"_taskID",
@@ -959,7 +959,7 @@ switch (_operation) do {
         };
     };
     case "updateTask": {
-        if (_args isEqualType []) then {
+        if (_args isEqualType [] || _args isEqualType createHashMap) then {
             private _updatedTask = _args;
 			_updatedTask params [
 					"_taskID",
@@ -1295,7 +1295,7 @@ switch (_operation) do {
     case "updateTaskState": {
         private["_task","_taskID","_playerID","_taskSide","_event"];
 
-        if (_args isEqualType []) then {
+        if (_args isEqualType [] || _args isEqualType createHashMap) then {
 			_args params ["", "_playerID", "_taskSide"];
 
             private _debug = [_logic, "debug", false] call ALIVE_fnc_hashGet;

@@ -129,7 +129,7 @@ private ["_result"];
 
 TRACE_1("C2ISTAR - input",_this);
 
-if !(_this isEqualType []) exitWith {};
+if !(_this isEqualType [] || _this isEqualType createHashMap) exitWith {};
 
 params [
     ["_logic", objNull, [objNull]],

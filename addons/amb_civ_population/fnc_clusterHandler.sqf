@@ -80,7 +80,7 @@ switch(_operation) do {
 
     case "debug": {
 
-        if !(_args isEqualType []) then {
+        if !(_args isEqualType [] || _args isEqualType createHashMap) then {
             _args = [_logic,"debug"] call ALIVE_fnc_hashGet;
         } else {
             [_logic,"debug",_args] call ALIVE_fnc_hashSet;
@@ -109,7 +109,7 @@ switch(_operation) do {
 
     case "state": {
 
-        if !(_args isEqualType []) then {
+        if !(_args isEqualType [] || _args isEqualType createHashMap) then {
 
             // Save state
 
@@ -125,7 +125,7 @@ switch(_operation) do {
             _result = _state;
 
         } else {
-            ASSERT_TRUE(_args isEqualType [], str typeName _args);
+            ASSERT_TRUE(_args isEqualType [] || _args isEqualType createHashMap, str typeName _args);
 
             // Restore state
 
@@ -139,7 +139,7 @@ switch(_operation) do {
 
     case "registerCluster": {
 
-        if(_args isEqualType []) then {
+        if(_args isEqualType [] || _args isEqualType createHashMap) then {
             private _cluster = _args;
 
             private _clusterID = [_cluster, "clusterID"] call ALIVE_fnc_hashGet;

@@ -183,7 +183,7 @@ switch(_operation) do {
 
         case "state": {
 
-            if !(_args isEqualType []) then {
+            if !(_args isEqualType [] || _args isEqualType createHashMap) then {
                 // Save state
 
                 private _state = [] call ALiVE_fnc_hashCreate;

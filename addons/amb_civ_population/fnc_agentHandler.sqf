@@ -148,7 +148,7 @@ switch(_operation) do {
 
     case "state": {
 
-        if !(_args isEqualType []) then {
+        if !(_args isEqualType [] || _args isEqualType createHashMap) then {
 
                 // Save state
 
@@ -164,7 +164,7 @@ switch(_operation) do {
                 _result = _state;
 
         } else {
-                ASSERT_TRUE(_args isEqualType [],str typeName _args);
+                ASSERT_TRUE(_args isEqualType [] || _args isEqualType createHashMap,str typeName _args);
 
                 // Restore state
 
@@ -178,7 +178,7 @@ switch(_operation) do {
 
     case "registerAgent": {
 
-        if(_args isEqualType []) then {
+        if(_args isEqualType [] || _args isEqualType createHashMap) then {
             private _agent = _args;
 
             private _agents = [_logic, "agents"] call ALIVE_fnc_hashGet;
@@ -232,7 +232,7 @@ switch(_operation) do {
 
     case "unregisterAgent": {
 
-        if(_args isEqualType []) then {
+        if(_args isEqualType [] || _args isEqualType createHashMap) then {
             private _agent = _args;
 
             private _agents = [_logic, "agents"] call ALIVE_fnc_hashGet;

@@ -94,7 +94,7 @@ switch(_operation) do {
 
         private _simple_operations = ["targets", "size","type","faction"];
 
-        if !(_args isEqualType []) then {
+        if !(_args isEqualType [] || _args isEqualType createHashMap) then {
             private _state = createHashMap;
 
             // Save state

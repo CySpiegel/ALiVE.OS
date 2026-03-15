@@ -280,7 +280,7 @@ switch(_operation) do {
     };
     case "state": {
 
-        if (_args isEqualType []) then {
+        if (_args isEqualType [] || _args isEqualType createHashMap) then {
             _logic setVariable [_operation, _args];
             _result = _args;
         } else {
@@ -2072,7 +2072,7 @@ switch(_operation) do {
 
         private _unit = _args;
 
-        if (_unit isEqualType []) then {
+        if (_unit isEqualType [] || _unit isEqualType createHashMap) then {
 
             private _state = [_logic,"state"] call MAINCLASS;
             private _customUnits = [_state,"customUnits"] call ALiVE_fnc_hashGet;
@@ -7365,7 +7365,7 @@ switch(_operation) do {
 
         private _group = _args;
 
-        if (_group isEqualType []) then {
+        if (_group isEqualType [] || _group isEqualType createHashMap) then {
 
             private _groupConfigName = [_group,"configName"] call ALiVE_fnc_hashGet;
             private _groupDisplayName = [_group,"name"] call ALiVE_fnc_hashGet;

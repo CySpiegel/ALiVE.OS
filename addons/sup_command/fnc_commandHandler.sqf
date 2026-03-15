@@ -102,7 +102,7 @@ switch(_operation) do {
 
     case "handleEvent": {
 
-        if (_args isEqualType []) then {
+        if (_args isEqualType [] || _args isEqualType createHashMap) then {
 
             _args params ["_type","_data"];
 
@@ -195,7 +195,7 @@ switch(_operation) do {
 
     case "opsDataPrepare": {
 
-        if (_args isEqualType []) then {
+        if (_args isEqualType [] || _args isEqualType createHashMap) then {
 
             _args params ["_playerID","_limit","_side","_faction"];
 
@@ -245,7 +245,7 @@ switch(_operation) do {
 
     case "opsOPCOMSelected": {
 
-        if (_args isEqualType []) then {
+        if (_args isEqualType [] || _args isEqualType createHashMap) then {
 
              _args params ["_playerID","_selOpcom"];
 	     private _selOpcomID = (_selOpcom select 0);
@@ -300,7 +300,7 @@ switch(_operation) do {
 
     case "opsGetProfile": {
 
-        if (_args isEqualType []) then {
+        if (_args isEqualType [] || _args isEqualType createHashMap) then {
 
             _args params ["_playerID","_profileID"];
 
@@ -340,7 +340,7 @@ switch(_operation) do {
 
     case "opsGetProfileWaypoints": {
 
-        if (_args isEqualType []) then {
+        if (_args isEqualType [] || _args isEqualType createHashMap) then {
 
             _args params ["_playerID","_profileID"];
 
@@ -380,7 +380,7 @@ switch(_operation) do {
 
     case "opsClearProfileWaypoints": {
 
-        if (_args isEqualType []) then {
+        if (_args isEqualType [] || _args isEqualType createHashMap) then {
 
             _args params ["_playerID","_profileID"];
 
@@ -422,7 +422,7 @@ switch(_operation) do {
 
     case "opsApplyProfileWaypoints": {
 
-        if (_args isEqualType []) then {
+        if (_args isEqualType [] || _args isEqualType createHashMap) then {
 
             _args params ["_playerID","_profileID","_updatedWaypoints"];
 
@@ -527,7 +527,7 @@ switch(_operation) do {
 
     case "opsJoinGroup": {
 
-        if (_args isEqualType []) then {
+        if (_args isEqualType [] || _args isEqualType createHashMap) then {
 
             _args params ["_playerID","_profileID"];
 
@@ -586,7 +586,7 @@ switch(_operation) do {
 
     case "opsSpectateGroup": {
 
-        if (_args isEqualType []) then {
+        if (_args isEqualType [] || _args isEqualType createHashMap) then {
 
             _args params ["_playerID","_profileID"];
 
@@ -655,7 +655,7 @@ switch(_operation) do {
 
     case "intelTypeSelected": {
 
-        if (_args isEqualType []) then {
+        if (_args isEqualType [] || _args isEqualType createHashMap) then {
 
             _args params ["_playerID","_type","_limit","_side","_faction"];
 
@@ -879,7 +879,7 @@ switch(_operation) do {
 
     case "intelOPCOMSelected": {
 
-        if (_args isEqualType []) then {
+        if (_args isEqualType [] || _args isEqualType createHashMap) then {
 
             _args params ["_playerID","_selOpcom"];
 			

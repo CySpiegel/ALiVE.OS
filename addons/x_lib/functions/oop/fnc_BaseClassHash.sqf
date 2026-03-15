@@ -38,7 +38,7 @@ nil
 ---------------------------------------------------------------------------- */
 if(
     isNil "_this" ||
-    {!(_this isEqualType [])} ||
+    {!(_this isEqualType [] || _this isEqualType createHashMap)} ||
     {count _this == 0} ||
     {!((_this select 0) isEqualType [] || (_this select 0) isEqualType createHashMap)}
 ) then {

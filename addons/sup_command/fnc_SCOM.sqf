@@ -83,7 +83,7 @@ private ["_result"];
 
 TRACE_1("SCOM - input",_this);
 
-if !(_this isEqualType []) exitWith {};
+if !(_this isEqualType [] || _this isEqualType createHashMap) exitWith {};
 
 params [
     ["_logic", objNull, [objNull]],
@@ -410,7 +410,7 @@ switch (_operation) do {
 
         // event handler for response from server command handler
 
-        if (_args isEqualType []) then {
+        if (_args isEqualType [] || _args isEqualType createHashMap) then {
 
             _args params ["_type","_data"];
 
@@ -2109,7 +2109,7 @@ switch (_operation) do {
 
         _back ctrlSetEventHandler ["MouseButtonClick", "['INTEL_RESET',[_this]] call ALIVE_fnc_SCOMTabletOnAction"];
 
-        if (_args isEqualType []) then {
+        if (_args isEqualType [] || _args isEqualType createHashMap) then {
 
             // hide the selection list title
 
@@ -2433,7 +2433,7 @@ switch (_operation) do {
 
         [_logic,"setOpsStatus", ""] call MAINCLASS;
 
-        if (_args isEqualType []) then {
+        if (_args isEqualType [] || _args isEqualType createHashMap) then {
 
             _listValues = [];
             _sources = _args select 1;
@@ -2486,7 +2486,7 @@ switch (_operation) do {
 
         // preform OPCOM objective display
 
-        if (_args isEqualType []) then {
+        if (_args isEqualType [] || _args isEqualType createHashMap) then {
 
             private _commandState = [_logic,"commandState"] call MAINCLASS;
 
@@ -2976,7 +2976,7 @@ switch (_operation) do {
 
         // populate group list and map markers
 
-        if(_args isEqualType []) then {
+        if(_args isEqualType [] || _args isEqualType createHashMap) then {
 
             _commandState = [_logic,"commandState"] call MAINCLASS;
 
@@ -3312,7 +3312,7 @@ switch (_operation) do {
         // once the profile data has returned from the command handler
         // display the profiles waypoints
 
-        if (_args isEqualType []) then {
+        if (_args isEqualType [] || _args isEqualType createHashMap) then {
 
             private _commandState = [_logic,"commandState"] call MAINCLASS;
 
@@ -3907,7 +3907,7 @@ switch (_operation) do {
         // once the data has returned from the command handler
         // enable remote controlled join of the group
 
-        if (_args isEqualType []) then {
+        if (_args isEqualType [] || _args isEqualType createHashMap) then {
 
             _unit = _args select 1 select 0;
 
